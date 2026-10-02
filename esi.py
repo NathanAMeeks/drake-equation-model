@@ -23,6 +23,9 @@ def sim(x, x0): return 1 - np.abs(x - x0) / (x + x0)
 def esi4(R, M, S):
     rho = M / R**3; v = np.sqrt(M / R); T = 288.0 * S**0.25
     return (sim(R, 1)**(W["R"]/4) * sim(rho, 1)**(W["rho"]/4) * sim(v, 1)**(W["vesc"]/4) * sim(T, 288.0)**(W["T"]/4))
+def sptype(t):   # same Teff bins as hz_archive.py: F>=6000, G>=5200, K>=3900, M>=2300 K
+    t = np.asarray(t, float)
+    return np.select([t >= 6000, t >= 5200, t >= 3900, t >= 2300], ["F", "G", "K", "M"], "other")
 def esi_phl(R, S): return 1 - np.sqrt(0.5 * (((S-1)/(S+1))**2 + ((R-1)/(R+1))**2))
 
 if __name__ == "__main__":
@@ -51,10 +54,20 @@ if __name__ == "__main__":
                         frac_ge_0p8=float((e >= 0.8).mean()),
                         mean_pow={str(k): float((e**k).mean()) for k in [1, 2, 3, 5, 10]},
                         mass_source_counts=d.mass_source.value_counts().to_dict())
-        d[cols].to_csv(f"data/esi_hz_rocky_{lab}.csv", index=False)
+        d = d.copy(); d["sp_type"] = sptype(d.st_teff)
+        out[lab]["by_type"] = {}
+        for c in ("M", "K", "G", "F"):        # per host spectral type (Teff bins as hz_archive.py)
+            dc = d[d.sp_type == c]; ec = dc.ESI4.values
+            out[lab]["by_type"][c] = dict(n=int(len(dc)), esi4=[float(x) for x in ec], names=dc.pl_name.tolist(),
+                                          mean=(float(ec.mean()) if len(ec) else None),
+                                          mean_pow={str(k): (float((ec**k).mean()) if len(ec) else None) for k in [1, 2, 3, 5, 10]},
+                                          top=dc[["pl_name", "st_teff", "pl_rade", "S", "ESI4", "sy_dist"]].head(5).round(3).to_dict("records"))
+        d[cols + ["sp_type"]].to_csv(f"data/esi_hz_rocky_{lab}.csv", index=False)
+    allr = df[ok & rocky].copy(); allr["sp_type"] = sptype(allr.st_teff)
+    out["top_any_orbit_R_lt_1p8_by_type"] = {c: allr[allr.sp_type == c].sort_values("ESI4", ascending=False)[["pl_name", "st_teff", "pl_rade", "S", "ESI4", "sy_dist"]].head(5).round(3).to_dict("records") for c in ("M", "K", "G", "F")}
     json.dump(out, open("data/esi_hz.json", "w"), indent=1)
-    for lab in out:
-        o = out[lab]; print(lab, {k: (round(v, 3) if isinstance(v, float) else v) for k, v in o.items() if k not in ("esi4", "esi_phl", "names")})
+    for lab in ("conservative", "optimistic"):
+        o = out[lab]; print(lab, {k: (round(v, 3) if isinstance(v, float) else v) for k, v in o.items() if k not in ("esi4", "esi_phl", "names", "by_type")})
     d = df[opt].sort_values("ESI4", ascending=False)
     pd.set_option("display.width", 250)
     print(d[cols].head(15).round(3).to_string(index=False))

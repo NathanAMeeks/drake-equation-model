@@ -6,36 +6,113 @@
 
 | | Nathan's headline (`nathan_headline`) | Literature baseline (`baseline`) |
 |---|---|---|
-| **Median (50/50) worlds now, other than Earth** | **3.18e+03** | **0.00238** |
-| 10th–90th percentile | 12.8 – 5.53e+05 | 4.27e-07 – 10.4 |
-| Mean | 9.55e+05 | 4.31e+03 |
-| P(N < 1) | 0.030 | 0.820 |
-| Median tool-using species now | 7.13e+03 | 0.00534 |
-| Median worlds that ever had tool users (by now) | 5.06e+04 | 0.851 |
-| Median nearest-neighbour distance at the median N | 744 ly | 8.53e+05 ly (N<1: no neighbour expected) |
-| Equal-cube side at the median N (disk ≈ 7.9e12 ly³) | 1.35e+03 ly | 1.49e+05 ly |
+| **Median (50/50) worlds now, other than Earth** | **2.63e+03** | **0.00179** |
+| 10th–90th percentile | 13.2 – 4.12e+05 | 3.72e-07 – 7.04 |
+| Mean | 6.92e+05 | 1.61e+03 |
+| P(N < 1) | 0.027 | 0.837 |
+| Median tool-using species now | 5.85e+03 | 0.00392 |
+| Median worlds that ever had tool users (by now) | 5.58e+04 | 1.13 |
+| Median radio-capable worlds now (radio + spacefaring stages) | 42.9 | 2.65e-05 |
+| Largest host-type share of N (share of mean) | K dwarfs 63% | K dwarfs 56% |
+| Median nearest-neighbour distance at the median N | 792 ly | 9.83e+05 ly (N<1: no neighbour expected) |
+| Equal-cube side at the median N (disk ≈ 7.9e12 ly³) | 1.44e+03 ly | 1.64e+05 ly |
 
 ![All scenarios compared](results/comparison_scenarios.png)
 
 Headline histogram: [`results/hist_log10N.png`](results/hist_log10N.png) · sensitivity tornado: [`results/tornado.png`](results/tornado.png) · literature baseline: [`hist`](results/hist_log10N_baseline.png), [`tornado`](results/tornado_baseline.png)
+
+## Multi-spectral and multiphase breakdowns (v2 model)
+
+Suggested by a friend of Nathan's (Oct 2026). Re-run with the v2 model (2e5 samples each): `baseline`, `baseline_no_exomoons`, `nathan_headline`, `nathan_headline_no_superhab`, `nathan_headline_no_tooluse`. Every other scenario is still the v1 model (two host classes, G/K and M, and one stone-age-or-greater phase).
+
+Change in the median N_now from v1 to v2: `nathan_headline` 3.18e+03 (v1) → 2.63e+03 (v2); `baseline` 0.00238 (v1) → 0.00179 (v2). The v2 total adds F stars, splits G from K (K now has its own, higher η⊕ and longer habitable window), adds K-activity and F-UV penalties and per-type ESI weights, and adds stage-specific collapse hazards after the lithic stage.
+
+![Multi-spectral breakdown](results/spectral_breakdown.png)
+
+### By host star type
+
+Each type has its own star fraction (RECONS 10-pc census vs Kroupa IMF), η⊕, habitable window, HZ giants for exomoons, activity/UV/tidal penalties, and similarity weight (its own Archive ESI list if it has ≥ 3 HZ rocky planets, otherwise the pooled list). The superhabitability boost applies only to K hosts. *Share* = that type's fraction of the posterior-mean N; *median share* = per-sample median of the type's fraction.
+
+| scenario | host type | median N now | 10th–90th pct | P(N<1) | share of mean N | median share [10th, 90th] | median N ever |
+|---|---|---|---|---|---|---|---|
+| nathan_headline | M | **280** | 1.06 – 6e+04 | 0.098 | 27.4% | 12.4% [1.8, 51.7] | 5.12e+03 |
+| nathan_headline | K | **1.69e+03** | 8.36 – 2.66e+05 | 0.035 | 63.5% | 71.8% [38.8, 89.7] | 3.22e+04 |
+| nathan_headline | G | **228** | 1.15 – 3.55e+04 | 0.094 | 9.0% | 9.3% [2.7, 25.6] | 9.56e+03 |
+| nathan_headline | F | **1.67** | 0.00681 – 324 | 0.453 | 0.1% | 0.1% [0.0, 0.6] | 458 |
+| nathan_headline | **all** | **2.63e+03** | 13.2 – 4.12e+05 | 0.027 | 100% | – | 5.58e+04 |
+| baseline | M | **2.34e-04** | 4.16e-08 – 1.12 | 0.898 | 38.6% | 15.2% [2.2, 58.1] | 0.123 |
+| baseline | K | **0.00116** | 2.47e-07 – 4.48 | 0.854 | 55.5% | 74.9% [36.2, 93.8] | 0.705 |
+| baseline | G | **5.92e-05** | 1.16e-08 – 0.264 | 0.933 | 5.9% | 3.9% [0.5, 18.7] | 0.0958 |
+| baseline | F | **6.28e-08** | 8.57e-12 – 4.11e-04 | 0.994 | 0.1% | 0.0% [0.0, 0.1] | 3.69e-04 |
+| baseline | **all** | **0.00179** | 3.72e-07 – 7.04 | 0.837 | 100% | – | 1.13 |
+
+**Top Archive planets by ESI, per host type** (Kopparapu+2014 HZ, R < 1.8 R⊕; Schulze-Makuch+2011 4-property ESI):
+
+| type | HZ rocky planets (conservative / optimistic) | top planets, optimistic HZ (ESI) | best R < 1.8 planets outside the HZ cut (ESI, insolation S⊕) |
+|---|---|---|---|
+| M | 22 / 35 | Teegarden's Star b (0.979), TOI-700 d (0.942), Kepler-1649 c (0.940), GJ 3378 b (0.938), TOI-700 e (0.932) | – |
+| K | 3 / 5 | Kepler-442 b (0.882), Kepler-1410 b (0.860), Kepler-1544 b (0.841), Kepler-62 e (0.824), Kepler-62 f (0.799) | Kepler-1512 b (0.883, S=1.60), Kepler-395 c (0.832, S=2.11) |
+| G | 1 / 1 | Kepler-452 b (0.879) | Kepler-1126 c (0.813, S=2.06), Kepler-69 c (0.733, S=2.69), Kepler-409 b (0.669, S=6.15) |
+| F | 0 / 0 | none | Kepler-132 e (0.677, S=6.10), Kepler-1620 b (0.598, S=7.92), Kepler-1633 b (0.456, S=26.26) |
+
+![Multiphase breakdown](results/stage_breakdown.png)
+
+### By civilisation stage
+
+Inside each tool-using episode a world moves through **lithic → agricultural → industrial → radio-capable → spacefaring** (orbital spaceflight). Each advance is an exponential waiting time. From stage 2 on, a stage-specific collapse hazard applies: a fraction q regresses one stage (and can recur later), and the rest ends the lineage. The baseline end-of-lineage hazards (intrinsic lifetime, Big-Five extinctions, GRB/SN, self-inflicted) apply in every stage. N in a stage = N_now × the long-run share of tool-using time spent in that stage.
+
+| stage parameter | prior | Earth anchor / best | source |
+|---|---|---|---|
+| `stage_tau_agri_yr` | loguniform [3.3e5, 3.3e7] | 3.29e6 | Earth anchor 3.3 Ma (Harmand+2015 Lomekwi 3) -> ~11.5 ka (Zeder 2011 Curr.Anthropol. 52, S221) = 3.29 Myr; range = Earth/10 .. Earth x10 ASSUMED |
+| `stage_tau_ind_yr` | loguniform [1.1e3, 1.1e5] | 1.1e4 | Earth anchor ~11.5 ka -> ~1760 CE (~11.2 kyr); range Earth/10 .. x10 ASSUMED |
+| `stage_tau_radio_yr` | loguniform [14.0, 1400.0] | 135.0 | Earth anchor ~1760 -> 1895 (Marconi's first radio transmissions) = ~135 yr (user: ~150 yr); range Earth/10 .. x10 ASSUMED |
+| `stage_tau_space_yr` | loguniform [6.2, 620.0] | 62.0 | Earth anchor 1895 -> 1957 (Sputnik 1) = 62 yr; range Earth/10 .. x10 ASSUMED |
+| `stage_h_agri_per_yr` | loguniform [1e-07, 0.001] | geometric mean | ASSUMED. Earth: farming has persisted ~11.5 kyr world-wide despite many regional collapses (Tainter 1988, The Collapse of Complex Societies); one world gives no galactic rate |
+| `stage_h_ind_per_yr` | loguniform [1e-06, 0.01] | geometric mean | ASSUMED (Earth: ~265 yr industrial so far). Natural extinction alone is < 6.9e-5/yr (Snyder-Beattie, Ord & Bonsall 2019 Sci.Rep. 9, 11054), so most of this range is anthropogenic risk, which that bound does not cover |
+| `stage_h_radio_per_yr` | loguniform [1e-10, 0.01] | geometric mean | 1/L with L log-uniform 1e2 .. 1e10 yr = Sandberg, Drexler & Ord 2018 Table 1 (lifetime of a detectable civilisation) |
+| `stage_h_space_per_yr` | loguniform [1e-10, 0.01] | geometric mean | Same as radio stage (SDO 2018 L 1e2 .. 1e10 yr); ASSUMED that orbital capability does not by itself lower the hazard |
+| `stage_q_regress` | uniform [0.0, 1.0] | midpoint | ASSUMED (no quantitative literature). Earth's regional collapses mostly regressed rather than ended lineages (Tainter 1988) |
+
+| scenario | stage | median N now | 10th–90th pct | mean | P(N<1) | median share of tool-using time [10th, 90th] |
+|---|---|---|---|---|---|---|
+| nathan_headline | lithic | **1.64e+03** | 9.94 – 2.31e+05 | 4.17e+05 | 0.030 | 0.969 [0.199, 0.999] |
+| nathan_headline | agricultural | **3.13** | 0.0129 – 590 | 1.77e+03 | 0.395 | 0.00115 [1.13e-04, 0.0128] |
+| nathan_headline | industrial | **0.0355** | 1.26e-04 – 7.27 | 23.8 | 0.785 | 1.33e-05 [9.59e-07, 1.84e-04] |
+| nathan_headline | radio | **0.0232** | 6.78e-05 – 5.79 | 47.5 | 0.805 | 8.51e-06 [4.97e-07, 1.55e-04] |
+| nathan_headline | spacefaring | **41.3** | 0.0191 – 5.5e+04 | 2.74e+05 | 0.274 | 0.0206 [1.47e-04, 0.797] |
+| nathan_headline | **radio-capable (radio + spacefaring)** | **42.9** | 0.0216 – 5.51e+04 | 2.74e+05 | 0.270 | – |
+| baseline | lithic | **0.00115** | 3.00e-07 – 3.58 | 1.03e+03 | 0.859 | 0.969 [0.202, 0.999] |
+| baseline | agricultural | **2.05e-06** | 4.33e-10 – 0.0083 | 4.83 | 0.982 | 0.00115 [1.15e-04, 0.0127] |
+| baseline | industrial | **2.54e-08** | 3.79e-12 – 1.15e-04 | 0.0676 | 0.998 | 1.33e-05 [9.80e-07, 1.89e-04] |
+| baseline | radio | **1.61e-08** | 2.41e-12 – 8.13e-05 | 0.0626 | 0.998 | 8.72e-06 [5.05e-07, 1.57e-04] |
+| baseline | spacefaring | **2.52e-05** | 1.28e-09 – 0.505 | 574 | 0.914 | 0.0208 [1.51e-04, 0.796] |
+| baseline | **radio-capable (radio + spacefaring)** | **2.65e-05** | 1.35e-09 – 0.512 | 574 | 0.914 | – |
+
+**Radio-capable N vs classic SETI-style Drake estimates.** 
+* `nathan_headline`: median **42.9** radio-capable worlds now (10th–90th 0.0216 – 5.51e+04, P(N<1) = 0.27; median nearest-neighbour distance at the median ≈ 6.35e+03 ly); top drivers: l_stone_yr (4.2 dex), stage_h_space_per_yr (3.4 dex), f_land_and_ocean (3.4 dex), f_plate_tectonics (1.8 dex)
+* `baseline`: median **2.65e-05** radio-capable worlds now (10th–90th 1.35e-09 – 0.512, P(N<1) = 0.91; below 1, so no radio neighbour is expected at the median); top drivers: l_stone_yr (4.4 dex), tau_stone_tool_intelligence (4.3 dex), f_land_and_ocean (3.7 dex), stage_h_space_per_yr (3.1 dex)
+* Sandberg, Drexler & Ord 2018 (arXiv:1806.02404), 'current knowledge' sketch for communicating civilisations: median N = 0.32, mean 27 million, P(N<1) = 52%. This repo's static SDO-style stone-age variant: median 28.8.
+* Radio-only (radio but not yet spacefaring) is a very short stage here, because Earth went from radio to orbital spaceflight in 62 years. Almost all radio-capable worlds are therefore in the spacefaring stage.
+
 
 ## Method
 
 **Target.** Worlds hosting a lineage that habitually makes stone tools (Lomekwi/Oldowan level) or anything more advanced, alive *now*. Radio detectability does not enter: it changes what we can detect, not N.
 
 1. **Star formation history of the disk.** A thick-disk phase 13.0–8.5 Gyr ago (≈ half the disk mass), then an exponential thin disk normalised to today's SFR and disk mass. This replaces a constant R\*.
-2. **Habitable bodies per star**, split into G/K and M hosts:
+2. **Habitable bodies per star**, split by host type (v2: M, K, G, F; v1 scenarios: G/K and M):
    * η⊕ from Kepler/Archive studies.
-   * Rare-Earth multipliers: plate tectonics, land + ocean, large moon, Jupiter shield, binary stability, M-dwarf flares and tidal/water loss.
+   * Rare-Earth multipliers: plate tectonics, land + ocean, large moon, Jupiter shield, binary stability, M-dwarf flares and tidal/water loss; v2 adds a K-dwarf activity/tidal penalty and an F-star UV penalty.
    * Galactic habitable zone and a metallicity ramp in time.
    * Habitable exomoons around HZ giants.
 3. **Biology as hard steps:** abiogenesis → oxygenic photosynthesis → eukaryotes → complex multicellularity → stone-tool intelligence. Each step is an exponential waiting time, and their convolution competes with the host's habitable window.
 4. **Duration and recurrence.** A tool-using phase ends through intrinsic lifetime, Big-Five-class extinctions, GRBs/supernovae and self-inflicted risk. It can re-evolve afterwards (an alternating renewal process). Whole-biosphere sterilisation scales with past star formation.
-5. **Output.** N(t) on a 20-Myr grid over 13.8 Gyr. Reported: N now, time-averaged N, N_ever, and species = worlds × hominin-like species per tool world.
+5. **Civilisation stages (v2).** Inside each tool-using episode: lithic → agricultural → industrial → radio-capable → spacefaring, with advance times, collapse hazards, and regression/recurrence (see the breakdown section above).
+6. **Output.** N(t) on a 20-Myr grid over 13.8 Gyr. Reported: N now (total, per host type, per stage), time-averaged N, N_ever, and species = worlds × hominin-like species per tool world.
 
 **Nathan's headline (`nathan_headline`).**
 * **Similarity weighting.** Known Earth-like planets are treated as sharing Earth's evolutionary timeline as the *typical* case (each step's expected time equals Earth's observed interval), weighted by the Earth Similarity Index (Schulze-Makuch et al. 2011, ESI¹) of the NASA Exoplanet Archive's HZ rocky planets.
-* **Superhabitability boost.** A boost of 1–3× (ASSUMED) applies to the fraction of G/K planets meeting the Schulze-Makuch, Heller & Guinan 2020 criteria.
+* **Superhabitability boost.** A boost of 1–3× (ASSUMED) applies to the fraction of K-dwarf planets (v2; G/K in v1) meeting the Schulze-Makuch, Heller & Guinan 2020 criteria.
 * **Cross-lineage tool use.** Tool use evolved independently many times on Earth (primates, corvids, octopus, sea otters, dolphins, elephants). The animals → tools step is therefore modelled as fast and repeatable: Earth's 0.597-Gyr interval is divided by 3–7 independent origins.
 
 **Literature baseline (`baseline`).** Hard-step expected times are log-uniform over 1e-3–1e3 Gyr, then updated on Earth's dated fossil record with the observer-selection correction of Snyder-Beattie et al. 2021, which favours slow, rare steps. **The choice between these two framings explains most of the ~6-orders-of-magnitude gap between the two headline numbers.**
@@ -88,13 +165,40 @@ Every variable lives in [`params.yaml`](params.yaml). `best` is the value used i
 | `f_jupiter_shield` | loguniform [0.067, 1.0] | default |  | Wittenmyer+2020 MNRAS (cool Jupiters around 6.73% of stars); Horner & Jones 2008 IJA (shield role ambiguous -> may not be needed) — https://arxiv.org/abs/1912.01821 |
 | `f_binary_ok` | uniform [0.8, 1.0] | default |  | Kraus+2016 AJ 152, 8 (close binaries <47 AU suppress planets; ~1/5 of solar-type stars disallowed); Raghavan+2010 ApJS (54% single). Upper bound 1 because Kepler eta-Earth may already include binaries — https://arxiv.org/abs/1604.05744 |
 | `f_m_flares` | loguniform [0.03, 1.0] | default |  | ASSUMED bracket; flare/XUV/proton-event ozone & atmosphere erosion reviewed in Shields+2016 Phys.Rep.; Tilley+2019 (arXiv:1711.08484); Lingam & Loeb 2018 — https://arxiv.org/abs/1610.05765 |
+| `f_k_activity` | loguniform [0.5, 1.0] | default |  | ASSUMED mild K-dwarf penalty (late-K flares/XUV and possible HZ tidal locking). Cuntz & Guinan 2016 ApJ 827, 79 (K dwarfs: favourable hosts, far lower activity than M dwarfs); Barnes 2017 Celest.Mech.Dyn.Astr. 129, 509 (HZ planets of low-mass stars can tidally lock within ~1 Gyr) — https://iopscience.iop.org/article/10.3847/0004-637X/827/1/79 ; https://link.springer.com/article/10.1007/s10569-017-9783-7 |
+| `f_f_uv` | loguniform [0.14, 1.0] | default |  | ASSUMED mapping of Sato et al. 2014 Int.J.Astrobiol. 13, 244 (F0-F8 V, 1.2-1.5 Msun: DNA damage at Earth-equivalent orbits 2.5-7.1x solar without atmospheric attenuation, much less with it): survival fraction 1/7.1 .. 1 — https://arxiv.org/abs/1312.7431 |
 | `extra_worlds_per_system` | one_plus_loguniform [0.001, 0.1] | default |  (user scenarios only) | USER-PROPOSED (speculative past intelligence on Venus/Mars): low-weight bonus for >1 tool-using world per system; not literature — user research export |
 | `tau_abiogenesis` | per scenario (baseline log-uniform 1e-3–1e3 Gyr; headline = Earth's interval) | Earth interval | expected waiting time; completed on Earth 3.9 Ga | Snyder-Beattie+2021 Table 1 (3.5->4.1 Gya range) — https://pmc.ncbi.nlm.nih.gov/articles/PMC7997718/ |
 | `tau_oxygenic_photosynthesis_GOE` | per scenario (baseline log-uniform 1e-3–1e3 Gyr; headline = Earth's interval) | Earth interval | expected waiting time; completed on Earth 2.4 Ga | Lyons, Reinhard & Planavsky 2014 Nature (GOE ~2.4-2.3 Ga) — https://www.nature.com/articles/nature13068 |
 | `tau_eukaryogenesis` | per scenario (baseline log-uniform 1e-3–1e3 Gyr; headline = Earth's interval) | Earth interval | expected waiting time; completed on Earth 1.84 Ga | Betts+2018 via Snyder-Beattie+2021 Table 1 (<1.84 Ga) — https://pmc.ncbi.nlm.nih.gov/articles/PMC7997718/ |
 | `tau_complex_multicellularity` | per scenario (baseline log-uniform 1e-3–1e3 Gyr; headline = Earth's interval) | Earth interval | expected waiting time; completed on Earth 0.6 Ga | Knoll 2011 Annu.Rev.EPS (animal complex multicellularity, Ediacaran) — https://www.annualreviews.org/content/journals/10.1146/annurev.earth.031208.100209 |
 | `tau_stone_tool_intelligence` | per scenario (baseline log-uniform 1e-3–1e3 Gyr; headline = Earth's interval) | Earth interval | expected waiting time; completed on Earth 0.0033 Ga | Harmand+2015 Nature (Lomekwi 3, 3.3 Ma) — https://www.nature.com/articles/nature14464 |
-| `f_superhab` | loguniform [0.02, 0.3] | 0.073 | fraction of G/K habitable planets meeting the superhabitable criteria (K host, ~1.0-1.5 R_earth, ~5 K warmer); age 5-8 Gyr is handled by the time model (headline only) | ASSUMED bracket around an Archive-derived 0.073 = K share of G/K stars 0.70 (RECONS: K 11.6% vs G 5.0%) x P(1.0<=R<=1.5 / HZ, R<2) 25/49 x P(T_surf 282-302 K / HZ, R<2) 10/49 (superhab.py; independence assumed). Criteria: Schulze-Makuch, Heller & Guinan 2020 Astrobiology 20, 1394 Table 2 — https://pmc.ncbi.nlm.nih.gov/articles/PMC7757576/ |
+| `f_star_M` | uniform [0.749, 0.811] | midpoint | fraction of stars formed that are M dwarfs (v2 multi-spectral) | RECONS 10-pc census 283/378 = 0.749; Kroupa 2001 IMF number fraction 0.08-0.6 Msun = 0.811 (integrated here) — http://www.recons.org/census.posted.htm |
+| `ne_M` | loguniform [0.16, 0.41] | 0.24 | Earth-size HZ planets per M dwarf (v2 multi-spectral) | Dressing & Charbonneau 2015 ApJ 807, 45 (0.16 conservative, 0.24 broad HZ); 2026 Astronomy & Computing Archive reanalysis (M ~0.41) — https://arxiv.org/abs/1501.01623 |
+| `th_M_gyr` | loguniform [10.0, 50.0] | 20.0 | Gyr habitable window (v2 multi-spectral) | Rushby et al. 2013 Astrobiology 13, 833 (HZ lifetimes up to 54.7 Gyr) — https://research-repository.st-andrews.ac.uk/handle/10023/5071 |
+| `n_giant_hz_M` | loguniform [0.01, 0.12] | 0.06 | HZ giants per star (exomoon hosts) (v2 multi-spectral) | Hill et al. 2018 ApJ 860, 67 Table: M 6.0+/-6.0%; lower bound 0.01 ASSUMED — https://arxiv.org/abs/1805.03370 |
+| `f_star_K` | uniform [0.077, 0.116] | midpoint | fraction of stars formed that are K dwarfs (v2 multi-spectral) | Kroupa 2001 IMF 0.6-0.9 Msun = 0.077 (integrated here); RECONS 44/378 = 0.116 — http://www.recons.org/census.posted.htm |
+| `ne_K` | loguniform [0.27, 0.88] | 0.49 | rocky HZ planets per K dwarf (v2 multi-spectral) | 2026 Astronomy & Computing Archive reanalysis K ~0.27 (low); Bryson+2021 AJ 161, 36 G-mid-K 0.37-0.60 conservative / 0.58-0.88 optimistic (high) — https://arxiv.org/abs/2010.14812 ; https://astrobiology.com/2026/08/06/quantifying-detection-bias-and-recovering-habitable-zone-occurrence-rates-in-the-nasa-exoplanet-archive/ |
+| `th_K_gyr` | loguniform [8.0, 30.0] | 15.0 | Gyr habitable window (v2 multi-spectral) | ASSUMED bracket informed by Rushby+2013 (Earth 6.29-7.79 Gyr; K/M hosts longer because of slower HZ migration; Kepler candidates up to 18.8 Gyr) — https://research-repository.st-andrews.ac.uk/handle/10023/5071 |
+| `n_giant_hz_K` | uniform [0.084, 0.146] | midpoint | HZ giants per star (v2 multi-spectral) | Hill et al. 2018: K 11.5+/-3.1% (+/-1 sigma) — https://arxiv.org/abs/1805.03370 |
+| `f_star_G` | uniform [0.026, 0.05] | midpoint | fraction of stars formed that are G dwarfs (v2 multi-spectral) | Kroupa 2001 IMF 0.9-1.1 Msun = 0.026 (integrated here); RECONS 19/378 = 0.050 — http://www.recons.org/census.posted.htm |
+| `ne_G` | loguniform [0.1, 0.88] | 0.3 | rocky HZ planets per G dwarf (v2 multi-spectral) | 2026 Astronomy & Computing Archive reanalysis F/G ~0.10 (low); Bryson+2021 G-mid-K up to 0.88 optimistic (high) — https://arxiv.org/abs/2010.14812 |
+| `th_G_gyr` | loguniform [5.0, 10.0] | 6.5 | Gyr habitable window (v2 multi-spectral) | Rushby+2013 (Earth HZ lifetime 6.29-7.79 Gyr); Earth biosphere ends 0.8-1.5 Ga from now (Caldeira & Kasting 1992 via Snyder-Beattie+2021) — https://research-repository.st-andrews.ac.uk/handle/10023/5071 |
+| `n_giant_hz_G` | uniform [0.046, 0.084] | midpoint | HZ giants per star (v2 multi-spectral) | Hill et al. 2018: G 6.5+/-1.9% (+/-1 sigma) — https://arxiv.org/abs/1805.03370 |
+| `f_star_F` | uniform [0.0185, 0.0285] | midpoint | fraction of stars formed that are F dwarfs (v2 multi-spectral) | RECONS 7/378 = 0.0185 (present day; some F stars have already died); Kroupa 2001 IMF 1.1-1.5 Msun = 0.0285 (integrated here) — http://www.recons.org/census.posted.htm |
+| `ne_F` | loguniform [0.03, 0.6] | 0.1 | rocky HZ planets per F dwarf (v2 multi-spectral) | 2026 Archive reanalysis F/G ~0.10 (best); Bryson+2021 sample extends only to 6300 K (upper 0.60 = its conservative upper bound); low 0.03 ASSUMED (poor Kepler completeness for F hosts) — https://arxiv.org/abs/2010.14812 |
+| `th_F_gyr` | loguniform [1.5, 5.0] | 2.7 | Gyr habitable window (v2 multi-spectral) | ASSUMED; F stars (1.2-1.5 Msun) have short main-sequence lifetimes that constrain habitability (Sato et al. 2014 Int.J.Astrobiol. 13, 244); Rushby+2013 only modelled 0.2-1.2 Msun — https://arxiv.org/abs/1312.7431 |
+| `n_giant_hz_F` | uniform [0.046, 0.084] | midpoint | HZ giants per star (v2 multi-spectral) | ASSUMED = G value (Hill et al. 2018 report no F-star rate) — https://arxiv.org/abs/1805.03370 |
+| `stage_tau_agri_yr` | loguniform [3.3e5, 3.3e7] | 3.29e6 | yr, expected time lithic -> agricultural (v2 multiphase) | Earth anchor 3.3 Ma (Harmand+2015 Lomekwi 3) -> ~11.5 ka (Zeder 2011 Curr.Anthropol. 52, S221) = 3.29 Myr; range = Earth/10 .. Earth x10 ASSUMED — https://www.nature.com/articles/nature14464 ; https://doi.org/10.1086/659307 |
+| `stage_tau_ind_yr` | loguniform [1.1e3, 1.1e5] | 1.1e4 | yr, expected time agricultural -> industrial (v2 multiphase) | Earth anchor ~11.5 ka -> ~1760 CE (~11.2 kyr); range Earth/10 .. x10 ASSUMED — https://doi.org/10.1086/659307 ; https://www.britannica.com/event/Industrial-Revolution |
+| `stage_tau_radio_yr` | loguniform [14.0, 1400.0] | 135.0 | yr, expected time industrial -> radio-capable (v2 multiphase) | Earth anchor ~1760 -> 1895 (Marconi's first radio transmissions) = ~135 yr (user: ~150 yr); range Earth/10 .. x10 ASSUMED — https://www.britannica.com/biography/Guglielmo-Marconi |
+| `stage_tau_space_yr` | loguniform [6.2, 620.0] | 62.0 | yr, expected time radio -> spacefaring (orbital spaceflight) (v2 multiphase) | Earth anchor 1895 -> 1957 (Sputnik 1) = 62 yr; range Earth/10 .. x10 ASSUMED — https://www.nasa.gov/history/sputnik/ |
+| `stage_h_agri_per_yr` | loguniform [1e-07, 0.001] | geometric mean | per yr, world-wide collapse hazard of the agricultural stage (v2 multiphase) | ASSUMED. Earth: farming has persisted ~11.5 kyr world-wide despite many regional collapses (Tainter 1988, The Collapse of Complex Societies); one world gives no galactic rate — https://doi.org/10.1086/659307 |
+| `stage_h_ind_per_yr` | loguniform [1e-06, 0.01] | geometric mean | per yr, world-wide collapse hazard of the industrial stage (v2 multiphase) | ASSUMED (Earth: ~265 yr industrial so far). Natural extinction alone is < 6.9e-5/yr (Snyder-Beattie, Ord & Bonsall 2019 Sci.Rep. 9, 11054), so most of this range is anthropogenic risk, which that bound does not cover — https://www.nature.com/articles/s41598-019-47540-7 |
+| `stage_h_radio_per_yr` | loguniform [1e-10, 0.01] | geometric mean | per yr, collapse hazard of the radio-capable stage (v2 multiphase) | 1/L with L log-uniform 1e2 .. 1e10 yr = Sandberg, Drexler & Ord 2018 Table 1 (lifetime of a detectable civilisation) — https://arxiv.org/abs/1806.02404 |
+| `stage_h_space_per_yr` | loguniform [1e-10, 0.01] | geometric mean | per yr, collapse hazard of the spacefaring stage (v2 multiphase) | Same as radio stage (SDO 2018 L 1e2 .. 1e10 yr); ASSUMED that orbital capability does not by itself lower the hazard — https://arxiv.org/abs/1806.02404 |
+| `stage_q_regress` | uniform [0.0, 1.0] | midpoint | fraction of stage collapses that regress one stage (and can recur) instead of ending the tool-using lineage (v2 multiphase) | ASSUMED (no quantitative literature). Earth's regional collapses mostly regressed rather than ended lineages (Tainter 1988) — https://www.cambridge.org/core/books/collapse-of-complex-societies/ |
+| `f_superhab` | loguniform [0.03, 0.43] | 0.104 | fraction of K-dwarf habitable planets meeting the superhabitable criteria (~1.0-1.5 R_earth, ~5 K warmer); age 5-8 Gyr is handled by the time model; applied to K hosts only (headline only) | ASSUMED bracket around an Archive-derived 0.104 = P(1.0<=R<=1.5 given HZ, R<2) 25/49 x P(T_surf 282-302 K given HZ, R<2) 10/49 (superhab.py; independence assumed). (v1 used 0.073 = 0.104 x K share 0.70 of G/K.) Criteria: Schulze-Makuch, Heller & Guinan 2020 Astrobiology 20, 1394 Table 2 — https://pmc.ncbi.nlm.nih.gov/articles/PMC7757576/ |
 | `superhab_boost` | loguniform [1.0, 3.0] | 1.73 | multiplier (>1) on the per-planet step-success probability for superhabitable planets (capped so probability <= 1) (headline only) | ASSUMED (user-suggested 1-3x). Schulze-Makuch+2020 and Heller & Armstrong 2014 (Astrobiology 14, 50) argue qualitatively for higher habitability/biomass but give no numeric factor — https://doi.org/10.1089/ast.2013.1088 |
 | `n_tool_origins` | loguniform [3.0, 7.0] | 6.0 | effective number of independent origins of tool use among complex animals on Earth; tau_stone_tool_intelligence = 0.5967 Gyr (Earth's multicellularity->stone-tools interval) / n (headline only) | Low 3 = independent lithic-flake-producing primate lineages (hominins, Harmand+2015; bearded capuchins, Proffitt+2016 Nature 539, 85; long-tailed macaques, Proffitt+2023 Sci.Adv. 9, eade8159). Best 6 = the user's list, each verified: primates (Goodall 1964 Nature 201, 1264), corvids (Hunt 1996 Nature 379, 249), octopus (Finn, Tregenza & Norman 2009 Curr.Biol. 19, R1069), sea otters (Hall & Schaller 1964 J.Mammal. 45, 287), dolphins (Kruetzen+2005 PNAS 102, 8939), elephants (Hart+2001 Anim.Behav. 62, 839). High 7 = classes with documented tool use (Bentley-Condit & Smith 2010 Behaviour 147, 185: three phyla, seven classes). Mapping origins -> Poisson rate (n events in ~0.6 Gyr => expected first-origin time 0.6/n Gyr) is ASSUMED — https://doi.org/10.1038/nature20112 ; https://www.science.org/doi/10.1126/sciadv.ade8159 ; https://brill.com/view/journals/beh/147/2/article-p185_3.xml |
 | `w_similarity` | bootstrap mean of ESI^k over Archive HZ rocky planets | 0.849 | similarity weight (similarity/headline scenarios) | Schulze-Makuch+2011 Astrobiology 11, 1041 — https://phl.upr.edu/projects/earth-similarity-index-esi |
@@ -107,30 +211,34 @@ Ranges marked **ASSUMED** have no quantitative literature value. **USER** marks 
 
 | scenario | samples | median worlds now | 10th–90th pct | mean | P(N<1) | median species now | median worlds ever | median NN distance (ly) |
 |---|---|---|---|---|---|---|---|---|
-| baseline (literature) | 1000000 | 0.00238 | 4.27e-07 – 10.4 | 4.31e+03 | 0.820 | 0.00534 | 0.851 | 8.53e+05 (N<1) |
-| baseline_no_exomoons | 1000000 | 0.00187 | 3.23e-07 – 8.36 | 3.76e+03 | 0.829 | 0.00422 | 0.66 | 9.64e+05 (N<1) |
+| baseline (literature) [v2] | 200000 | 0.00179 | 3.72e-07 – 7.04 | 1.61e+03 | 0.837 | 0.00392 | 1.13 | 9.83e+05 (N<1) |
+| baseline_no_exomoons [v2] | 200000 | 0.00143 | 2.98e-07 – 5.88 | 1.36e+03 | 0.844 | 0.00308 | 0.874 | 1.10e+06 (N<1) |
 | snyder_beattie_priors | 200000 | 5.51e-21 | 3.60e-30 – 1.04e-11 | 0.643 | 0.999 | 1.29e-20 | 4.70e-18 | 5.61e+14 (N<1) |
 | user_inputs | 500000 | 9.93e-05 | 3.94e-08 – 0.251 | 34.4 | 0.934 | 2.20e-04 | 0.875 | 4.18e+06 (N<1) |
 | user_fast_intelligence | 200000 | 571 | 0.736 – 2.06e+05 | 6.01e+05 | 0.110 | 1.28e+03 | 967 | 1.74e+03 |
 | similarity_weighted | 200000 | 895 | 2.68 – 2.08e+05 | 4.69e+05 | 0.067 | 1.99e+03 | 4.39e+04 | 1.39e+03 |
 | similarity_weighted_no_rare_earth | 200000 | 1.90e+07 | 1.75e+05 – 5.41e+08 | 2.12e+08 | 0.000 | 4.20e+07 | 7.87e+08 | 41 |
 | earth_random_draw | 200000 | 157 | 0.225 – 5.9e+04 | 2.32e+05 | 0.159 | 352 | 1.2e+04 | 3.32e+03 |
-| **nathan_headline** (headline) | 200000 | 3.18e+03 | 12.8 – 5.53e+05 | 9.55e+05 | 0.030 | 7.13e+03 | 5.06e+04 | 744 |
-| nathan_headline_no_superhab | 200000 | 3.03e+03 | 12.1 – 5.26e+05 | 9.09e+05 | 0.031 | 6.79e+03 | 4.79e+04 | 756 |
-| nathan_headline_no_tooluse | 200000 | 964 | 2.83 – 2.24e+05 | 5.10e+05 | 0.065 | 2.16e+03 | 4.71e+04 | 1.34e+03 |
+| **nathan_headline** (headline) [v2] | 200000 | 2.63e+03 | 13.2 – 4.12e+05 | 6.92e+05 | 0.027 | 5.85e+03 | 5.58e+04 | 792 |
+| nathan_headline_no_superhab [v2] | 200000 | 2.46e+03 | 12.3 – 3.87e+05 | 6.48e+05 | 0.028 | 5.48e+03 | 5.28e+04 | 810 |
+| nathan_headline_no_tooluse [v2] | 200000 | 678 | 2.86 – 1.32e+05 | 3.06e+05 | 0.062 | 1.52e+03 | 5.21e+04 | 1.6e+03 |
 | classic_static_SDO_style | 1000000 | 28.8 | 3.14e-60 – 1.49e+06 | 8.05e+06 | 0.465 | 61.8 | – | 7.75e+03 |
 
-Effect of the headline's new factors (paired draws): without superhabitability the median is 3.03e+03 (headline ×1.05); without cross-lineage tool use it is 964 (×3.30).
+Effect of the headline's new factors (paired draws): without superhabitability the median is 2.46e+03 (headline ×1.07); without cross-lineage tool use it is 678 (×3.88).
+
+[v2] = re-run with the multi-spectral (M/K/G/F) + multiphase model; unmarked scenarios are the v1 model (G/K + M hosts, one phase).
 
 Scenario definitions are in `params.yaml` under `scenarios:`. Full statistics, sensitivity tables and ESI-exponent variants are in [`results/results_summary.md`](results/results_summary.md).
 
 ## What it means (plain language)
 
-* **If Earth's history is typical** (Nathan's headline), the Milky Way has about **3.18e+03** worlds with stone-age-or-better tool users right now, and the typical distance to the nearest one is about **744 light-years**. The range is very wide (12.8 to 5.53e+05), but under these assumptions it is unlikely we are alone (P(N<1) ≈ 3%).
-* **If Earth's history is treated as a lucky draw** that we see only because we exist (the literature baseline), the median falls to **0.00238**, and we are probably the only such world right now (P(N<1) ≈ 82%).
-* **The data cannot yet decide between those two views.** The biggest swings come from how often planets have both land and ocean, how long a stone-age-or-later phase lasts, plate tectonics, and the hard-step timescales. Star counts and η⊕ matter much less (η⊕ for G/K stars swings the headline by only ~0.6 orders of magnitude).
-* **What Nathan's two new factors do.** Superhabitable worlds change the answer only slightly (×1.05). Treating tool use as fast and repeatable matters more (×3.3). This is probably mostly through faster re-emergence after a collapse, because the first arrival moves by only ~0.5 of ~4.4 Gyr.
+* **If Earth's history is typical** (Nathan's headline), the Milky Way has about **2.63e+03** worlds with stone-age-or-better tool users right now, and the typical distance to the nearest one is about **792 light-years**. The range is very wide (13.2 to 4.12e+05), but under these assumptions it is unlikely we are alone (P(N<1) ≈ 3%).
+* **If Earth's history is treated as a lucky draw** that we see only because we exist (the literature baseline), the median falls to **0.00179**, and we are probably the only such world right now (P(N<1) ≈ 84%).
+* **The data cannot yet decide between those two views.** The biggest swings come from how often planets have both land and ocean, how long a stone-age-or-later phase lasts, plate tectonics, and the hard-step timescales. Star counts and η⊕ matter much less (η⊕ for K stars swings the headline by less than one order of magnitude (it is not among the top 15 drivers)).
+* **What Nathan's two new factors do.** Superhabitable worlds change the answer only slightly (×1.07). Treating tool use as fast and repeatable matters more (×3.9). This is probably mostly through faster re-emergence after a collapse, because the first arrival moves by only ~0.5 of ~4.4 Gyr.
 * **Stone-age worlds are effectively invisible** at interstellar distances, so a large N is consistent with the silence we observe.
+* **Most of these worlds would still be in the stone age.** In the stage breakdown, most tool-using time is spent in the lithic stage, because Earth took 3.3 Myr to get from stone tools to farming. Radio-capable worlds number about **42.9** in the headline (P(N<1) ≈ 27%) and **2.65e-05** in the literature baseline.
+* **K dwarfs dominate.** Orange K stars supply most of N in both framings (63% headline, 56% baseline). They are ~1.5–4.5× more common than G stars, have a higher η⊕ range and long habitable windows. M dwarfs are ~6–10× more numerous than K dwarfs but carry the flare and tidal-locking/water-loss penalties. The superhabitability boost (K only) adds just a few percentage points. F stars contribute ~0.1%: they are rare (~2–3% of stars), their habitable windows (1.5–5 Gyr, ASSUMED) are mostly shorter than the ~4-Gyr Earth-like path to tool use, and they carry a UV penalty.
 
 ## Caveats
 
@@ -143,6 +251,8 @@ Scenario definitions are in `params.yaml` under `scenarios:`. Full statistics, s
 * **Several brackets are ASSUMED:** M-dwarf penalties, sterilisation rate, recurrence, self-inflicted risk, metallicity ramp, moon-host fraction. The Rare-Earth multipliers are treated as independent.
 * **Species counts** assume Earth's hominin radiation is typical: on average 2.38 coexisting species, 15 over ~3.3 Myr (Smithsonian Human Origins). They depend on how finely taxonomists split species.
 * **Spacing assumptions.** Nearest-neighbour distances assume random placement in a 50,000-ly-radius, 1,000-ly-thick disk (≈7.9e12 ly³, a user-supplied figure). Below 1 expected world they are formal only.
+* **Multi-spectral (v2).** The F-star η⊕ low end and habitable window, the K-activity and F-UV penalties, the F-star HZ-giant rate, and the mass bins behind the Kroupa fractions are ASSUMED. Per-type ESI lists are tiny (M 22, K 3, G 1, F 0 conservative HZ planets), so G and F use the pooled list. The K share comes mainly from K stars being ~1.5–4.5× more common than G stars with a higher η⊕ range, and from the M-dwarf penalties; the K-only superhabitability boost moves the K share by only ~2–3 percentage points.
+* **Multiphase (v2).** Stage advance times are Earth/10 to Earth×10 around one Earth history; the agricultural and industrial collapse hazards and the regress fraction are ASSUMED; the radio and spacefaring hazards reuse Sandberg, Drexler & Ord 2018's 1e2–1e10 yr lifetime prior. Stage shares use the long-run (stationary) occupancy of the stage chain, which ignores worlds that started their tool-using phase within the last few Myr. The stage-specific hazards are added on top of the v1 self-inflicted hazard `r_self_per_gyr`, so some self-inflicted risk may be counted twice (conservative for N).
 * **Sample sizes.** 2e5–1e6 per scenario. Importance-weighted scenarios have smaller effective sample sizes (see `results_summary.md`).
 
 ## Reproduce
@@ -154,7 +264,7 @@ python hz_archive.py && python esi.py && python superhab.py      # derived data 
 python drake_model.py               # all scenarios in params.yaml (n_samples each; slow at 1e6)
 python drake_model.py --scenario nathan_headline --n 200000      # one scenario (run several in parallel)
 python drake_model.py --analyze-only                              # stats, charts, results_summary.md
-python tools/build_readme.py        # refresh this README from results
+python tools/build_readme.py        # refresh this README from results (uses tools/v2_sections.py)
 ```
 Raw samples (`results/*.npz`, several hundred MB) and `data/pscomppars.csv` are not committed. They regenerate from the commands above, and the random seed is fixed in `params.yaml`.
 
@@ -162,6 +272,7 @@ Raw samples (`results/*.npz`, several hundred MB) and `data/pscomppars.csv` are 
 * **New habitability factor:** add an entry under `multipliers:` in `params.yaml` with `dist`, `low`/`high` (or `value`), `applies_to: [gk, m]`, `source` and `url`. It is sampled automatically, applied, and included in the sensitivity tornado.
 * **New evolutionary step:** add an entry under `hard_steps:` with `earth_gya` (when it happened on Earth).
 * **Scenario-specific change:** add `overrides:` (replace an existing variable) or `extra_params:` (new scenario-only variable) under the scenario. Then list the scenario in `run.scenarios_to_run`.
+* **New host type or stage:** host classes live under `star_classes.classes` (per-class `f_star`, `ne`, `th_gyr`, `n_giant_hz`, `penalty_params`); stages under `multiphase` (`advance_params`, `hazard_params`). A scenario uses them with `multispectral: true` / `multiphase: true`. Multipliers can target single classes with `applies_to: [K]` etc.
 * **Headline:** set `run.headline_scenario`. `run.literature_baseline` is always reported alongside it.
 * Supported distributions: `fixed`, `uniform`, `loguniform`, `normal` (with optional min/max), `lognormal10`, `one_plus_loguniform`.
 

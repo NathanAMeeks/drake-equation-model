@@ -123,13 +123,34 @@ class Model:
         self.earth_dt = np.array([dates[i] - dates[i + 1] for i in range(len(self.steps))])
         self.earth_T = ts - 0.0                                # completed by now
         self.iE = int(round(self.earth_T / self.dt))
+        # v2 options (per scenario): multi-spectral host classes (M/K/G/F) and multiphase civilisation stages
+        self.ms = bool(self.scn.get("multispectral", False)) and "star_classes" in cfg
+        self.classes = list(cfg["star_classes"]["classes"].keys()) if self.ms else []
+        self.mp = bool(self.scn.get("multiphase", False)) and "multiphase" in cfg
+        self.stages = cfg["multiphase"]["stages"] if self.mp else []
+
+    def _targets(self, s):
+        """Host classes a multiplier applies to. Legacy tags: gk -> K,G,F ; m -> M."""
+        tags = s.get("applies_to", ["gk", "m"])
+        if not self.ms: return [t for t in tags if t in ("gk", "m")]
+        out = []
+        for t in tags:
+            out += {"gk": ["K", "G", "F"], "m": ["M"]}.get(t, [t])
+        return [c for c in out if c in self.classes]
 
     def active_multipliers(self):
         return {k: v for k, v in self.cfg.get("multipliers", {}).items()
-                if ("scenarios" not in v) or (self.scenario in v["scenarios"])}
+                if (("scenarios" not in v) or (self.scenario in v["scenarios"]))
+                and (self.ms or not v.get("multispectral_only", False))}
 
     def param_specs(self):
         specs = dict(self.cfg["params"])
+        if self.ms:   # replace the 2-class (G/K, M) parameters by per-class ones
+            sc = self.cfg["star_classes"]
+            for k in sc["replaces_params"]: specs.pop(k, None)
+            for c, d in sc["classes"].items():
+                for fld, nm in (("f_star", f"f_star_{c}"), ("ne", f"ne_{c}"), ("th_gyr", f"th_{c}_gyr"), ("n_giant_hz", f"n_giant_hz_{c}")):
+                    specs[nm] = d[fld]
         for name, s in self.active_multipliers().items():
             specs[name] = s
         hst = self.scn["hard_step_tau"]
@@ -141,6 +162,9 @@ class Model:
             else:
                 spec = hst
             specs["tau_" + s["name"]] = s.get("tau_gyr", spec)
+        if self.mp:
+            for name, s in self.cfg["multiphase"]["params"].items():
+                specs[name] = s
         for name, s in self.scn.get("overrides", {}).items():
             specs[name] = {**specs.get(name, {}), **s}
         for name, s in self.scn.get("extra_params", {}).items():   # scenario-only parameters (drawn last => pairing kept)
@@ -158,6 +182,14 @@ class Model:
                 for k in sim["exponents"]:
                     P[f"aux_w_{pop}_k{k}"] = (e[idx] ** float(k)).mean(1)
             P["w_similarity"] = P[f"aux_w_{sim['population']}_k{sim['headline_exponent']}"].copy()
+            if self.ms:   # per host type: bootstrap that type's own ESI list if it has >= min_n planets, else the pooled weight
+                kx = float(sim["headline_exponent"]); bt = E[sim["population"]]["by_type"]
+                for c in self.classes:
+                    e = np.array(bt.get(c, {}).get("esi4", []))
+                    if len(e) >= int(sim.get("min_n_by_type", 3)):
+                        idx = rng.integers(0, len(e), size=(n, len(e))); P[f"w_similarity_{c}"] = (e[idx] ** kx).mean(1)
+                    else:
+                        P[f"w_similarity_{c}"] = P["w_similarity"].copy()
         for k, v in extra.items():
             P[k] = sample(v, n, rng)
         self._apply_tool_origins(P)
@@ -174,6 +206,11 @@ class Model:
         if sim:
             E = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), sim["esi_file"])))
             P["w_similarity"] = np.array([E[sim["population"]]["mean_pow"][str(sim["headline_exponent"])]])
+            if self.ms:
+                bt = E[sim["population"]]["by_type"]
+                for c in self.classes:
+                    d = bt.get(c, {})
+                    P[f"w_similarity_{c}"] = (np.array([d["mean_pow"][str(sim["headline_exponent"])]]) if d.get("n", 0) >= int(sim.get("min_n_by_type", 3)) else P["w_similarity"].copy())
         ov = self.scn.get("overrides", {})
         for i, s in enumerate(self.steps):                    # Copernican point: tau = Earth's interval
             k = "tau_" + s["name"]
@@ -195,28 +232,39 @@ class Model:
         sfr = np.where(t[None, :] < col(ts_), 0.0,
               np.where(t[None, :] < col(tq), col(S_thick),
                        col(P["sfr_now"]) * np.exp(col(kk) * (T - t[None, :]))))
-        # ---- 2. habitable-planet production per bin
+        # ---- 2. habitable-planet production per bin, per host class
         fZ = 1.0 / (1.0 + np.exp(-(t[None, :] - col(P["t_metal_gyr"])) / 0.5))
-        mult = {"gk": np.ones(n), "m": np.ones(n)}; multm = {"gk": np.ones(n), "m": np.ones(n)}
+        cls = self.classes if self.ms else ["gk", "m"]
+        mult = {c: np.ones(n) for c in cls}; multm = {c: np.ones(n) for c in cls}
         for name, s in self.active_multipliers().items():
-            for c in s.get("applies_to", ["gk", "m"]):
+            for c in self._targets(s):
                 mult[c] = mult[c] * P[name]
                 if s.get("applies_to_exomoons", True):
                     multm[c] = multm[c] * P[name]
-        # habitable exomoons: extra habitable bodies per star (giant in HZ x moon-host fraction x moon habitability)
-        if "w_similarity" in P:   # similarity weight applies to every habitable body (planets and moons)
-            for c in ("gk", "m"):
-                mult[c] = mult[c] * P["w_similarity"]; multm[c] = multm[c] * P["w_similarity"]
-        if "f_superhab" in P:     # superhabitable fraction of G/K planets: step-success probability x boost (capped at 1); not moons
+        # similarity weight applies to every habitable body (planets and moons); per class if available
+        if "w_similarity" in P:
+            for c in cls:
+                wc = P.get(f"w_similarity_{c}", P["w_similarity"])
+                mult[c] = mult[c] * wc; multm[c] = multm[c] * wc
+        if "f_superhab" in P:     # superhabitable fraction: step-success probability x boost (capped at 1); planets only, not moons
             f = P["f_superhab"]
-            mult["gk"] = (1 - f) * mult["gk"] + f * np.minimum(mult["gk"] * P["superhab_boost"], 1.0)
+            for c in (self.cfg["star_classes"].get("superhab_classes", ["K"]) if self.ms else ["gk"]):
+                mult[c] = (1 - f) * mult[c] + f * np.minimum(mult[c] * P["superhab_boost"], 1.0)
         moon = P.get("f_exomoon_host", np.zeros(n)) * P.get("f_exomoon_habitable", np.ones(n))
-        ne_eff_gk = P["ne_gk"] * mult["gk"] + P.get("n_giant_hz_gk", np.zeros(n)) * moon * multm["gk"]
-        ne_eff_m = P["ne_m"] * mult["m"] + P.get("n_giant_hz_m", np.zeros(n)) * moon * multm["m"]
-        self._moon_share = (P.get("n_giant_hz_gk", np.zeros(n)) * moon * multm["gk"]) / ne_eff_gk
         base = sfr * 1e9 * dt * col(P["stars_per_msun"] * P["fp"] * P["f_ghz"]) * fZ
-        pl_gk = base * col(P["f_gk"] * ne_eff_gk)
-        pl_m = base * col(P["f_m"] * ne_eff_m * P["f_m_habitable"])
+        pl, th, moon_share = {}, {}, {}
+        for c in cls:
+            if self.ms:
+                d = self.cfg["star_classes"]["classes"][c]
+                fs, ne, ng, thc = P[f"f_star_{c}"], P[f"ne_{c}"], P[f"n_giant_hz_{c}"], P[f"th_{c}_gyr"]
+                pen = np.ones(n)
+                for pp in d.get("penalty_params", []): pen = pen * P[pp]
+            else:
+                fs, ne, ng, thc = P[f"f_{c}"], P[f"ne_{c}"], P.get(f"n_giant_hz_{c}", np.zeros(n)), P[f"th_{c}_gyr"]
+                pen = P["f_m_habitable"] if c == "m" else np.ones(n)
+            ne_eff = ne * mult[c] + ng * moon * multm[c]
+            moon_share[c] = np.where(ne_eff > 0, ng * moon * multm[c] / np.where(ne_eff > 0, ne_eff, 1), 0.0)
+            pl[c] = base * col(fs * ne_eff * pen); th[c] = thc
         # ---- 3. hard-step delay distribution g(d) via analytic DFTs
         G = np.ones((n, self.M // 2 + 1), dtype=complex)
         taus = np.stack([P["tau_" + s["name"]] for s in self.steps], axis=1)
@@ -237,44 +285,86 @@ class Model:
         r_kill = (P["r_bigfive_per_gyr"] * P["p_bigfive_kills_toolusers"]
                   + P["p_lethal_astro"] * (P["r_grb_per_gyr"] + P["r_sn_per_gyr"]) + P["r_self_per_gyr"])
         alpha = 1.0 / Lgyr + r_kill
+        stage_out = {}
+        if self.mp:   # multiphase: stage chain inside each tool-using episode; episode mean length replaces 1/alpha
+            alpha, phi = self.stage_chain(P, alpha)
+            for k, nm in enumerate(self.stages): stage_out[nm] = phi[:, k]
         beta = 1.0 / (P["m_recurrence"] * taus[:, -1])
         pi_on = beta / (alpha + beta); Lp = 1.0 / (alpha + beta)
-        c = (Lp / dt) * (-np.expm1(-dt / Lp))
+        c_ = (Lp / dt) * (-np.expm1(-dt / Lp))
         Khat = col(pi_on) * dft_trunc_const(I, self.omega_log) + \
-               col((1 - pi_on) * c / (-np.expm1(-dt / Lp))) * dft_trunc_exp(col(dt / Lp), I, self.omega_log)
+               col((1 - pi_on) * c_ / (-np.expm1(-dt / Lp))) * dft_trunc_exp(col(dt / Lp), I, self.omega_log)
         Q = np.clip(np.fft.irfft(G * Khat, n=self.M)[:, :I], 0, None)   # expected occupied worlds per planet vs age
         cdf_g = np.cumsum(g, 1)
         # ---- 5. windows, sterilisation, galactic convolution
         age = (np.arange(I) + 0.5) * dt
-        Qgk = Q * (age[None, :] < col(P["th_gk_gyr"]))
-        Qm = Q * (age[None, :] < col(P["th_m_gyr"]))
         rster = col(P["r_ster0_per_gyr"]) * sfr / col(P["sfr_now"])
         H = np.cumsum(rster * dt, 1)
         eH = np.exp(H)
         Mc = self.Mc
         F = lambda x: np.fft.rfft(x, n=Mc)
-        conv = np.fft.irfft(F(pl_gk * eH) * F(Qgk) + F(pl_m * eH) * F(Qm), n=Mc)[:, :I]
-        Nt = np.clip(conv, 0, None) * np.exp(-H)
-        N_now = Nt[:, -1].copy()
-        # worlds that EVER produced tool users by now (archaeological form, Frank & Sullivan 2016)
-        cg_gk = np.where(age[None, :] < col(P["th_gk_gyr"]), cdf_g,
-                         np.take_along_axis(cdf_g, np.minimum((col(P["th_gk_gyr"]) / dt).astype(int), I - 1), 1))
-        cg_m = np.where(age[None, :] < col(P["th_m_gyr"]), cdf_g,
-                        np.take_along_axis(cdf_g, np.minimum((col(P["th_m_gyr"]) / dt).astype(int), I - 1), 1))
         surv = np.exp(-(H[:, -1:] - H))[:, ::-1]           # indexed by age
-        N_ever = (pl_gk[:, ::-1] * cg_gk * surv).sum(1) + (pl_m[:, ::-1] * cg_m * surv).sum(1)
+        Fsum = 0; Nnow_c, Never_c = {}, {}
+        for c in cls:
+            Fc = F(pl[c] * eH) * F(Q * (age[None, :] < col(th[c])))
+            Fsum = Fsum + Fc
+            Nnow_c[c] = np.clip(np.fft.irfft(Fc, n=Mc)[:, I - 1], 0, None) * np.exp(-H[:, -1])
+            # worlds that EVER produced tool users by now (archaeological form, Frank & Sullivan 2016)
+            cg = np.where(age[None, :] < col(th[c]), cdf_g,
+                          np.take_along_axis(cdf_g, np.minimum((col(th[c]) / dt).astype(int), I - 1), 1))
+            Never_c[c] = (pl[c][:, ::-1] * cg * surv).sum(1)
+        Nt = np.clip(np.fft.irfft(Fsum, n=Mc)[:, :I], 0, None) * np.exp(-H)
+        N_now = Nt[:, -1].copy()
+        N_ever = sum(Never_c.values())
+        th0 = th[cls[0]] if not self.ms else th["G"]
         out = dict(N_now=N_now, N_timeavg=Nt.mean(1), N_peak=Nt.max(1),
                    t_peak=t[np.argmax(Nt, 1)], N_ever=N_ever, logw=logw,
-                   N_now_gk=None, n_hab_total=(pl_gk.sum(1) + pl_m.sum(1)),
-                   p_tool_gk_window=np.take_along_axis(cdf_g, np.minimum((col(P["th_gk_gyr"]) / dt).astype(int), I - 1), 1)[:, 0])
-        # share of N_now from G/K hosts
-        conv_gk = np.fft.irfft(F(pl_gk * eH) * F(Qgk), n=Mc)[:, I - 1] * np.exp(-H[:, -1])
-        out["exomoon_share_gk"] = self._moon_share
-        out["frac_gk"] = np.where(N_now > 0, np.clip(conv_gk, 0, None) / np.where(N_now > 0, N_now, 1), np.nan)
+                   N_now_gk=None, n_hab_total=sum(p.sum(1) for p in pl.values()),
+                   p_tool_gk_window=np.take_along_axis(cdf_g, np.minimum((col(th0) / dt).astype(int), I - 1), 1)[:, 0])
+        tot = sum(Nnow_c.values())
+        sun_like = [c for c in cls if c != "m" and c != "M"]
+        out["frac_gk"] = np.where(tot > 0, sum(Nnow_c[c] for c in sun_like) / np.where(tot > 0, tot, 1), np.nan)
+        out["exomoon_share_gk"] = moon_share["gk"] if not self.ms else moon_share["K"]
+        if self.ms:
+            for c in cls:
+                out[f"N_now_{c}"] = Nnow_c[c]; out[f"N_ever_{c}"] = Never_c[c]; out[f"exomoon_share_{c}"] = moon_share[c]
+                out[f"n_hab_{c}"] = pl[c].sum(1)
+        if self.mp:
+            out["L_episode_yr"] = 1e9 / alpha
+            for nm, ph in stage_out.items():
+                out[f"phi_{nm}"] = ph; out[f"N_now_stage_{nm}"] = N_now * ph
         # mean planet age-at-formation of habitable planets (sanity vs Lineweaver 2001)
-        w_age = (pl_gk + pl_m)
+        w_age = sum(pl.values())
         out["mean_planet_age"] = (w_age * (T - t)[None, :]).sum(1) / w_age.sum(1)
         return out, Nt
+
+    def stage_chain(self, P, alpha):
+        """Multiphase civilisation stages inside one tool-using episode (continuous-time Markov chain).
+        States 1..S (lithic, agricultural, industrial, radio, spacefaring). From stage s:
+          advance s->s+1 at rate 1/tau_s ; stage-specific collapse at rate h_s, of which a fraction q regresses to s-1
+          (recurrence: it can re-advance later) and 1-q ends the episode (lineage lost); plus the baseline
+          end-of-lineage rate alpha (L_stone, Big-Five, GRB/SN, r_self) in every stage.
+        Every episode starts in stage 1. Expected time in each stage per episode T = e1^T (-Q_on)^-1, so
+        phi_s = T_s / sum(T) is the long-run share of tool-using time spent in stage s (exact for the
+        alternating renewal; stage relaxation assumed fast compared with Gyr galactic time), and the mean episode
+        length sum(T) replaces 1/alpha in the on/off kernel."""
+        mpc = self.cfg["multiphase"]; S = len(self.stages); n = len(alpha)
+        a = [1e9 / P[k] for k in mpc["advance_params"]]                # per Gyr, s -> s+1 (S-1 entries)
+        h = [np.zeros(n)] + [1e9 * P[k] for k in mpc["hazard_params"]]   # per Gyr, stage 1 has no extra hazard
+        q = P[mpc["regress_fraction_param"]]
+        Qm = np.zeros((n, S, S))
+        for s_ in range(S):
+            out_rate = alpha + h[s_]
+            if s_ < S - 1:
+                Qm[:, s_, s_ + 1] = a[s_]; out_rate = out_rate + a[s_]
+            if s_ > 0:
+                Qm[:, s_, s_ - 1] = q * h[s_]
+            Qm[:, s_, s_] = -out_rate
+        e1 = np.zeros((n, S)); e1[:, 0] = 1.0
+        Tst = np.linalg.solve(np.transpose(-Qm, (0, 2, 1)), e1[..., None])[..., 0]   # row 1 of (-Q)^-1
+        Tst = np.clip(Tst, 0, None)
+        Ltot = Tst.sum(1)
+        return 1.0 / Ltot, Tst / Ltot[:, None]
 
 # ------------------------------------------------------------------ classic static (SDO-style)
 def classic_static(cfg, rng):
@@ -298,6 +388,7 @@ def run(cfg_path, n_override=None, outdir="results", scenarios=None, do_classic=
         if m.scn.get("similarity"):
             sim = m.scn["similarity"]
             keys += ["w_similarity"] + [f"aux_w_{p}_k{k}" for p in ("conservative", "optimistic") for k in sim["exponents"]]
+            keys += [f"w_similarity_{c}" for c in m.classes]
         store = {k: [] for k in keys}; res = {}
         Nt_w = np.zeros(m.I); wsum = 0.0
         t0 = time.time()

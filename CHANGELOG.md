@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-02 — Multi-spectral and multiphase breakdowns, suggested by a friend of Nathan's
+- **Multi-spectral (v2 model):** N is broken down by host star type **M, K, G, F**. Each type has its own star fraction (RECONS 10-pc census vs Kroupa IMF), η⊕, habitable window, HZ giants for exomoons (Hill et al. 2018), activity/UV/tidal penalties (new `f_k_activity` and `f_f_uv` multipliers; M-dwarf penalties kept), and similarity weight (per-type Archive ESI lists). The superhabitability boost now applies to K hosts only (`f_superhab` rescaled to a fraction of K planets). Config: `star_classes:` in `params.yaml`; a scenario opts in with `multispectral: true`.
+- **Multiphase (v2 model):** civilisations move through stages (lithic → agricultural → industrial → radio-capable → spacefaring). Each stage has an advance time anchored on Earth's history, plus a collapse hazard (radio and spacefaring use Sandberg, Drexler & Ord 2018's L prior). A share of collapses regresses one stage and can recur. Config: `multiphase:`; opt in with `multiphase: true`.
+- Re-ran `nathan_headline`, `nathan_headline_no_superhab`, `nathan_headline_no_tooluse`, `baseline` and `baseline_no_exomoons` with v2 (2e5 samples each). Headline median now 2.63e+03 (v1: 3.18e+03); literature baseline 0.00179 (v1: 0.00238). Radio-capable N (radio + spacefaring): headline median 42.9, baseline 2.65e-05. All other scenarios are unchanged v1 runs. The v1 results are kept in `results/v1_results.json`.
+- New charts: `results/spectral_breakdown.png` and `results/stage_breakdown.png`. `esi.py` now writes per-host-type ESI lists and top planets. README rebuilt with `tools/build_readme.py`, using the new `tools/v2_sections.py`.
+
 ## 2026-10-02 — first public release
 - Time-aware extended Drake model (`drake_model.py`): disk star-formation history, G/K vs M hosts, Rare-Earth multipliers, habitable exomoons, five evolutionary hard steps, extinction/sterilisation hazards, recurrence of tool use, N(t) over 13.8 Gyr.
 - Scenarios: literature `baseline` (Snyder-Beattie-style Earth-timing update), `baseline_no_exomoons`, `snyder_beattie_priors`, `user_inputs`, `user_fast_intelligence`, `similarity_weighted` (+ `_no_rare_earth`), `earth_random_draw`, classic static Sandberg-Drexler-Ord comparison.

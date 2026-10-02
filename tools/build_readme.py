@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Regenerate README.md from params.yaml, results/results.json and data/*.json (run after analyze)."""
-import json, os, yaml
+import json, os, sys, yaml
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import v2_sections as v2
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 cfg = yaml.safe_load(open("params.yaml")); S = json.load(open("results/results.json"))
 E = json.load(open("data/esi_hz.json")); SH = json.load(open("data/superhab.json")); HZ = json.load(open("data/hz_counts.json"))
@@ -31,28 +33,37 @@ L.append(f"| Mean | {fmt(h['mean'])} | {fmt(b['mean'])} |")
 L.append(f"| P(N < 1) | {h['P_lambda_lt1']:.3f} | {b['P_lambda_lt1']:.3f} |")
 L.append(f"| Median tool-using species now | {fmt(H['species_now']['median'])} | {fmt(B['species_now']['median'])} |")
 L.append(f"| Median worlds that ever had tool users (by now) | {fmt(H['N_ever']['median'])} | {fmt(B['N_ever']['median'])} |")
+if "radio_capable" in H and "radio_capable" in B:
+    L.append(f"| Median radio-capable worlds now (radio + spacefaring stages) | {fmt(H['radio_capable']['N_now']['median'])} | {fmt(B['radio_capable']['N_now']['median'])} |")
+if "by_type" in H and "by_type" in B:
+    top_ = lambda X: max(X["by_type"].items(), key=lambda kv: kv[1]["share_of_mean"])
+    L.append(f"| Largest host-type share of N (share of mean) | {top_(H)[0]} dwarfs {100*top_(H)[1]['share_of_mean']:.0f}% | {top_(B)[0]} dwarfs {100*top_(B)[1]['share_of_mean']:.0f}% |")
 hs, bs = H["spacing"]["median"], B["spacing"]["median"]
 L.append(f"| Median nearest-neighbour distance at the median N | {fmt(hs['nn_median_ly'])} ly | {fmt(bs['nn_median_ly'])} ly (N<1: no neighbour expected) |")
 L.append(f"| Equal-cube side at the median N (disk ≈ 7.9e12 ly³) | {fmt(hs['cube_side_ly'])} ly | {fmt(bs['cube_side_ly'])} ly |")
 L.append("\n![All scenarios compared](results/comparison_scenarios.png)\n")
 L.append(f"Headline histogram: [`results/hist_log10N.png`](results/hist_log10N.png) · sensitivity tornado: [`results/tornado.png`](results/tornado.png) · "
          f"literature baseline: [`hist`](results/hist_log10N_baseline.png), [`tornado`](results/tornado_baseline.png)\n")
+v1p = "results/v1_results.json"
+V1 = json.load(open(v1p)) if os.path.exists(v1p) else None
+L.append(v2.section(S, cfg, E, head, lit, v1=V1))
 L.append("## Method\n")
 L.append("""**Target.** Worlds hosting a lineage that habitually makes stone tools (Lomekwi/Oldowan level) or anything more advanced, alive *now*. Radio detectability does not enter: it changes what we can detect, not N.
 
 1. **Star formation history of the disk.** A thick-disk phase 13.0–8.5 Gyr ago (≈ half the disk mass), then an exponential thin disk normalised to today's SFR and disk mass. This replaces a constant R\\*.
-2. **Habitable bodies per star**, split into G/K and M hosts:
+2. **Habitable bodies per star**, split by host type (v2: M, K, G, F; v1 scenarios: G/K and M):
    * η⊕ from Kepler/Archive studies.
-   * Rare-Earth multipliers: plate tectonics, land + ocean, large moon, Jupiter shield, binary stability, M-dwarf flares and tidal/water loss.
+   * Rare-Earth multipliers: plate tectonics, land + ocean, large moon, Jupiter shield, binary stability, M-dwarf flares and tidal/water loss; v2 adds a K-dwarf activity/tidal penalty and an F-star UV penalty.
    * Galactic habitable zone and a metallicity ramp in time.
    * Habitable exomoons around HZ giants.
 3. **Biology as hard steps:** abiogenesis → oxygenic photosynthesis → eukaryotes → complex multicellularity → stone-tool intelligence. Each step is an exponential waiting time, and their convolution competes with the host's habitable window.
 4. **Duration and recurrence.** A tool-using phase ends through intrinsic lifetime, Big-Five-class extinctions, GRBs/supernovae and self-inflicted risk. It can re-evolve afterwards (an alternating renewal process). Whole-biosphere sterilisation scales with past star formation.
-5. **Output.** N(t) on a 20-Myr grid over 13.8 Gyr. Reported: N now, time-averaged N, N_ever, and species = worlds × hominin-like species per tool world.
+5. **Civilisation stages (v2).** Inside each tool-using episode: lithic → agricultural → industrial → radio-capable → spacefaring, with advance times, collapse hazards, and regression/recurrence (see the breakdown section above).
+6. **Output.** N(t) on a 20-Myr grid over 13.8 Gyr. Reported: N now (total, per host type, per stage), time-averaged N, N_ever, and species = worlds × hominin-like species per tool world.
 
 **Nathan's headline (`nathan_headline`).**
 * **Similarity weighting.** Known Earth-like planets are treated as sharing Earth's evolutionary timeline as the *typical* case (each step's expected time equals Earth's observed interval), weighted by the Earth Similarity Index (Schulze-Makuch et al. 2011, ESI¹) of the NASA Exoplanet Archive's HZ rocky planets.
-* **Superhabitability boost.** A boost of 1–3× (ASSUMED) applies to the fraction of G/K planets meeting the Schulze-Makuch, Heller & Guinan 2020 criteria.
+* **Superhabitability boost.** A boost of 1–3× (ASSUMED) applies to the fraction of K-dwarf planets (v2; G/K in v1) meeting the Schulze-Makuch, Heller & Guinan 2020 criteria.
 * **Cross-lineage tool use.** Tool use evolved independently many times on Earth (primates, corvids, octopus, sea otters, dolphins, elephants). The animals → tools step is therefore modelled as fast and repeatable: Earth's 0.597-Gyr interval is divided by 3–7 independent origins.
 
 **Literature baseline (`baseline`).** Hard-step expected times are log-uniform over 1e-3–1e3 Gyr, then updated on Earth's dated fossil record with the observer-selection correction of Snyder-Beattie et al. 2021, which favours slow, rare steps. **The choice between these two framings explains most of the ~6-orders-of-magnitude gap between the two headline numbers.**
@@ -74,6 +85,7 @@ for sec in ("params", "multipliers"):
         L.append(f"| `{k}` | {rng_(s)} | {s.get('best', 'default')} | {cell(s.get('unit', ''))}{scope} | {cell(s.get('source', ''))} — {cell(s.get('url', ''))} |")
 for st in cfg["hard_steps"]:
     L.append(f"| `tau_{st['name']}` | per scenario (baseline log-uniform 1e-3–1e3 Gyr; headline = Earth's interval) | Earth interval | expected waiting time; completed on Earth {st['earth_gya']} Ga | {cell(st['source'])} — {st['url']} |")
+for r_ in v2.variable_rows(cfg): L.append(r_)
 for k, s in cfg["scenarios"]["nathan_headline"]["extra_params"].items():
     L.append(f"| `{k}` | {rng_(s)} | {s.get('best')} | {cell(s['unit'])} (headline only) | {cell(s['source'])} — {cell(s['url'])} |")
 L.append(f"| `w_similarity` | bootstrap mean of ESI^k over Archive HZ rocky planets | {c['mean_pow']['1']:.3f} | similarity weight (similarity/headline scenarios) | Schulze-Makuch+2011 Astrobiology 11, 1041 — https://phl.upr.edu/projects/earth-similarity-index-esi |")
@@ -89,18 +101,24 @@ for k, s in S.items():
     a = s["N_now"]; sp = s.get("species_now"); ev = s.get("N_ever"); d = s.get("spacing", {}).get("median", {})
     nn = (fmt(d.get("nn_median_ly")) + (" (N<1)" if d.get("N", 1) < 1 else "")) if d.get("nn_median_ly") else "–"
     lab = f"**{k}** (headline)" if k == head else (f"{k} (literature)" if k == lit else k)
+    if s.get("model_version") == "v2": lab += " [v2]"
     L.append(f"| {lab} | {s.get('n', 1000000)} | {fmt(a['median'])} | {fmt(a['p10'])} – {fmt(a['p90'])} | {fmt(a['mean'])} | {a['P_lambda_lt1']:.3f} | {fmt(sp['median']) if sp else '–'} | {fmt(ev['median']) if ev else '–'} | {nn} |")
 pf = S.get("nathan_factor_effects", {})
 if pf:
     L.append(f"\nEffect of the headline's new factors (paired draws): without superhabitability the median is {fmt(pf['nathan_headline_no_superhab']['median_N'])} (headline ×{pf['nathan_headline_no_superhab']['ratio_of_medians']:.2f}); "
              f"without cross-lineage tool use it is {fmt(pf['nathan_headline_no_tooluse']['median_N'])} (×{pf['nathan_headline_no_tooluse']['ratio_of_medians']:.2f}).")
+L.append("\n[v2] = re-run with the multi-spectral (M/K/G/F) + multiphase model; unmarked scenarios are the v1 model (G/K + M hosts, one phase).")
 L.append("\nScenario definitions are in `params.yaml` under `scenarios:`. Full statistics, sensitivity tables and ESI-exponent variants are in [`results/results_summary.md`](results/results_summary.md).\n")
+ne_sw = next((f"~{o['swing']:.1f} orders of magnitude" for o in H["sens"] if o["param"] in ("ne_K", "ne_gk")), "less than one order of magnitude (it is not among the top 15 drivers)")
+rc_h = H.get("radio_capable", {}).get("N_now", {}); rc_b = B.get("radio_capable", {}).get("N_now", {})
 L.append("## What it means (plain language)\n")
 L.append(f"""* **If Earth's history is typical** (Nathan's headline), the Milky Way has about **{fmt(h['median'])}** worlds with stone-age-or-better tool users right now, and the typical distance to the nearest one is about **{fmt(hs['nn_median_ly'])} light-years**. The range is very wide ({fmt(h['p10'])} to {fmt(h['p90'])}), but under these assumptions it is unlikely we are alone (P(N<1) ≈ {h['P_lambda_lt1']:.0%}).
 * **If Earth's history is treated as a lucky draw** that we see only because we exist (the literature baseline), the median falls to **{fmt(b['median'])}**, and we are probably the only such world right now (P(N<1) ≈ {b['P_lambda_lt1']:.0%}).
-* **The data cannot yet decide between those two views.** The biggest swings come from how often planets have both land and ocean, how long a stone-age-or-later phase lasts, plate tectonics, and the hard-step timescales. Star counts and η⊕ matter much less (η⊕ for G/K stars swings the headline by only ~0.6 orders of magnitude).
+* **The data cannot yet decide between those two views.** The biggest swings come from how often planets have both land and ocean, how long a stone-age-or-later phase lasts, plate tectonics, and the hard-step timescales. Star counts and η⊕ matter much less (η⊕ for K stars swings the headline by {ne_sw}).
 * **What Nathan's two new factors do.** Superhabitable worlds change the answer only slightly (×{pf.get('nathan_headline_no_superhab', {}).get('ratio_of_medians', float('nan')):.2f}). Treating tool use as fast and repeatable matters more (×{pf.get('nathan_headline_no_tooluse', {}).get('ratio_of_medians', float('nan')):.1f}). This is probably mostly through faster re-emergence after a collapse, because the first arrival moves by only ~0.5 of ~4.4 Gyr.
 * **Stone-age worlds are effectively invisible** at interstellar distances, so a large N is consistent with the silence we observe.
+* **Most of these worlds would still be in the stone age.** In the stage breakdown, most tool-using time is spent in the lithic stage, because Earth took 3.3 Myr to get from stone tools to farming. Radio-capable worlds number about **{fmt(rc_h.get('median'))}** in the headline (P(N<1) ≈ {rc_h.get('P_lambda_lt1', float('nan')):.0%}) and **{fmt(rc_b.get('median'))}** in the literature baseline.
+* **K dwarfs dominate.** Orange K stars supply most of N in both framings ({100*H['by_type']['K']['share_of_mean']:.0f}% headline, {100*B['by_type']['K']['share_of_mean']:.0f}% baseline). They are ~1.5–4.5× more common than G stars, have a higher η⊕ range and long habitable windows. M dwarfs are ~6–10× more numerous than K dwarfs but carry the flare and tidal-locking/water-loss penalties. The superhabitability boost (K only) adds just a few percentage points. F stars contribute ~0.1%: they are rare (~2–3% of stars), their habitable windows (1.5–5 Gyr, ASSUMED) are mostly shorter than the ~4-Gyr Earth-like path to tool use, and they carry a UV penalty.
 """)
 L.append("## Caveats\n")
 L.append("""* **Prior-dominated.** Defensible priors move the median by more than 20 orders of magnitude (`snyder_beattie_priors` 5.5e-21 vs the headline). Read medians as summaries of the stated uncertainty, not measurements.
@@ -112,7 +130,7 @@ L.append("""* **Prior-dominated.** Defensible priors move the median by more tha
 * **Several brackets are ASSUMED:** M-dwarf penalties, sterilisation rate, recurrence, self-inflicted risk, metallicity ramp, moon-host fraction. The Rare-Earth multipliers are treated as independent.
 * **Species counts** assume Earth's hominin radiation is typical: on average 2.38 coexisting species, 15 over ~3.3 Myr (Smithsonian Human Origins). They depend on how finely taxonomists split species.
 * **Spacing assumptions.** Nearest-neighbour distances assume random placement in a 50,000-ly-radius, 1,000-ly-thick disk (≈7.9e12 ly³, a user-supplied figure). Below 1 expected world they are formal only.
-* **Sample sizes.** 2e5–1e6 per scenario. Importance-weighted scenarios have smaller effective sample sizes (see `results_summary.md`).
+""" + v2.caveats() + """* **Sample sizes.** 2e5–1e6 per scenario. Importance-weighted scenarios have smaller effective sample sizes (see `results_summary.md`).
 """)
 L.append("## Reproduce\n")
 L.append("""```bash
@@ -122,7 +140,7 @@ python hz_archive.py && python esi.py && python superhab.py      # derived data 
 python drake_model.py               # all scenarios in params.yaml (n_samples each; slow at 1e6)
 python drake_model.py --scenario nathan_headline --n 200000      # one scenario (run several in parallel)
 python drake_model.py --analyze-only                              # stats, charts, results_summary.md
-python tools/build_readme.py        # refresh this README from results
+python tools/build_readme.py        # refresh this README from results (uses tools/v2_sections.py)
 ```
 Raw samples (`results/*.npz`, several hundred MB) and `data/pscomppars.csv` are not committed. They regenerate from the commands above, and the random seed is fixed in `params.yaml`.
 
@@ -130,6 +148,7 @@ Raw samples (`results/*.npz`, several hundred MB) and `data/pscomppars.csv` are 
 * **New habitability factor:** add an entry under `multipliers:` in `params.yaml` with `dist`, `low`/`high` (or `value`), `applies_to: [gk, m]`, `source` and `url`. It is sampled automatically, applied, and included in the sensitivity tornado.
 * **New evolutionary step:** add an entry under `hard_steps:` with `earth_gya` (when it happened on Earth).
 * **Scenario-specific change:** add `overrides:` (replace an existing variable) or `extra_params:` (new scenario-only variable) under the scenario. Then list the scenario in `run.scenarios_to_run`.
+* **New host type or stage:** host classes live under `star_classes.classes` (per-class `f_star`, `ne`, `th_gyr`, `n_giant_hz`, `penalty_params`); stages under `multiphase` (`advance_params`, `hazard_params`). A scenario uses them with `multispectral: true` / `multiphase: true`. Multipliers can target single classes with `applies_to: [K]` etc.
 * **Headline:** set `run.headline_scenario`. `run.literature_baseline` is always reported alongside it.
 * Supported distributions: `fixed`, `uniform`, `loguniform`, `normal` (with optional min/max), `lognormal10`, `one_plus_loguniform`.
 
