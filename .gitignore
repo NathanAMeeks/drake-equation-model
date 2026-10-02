@@ -1,0 +1,16 @@
+# large / regenerable
+data/pscomppars.csv
+results/*.npz
+results/*.npy
+results/log_*.txt
+*.npz
+*.npy
+# environments & caches
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+# not part of the public repo
+sb2021.*
+xpost/
