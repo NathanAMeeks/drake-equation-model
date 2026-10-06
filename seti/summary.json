@@ -1,0 +1,6 @@
+{
+ "generated": "2026-10-06T01:52:20-07:00",
+ "readme_text": "Feasibility pass on Breakthrough Listen public data with turboSETI (`seti/scan.py`, queue in `seti/queue.json`). Full details in [`seti/scan_log.md`](seti/scan_log.md).\n\n* **3I/ATLAS GBT L-band (1618.65-1621.58 MHz, Iridium/GNSS region): blc23 scans 0013-0018, coarse channel 23** \u2014 hits at S/N>10: 438; ON-OFF filter-3 events: 1; at S/N>5: 828; ON-OFF filter-3 events: 1. Top plotted: 1618.785314 MHz, -2.121 Hz/s, S/N 23.38 ([plot](seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/top_hit.png)). Injection check: a synthetic drifting tone added to the ON scans was recovered as a filter-3 event.\n\nEvery hit is almost certainly RFI or noise; **no detection is claimed**, and anything interesting would need re-observation. 3 job(s) pending for the weekly run.",
+ "n_done": 1,
+ "n_pending": 3
+}

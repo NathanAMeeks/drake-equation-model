@@ -1,0 +1,10 @@
+# SETI scan environment (tested 2026-10-06, Python 3.13)
+turbo_seti==2.3.2
+blimpy==2.1.4
+h5py==3.16.0
+hdf5plugin==7.1.0
+fsspec
+aiohttp
+requests
+matplotlib
+setuptools<81   # blimpy still imports pkg_resources

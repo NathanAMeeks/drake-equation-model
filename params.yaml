@@ -34,14 +34,14 @@ params:
                        source: "Madau & Dickinson 2014 ARA&A (R=0.27 Salpeter, 0.41 Chabrier)", url: "https://ned.ipac.caltech.edu/level5/March14/Madau/paper.pdf"}
   f_early_disk_mass:  {dist: uniform, low: 0.4, high: 0.6, unit: "fraction of disk mass formed 13.0-8.5 Gyr ago (thick-disk phase)",
                        source: "Snaith et al. 2015 A&A 578, A87 ('roughly half the stellar mass in first 4-5 Gyr')", url: "https://www.aanda.org/articles/aa/full_html/2015/06/aa24281-14/aa24281-14.html"}
-  disk_start_gyr:     {dist: fixed, value: 0.8, unit: "Gyr after Big Bang (13.0 Gyr ago)", source: "Snaith et al. 2015 (thick disk 9-13 Gyr ago)", url: "https://www.aanda.org/articles/aa/full_html/2015/06/aa24281-14/aa24281-14.html"}
+  disk_start_gyr:     {dist: fixed, value: 0.8, unit: "Gyr after Big Bang (13.0 Gyr ago)", source: "Snaith et al. 2015 (thick disk 9-13 Gyr ago); CONFIRMED by Xiang & Rix 2022 Nature 603, 599 (Gaia EDR3 + LAMOST ages of ~250,000 subgiants: old disk began forming ~13 Gyr ago, 0.8 Gyr after the Big Bang)", url: "https://www.aanda.org/articles/aa/full_html/2015/06/aa24281-14/aa24281-14.html ; https://www.nature.com/articles/s41586-022-04496-5"}
   thick_end_gyr:      {dist: fixed, value: 5.3, unit: "Gyr after Big Bang (8.5 Gyr ago)", source: "Snaith et al. 2015 (sharp SFR drop ~8-9 Gyr ago)", url: "https://www.aanda.org/articles/aa/full_html/2015/06/aa24281-14/aa24281-14.html"}
   stars_per_msun:     {dist: uniform, low: 1.6, high: 2.8, best: 1.64, unit: "stars per Msun formed",
                        source: "Kroupa 2001 IMF: 1.64 H-burning stars/Msun (integrated here); 2.8 = 1/0.36 incl. brown dwarfs", url: "https://adsabs.harvard.edu/pdf/2001mnras.322..231k"}
   f_gk:               {dist: uniform, low: 0.10, high: 0.17, unit: "fraction of stars that are G/K",
-                       source: "RECONS 10-pc census (G 5.0% + K 11.6%); Kroupa IMF 0.6-1.1 Msun = 10%", url: "http://www.recons.org/census.posted.htm"}
-  f_m:                {dist: uniform, low: 0.75, high: 0.81, unit: "fraction of stars that are M dwarfs",
-                       source: "RECONS 10-pc census (75%); Kroupa IMF 0.08-0.6 Msun = 81%", url: "http://www.recons.org/census.posted.htm"}
+                       source: "RECONS 10-pc census (G 5.0% + K 11.6%); Kroupa IMF 0.6-1.1 Msun = 10%; Gaia-EDR3 10-pc census (Reyle+2021 A&A 650, A201: G 18 + Sun, K 38 of 338 stars incl. white dwarfs = 16.9%; 15.2% if the 36 unresolved probable-M companions are added) lies inside the range", url: "http://www.recons.org/census.posted.htm ; https://arxiv.org/abs/2104.14972"}
+  f_m:                {dist: uniform, low: 0.737, high: 0.81, unit: "fraction of stars that are M dwarfs",
+                       source: "Gaia-EDR3 10-pc census (Reyle+2021 A&A 650, A201: 249 M of 338 stars incl. white dwarfs and the Sun = 0.737; 0.762 with the 36 unresolved probable-M companions); RECONS 10-pc census (75%); Kroupa IMF 0.08-0.6 Msun = 81%. (2026-10-06: low 0.75 -> 0.737)", url: "https://arxiv.org/abs/2104.14972 ; http://www.recons.org/census.posted.htm"}
   fp:                 {dist: fixed, value: 1.0, unit: "-", note: "folded into ne (eta-Earth values are per star)",
                        source: "Cassan et al. 2012 Nature 481, 167 (>=1 bound planet per star)", url: "https://www.nature.com/articles/nature10684"}
   ne_gk:              {dist: loguniform, low: 0.10, high: 0.88, best: 0.35, unit: "rocky HZ planets per G/K star (fp folded in)",
@@ -60,7 +60,7 @@ params:
   f_ghz:              {dist: loguniform, low: 0.1, high: 1.0, unit: "spatial fraction of disk stars in Galactic Habitable Zone",
                        source: "Lineweaver, Fenner & Gibson 2004 Science (<10% incl. time/metallicity cuts); Prantzos 2008 SSRv (whole disk by now); Gowanlock+2011 (1.2% incl. more factors)", url: "https://arxiv.org/abs/astro-ph/0401024"}
   t_metal_gyr:        {dist: uniform, low: 1.0, high: 3.0, unit: "Gyr after Big Bang when Earth-forming metallicity is reached (logistic midpoint, width 0.5 Gyr)",
-                       source: "ASSUMED; informed by Lineweaver 2001 Icarus (metallicity selection; Earths avg 1.8+/-0.9 Gyr older than Earth) and Zackrisson+2016 ApJ 833, 214", url: "https://ui.adsabs.harvard.edu/abs/2001Icar..151..307L/abstract"}
+                       source: "ASSUMED (no direct measurement of when Earth-forming metallicity was reached); informed by Lineweaver 2001 Icarus (metallicity selection; Earths avg 1.8+/-0.9 Gyr older than Earth) and Zackrisson+2016 ApJ 833, 214. Consistent with Xiang & Rix 2022 Nature (Gaia: thick-disk [Fe/H] rose from about -1 to +0.5 during the 5-6 Gyr after disk formation began 13 Gyr ago); the data do not pin down the logistic midpoint, so the bracket is kept", url: "https://ui.adsabs.harvard.edu/abs/2001Icar..151..307L/abstract ; https://www.nature.com/articles/s41586-022-04496-5"}
   # -------- habitable exomoons (additional habitable bodies alongside ne) --------
   n_giant_hz_gk:      {dist: uniform, low: 0.065, high: 0.115, unit: "giant planets (3-25 R_earth) in optimistic HZ per G/K star",
                        source: "Hill et al. 2018 ApJ 860, 6 (G 6.5+/-1.9%, K 11.5+/-3.1%)", url: "https://arxiv.org/abs/1805.03370"}
@@ -78,20 +78,22 @@ params:
   r_bigfive_per_gyr:  {dist: uniform, low: 9.3, high: 10.6, unit: "per Gyr, Big-Five-class mass extinctions (Earth analog)",
                        source: "Big Five at ~444, 372, 252, 201, 66 Ma (US NPS / geologic time scale): intervals 72,120,51,135 Myr (mean 94.5 Myr => 10.6/Gyr); 5 events in 539 Myr Phanerozoic => 9.3/Gyr; Raup & Sepkoski 1982",
                        url: "https://www.nps.gov/subjects/fossils/mass-extinctions-through-geologic-time.htm"}
-  p_bigfive_kills_toolusers: {dist: loguniform, low: 0.1, high: 1.0, unit: "probability a Big-Five-class event ends a widespread tool-using lineage",
-                       source: "ASSUMED (mammals, birds and many large clades survived each Big Five event)", url: "https://www.science.org/doi/10.1126/science.215.4539.1501"}
+  p_bigfive_kills_toolusers: {dist: loguniform, low: 0.16, high: 1.0, unit: "probability a Big-Five-class event ends a widespread tool-using lineage",
+                       source: "LITERATURE-INFORMED (2026-10-06; was ASSUMED loguniform 0.1-1). Low 0.16 = smallest Big-Five marine SPECIES loss (Frasnian 16-20%; Stanley 2016 PNAS 113, E6325: end-Permian ~81%, end-Cretaceous ~56%, end-Ordovician ~50%); marine GENUS losses 22-57% (Bambach et al. 2004 Paleobiology 30, 522, tabulated in McGhee et al. 2013) fall inside. High 1.0 kept because large-bodied terrestrial lineages fared worse than the marine average (all non-avian dinosaurs were lost at the K-Pg). Mapping 'a tool-using lineage is lost with the per-species/genus extinction fraction' is ASSUMED",
+                       url: "https://www.pnas.org/doi/10.1073/pnas.1613094113 ; https://people.ucsc.edu/~mclapham/papers/McGheeEtAl2013.pdf"}
   r_self_per_gyr:     {dist: loguniform, low: 0.1, high: 100.0, best: 3.0, unit: "per Gyr, self-inflicted / technological end-of-lineage hazard (mean 10 Myr to 10 Gyr), averaged over the whole stone-age-or-later phase",
                        source: "ASSUMED, no galactic data. Earth-only context (NOT used as galactic L): Urban 2024 Science (climate threatens 7.6% of species avg; 1.6% at ~1.3 C; ~1/3 at highest emissions); Ceballos & Ehrlich 2023 PNAS (73 tetrapod genera lost since 1500, ~35x background) vs PLOS Biol 2025 (102 genera, rare & decelerating)",
                        url: "https://www.science.org/doi/10.1126/science.adp4461"}
   r_grb_per_gyr:      {dist: uniform, low: 0.46, high: 1.4, unit: "per Gyr today at solar radius, ozone-destroying (complex-life-lethal) long GRBs",
                        source: "Piran & Jimenez 2014 PRL (>90% in 5 Gyr => >=0.46/Gyr; 50% in 500 Myr => 1.4/Gyr)", url: "https://arxiv.org/abs/1409.2506"}
-  r_sn_per_gyr:       {dist: fixed, value: 1.5, unit: "per Gyr, core-collapse SNe within 8 pc",
-                       source: "Gehrels et al. 2003 ApJ 585, 1169 (1.5/Gyr; ~doubles biologically active UV)", url: "https://arxiv.org/abs/astro-ph/0211361"}
+  r_sn_per_gyr:       {dist: loguniform, low: 0.11, high: 3.6, best: 2.5, unit: "per Gyr, core-collapse SNe within the lethal distance (8-20 pc)",
+                       source: "LITERATURE (2026-10-06; was fixed 1.5 = Gehrels+2003 ApJ 585, 1169, 8 pc). Rate within 20 pc from the Gaia-based census of OB stars within 1 kpc: 2.0 (+0.9/-0.3)/Gyr with an upper progenitor-mass limit, 2.5 (+1.1/-0.3)/Gyr without (Quintana, Wright & Martinez Garcia 2025 MNRAS 538, 1367). Lethal distance ~20 pc as working value (Thomas & Yelland 2023 ApJ 950, 41: ~62% global ozone loss at 20 pc), vs the older 8-10 pc (Gehrels+2003). High 3.6 = 2.5+1.1 at 20 pc; low 0.11 = (2.0-0.3) x (8/20)^3 (volume scaling, valid since 8-20 pc << the 76 pc OB scale height); best 2.5 = central 20-pc rate. Context: 60Fe in deep-sea archives records SNe at <=100 pc 1.5-3.2 and 6.5-8.7 Myr ago (Wallner+2016 Nature 532, 69)",
+                       url: "https://arxiv.org/abs/2503.08286 ; https://iopscience.iop.org/article/10.3847/1538-4357/accf8a ; https://arxiv.org/abs/astro-ph/0211361 ; https://www.nature.com/articles/nature17196"}
   p_lethal_astro:     {dist: loguniform, low: 0.1, high: 1.0, unit: "probability a GRB/SN event actually ends a tool-using lineage",
                        source: "ASSUMED (Gehrels+2003 note SN pathway 'may be less important than previously thought')", url: "https://arxiv.org/abs/astro-ph/0211361"}
   # -------- stone-age phase duration & recurrence --------
   l_stone_yr:         {dist: loguniform, low: 1.0e4, high: 1.0e9, best: 6.6e6, unit: "yr, intrinsic (background, non-catastrophic, non-self-inflicted) duration of the stone-age-or-later phase",
-                       source: "Earth: >=3.3 Myr so far (Harmand+2015 Nature); Gott 1993 Copernican estimate (best = 2x elapsed); chimp stone age >=4.3 kyr (Mercader+2007 PNAS); SDO 2018 L upper ~1e9-1e10", url: "https://www.nature.com/articles/nature14464"}
+                       source: "Earth: >=3.3 Myr so far (Harmand+2015 Nature); Gott 1993 Copernican estimate (best = 2x elapsed); chimp stone age >=4.3 kyr (Mercader+2007 PNAS); capuchin stone tool use >=3,000 yr (oldest phase 2,993-2,422 cal BP; Falotico+2019 Nat.Ecol.Evol. 3, 1034); SDO 2018 L upper ~1e9-1e10. Range kept: genetics show lithic-stage lineages can come close to ending (Hu+2023 Science 381, 979: ~1,280 breeding individuals for ~117 kyr, ~930-813 ka) but give no rate", url: "https://www.nature.com/articles/nature14464 ; https://www.nature.com/articles/s41559-019-0904-4 ; https://www.science.org/doi/10.1126/science.abq7487"}
   m_recurrence:       {dist: loguniform, low: 0.01, high: 1.0, unit: "expected re-evolution time of tool use after loss, as a multiple of the intelligence step's tau",
                        source: "ASSUMED (no quantitative literature); multiple independent stone-tool lineages on Earth (Mercader+2007) suggest re-evolution can be easier than the first time", url: "https://www.pnas.org/doi/10.1073/pnas.0607909104"}
 
@@ -117,10 +119,10 @@ multipliers:
                        source: "Kraus+2016 AJ 152, 8 (close binaries <47 AU suppress planets; ~1/5 of solar-type stars disallowed); Raghavan+2010 ApJS (54% single). Upper bound 1 because Kepler eta-Earth may already include binaries",
                        url: "https://arxiv.org/abs/1604.05744"}
   f_m_flares:         {dist: loguniform, low: 0.03, high: 1.0, applies_to: [m],
-                       source: "ASSUMED bracket; flare/XUV/proton-event ozone & atmosphere erosion reviewed in Shields+2016 Phys.Rep.; Tilley+2019 (arXiv:1711.08484); Lingam & Loeb 2018",
+                       source: "ASSUMED bracket (flare statistics exist but no published mapping to a habitable fraction). Data: TESS flares on >40% of mid-to-late M dwarfs vs ~5% of K dwarfs (Gunther+2020 AJ 159, 60); HZ X-ray and Ly-alpha irradiance tabulated by spectral type in Cuntz & Guinan 2016 ApJ 827, 79 Table 3. Flare/XUV/proton-event ozone & atmosphere erosion reviewed in Shields+2016 Phys.Rep.; Tilley+2019 (arXiv:1711.08484); Lingam & Loeb 2018. URLs: arXiv:1901.00443",
                        url: "https://arxiv.org/abs/1610.05765"}
   f_k_activity:       {dist: loguniform, low: 0.5, high: 1.0, applies_to: [K], multispectral_only: true,
-                       source: "ASSUMED mild K-dwarf penalty (late-K flares/XUV and possible HZ tidal locking). Cuntz & Guinan 2016 ApJ 827, 79 (K dwarfs: favourable hosts, far lower activity than M dwarfs); Barnes 2017 Celest.Mech.Dyn.Astr. 129, 509 (HZ planets of low-mass stars can tidally lock within ~1 Gyr)",
+                       source: "ASSUMED mild K-dwarf penalty (late-K flares/XUV and possible HZ tidal locking); no published survival fraction. Data: ~5% of K dwarfs show TESS flares vs >40% of mid/late M (Gunther+2020 AJ 159, 60, arXiv:1901.00443); HZ X-ray/Ly-alpha irradiance by spectral type in Cuntz & Guinan 2016 Table 3; HZ planets of stars cooler than ~K3 (4800 K) tidally lock within ~4.5 Gyr (Cuntz & Guinan 2016). Cuntz & Guinan 2016 ApJ 827, 79 (K dwarfs: favourable hosts, far lower activity than M dwarfs); Barnes 2017 Celest.Mech.Dyn.Astr. 129, 509 (HZ planets of low-mass stars can tidally lock within ~1 Gyr)",
                        url: "https://iopscience.iop.org/article/10.3847/0004-637X/827/1/79 ; https://link.springer.com/article/10.1007/s10569-017-9783-7"}
   f_f_uv:             {dist: loguniform, low: 0.14, high: 1.0, applies_to: [F], multispectral_only: true,
                        source: "ASSUMED mapping of Sato et al. 2014 Int.J.Astrobiol. 13, 244 (F0-F8 V, 1.2-1.5 Msun: DNA damage at Earth-equivalent orbits 2.5-7.1x solar without atmospheric attenuation, much less with it): survival fraction 1/7.1 .. 1",
@@ -141,8 +143,8 @@ star_classes:
   recons_source: "RECONS 10-pc census as of 2018-04-12 (378 stars): M 283 (74.9%), K 44 (11.6%), G 19 (5.0%), F 7 (1.85%), A 4, white dwarfs 21"
   classes:
     M:
-      f_star:     {dist: uniform, low: 0.749, high: 0.811, unit: "fraction of stars formed that are M dwarfs",
-                   source: "RECONS 10-pc census 283/378 = 0.749; Kroupa 2001 IMF number fraction 0.08-0.6 Msun = 0.811 (integrated here)", url: "http://www.recons.org/census.posted.htm"}
+      f_star:     {dist: uniform, low: 0.737, high: 0.811, unit: "fraction of stars formed that are M dwarfs",
+                   source: "Gaia-EDR3 10-pc census 249/338 = 0.737 (Reyle+2021 A&A 650, A201 Table 3; denominator = A 4 + F 8 + G 18 + Sun + K 38 + M 249 + white dwarfs 20; 0.762 if the 36 unresolved probable-M companions are counted); RECONS 10-pc census 283/378 = 0.749; Kroupa 2001 IMF number fraction 0.08-0.6 Msun = 0.811 (integrated here). (2026-10-06: low 0.749 -> 0.737)", url: "https://arxiv.org/abs/2104.14972 ; http://www.recons.org/census.posted.htm"}
       ne:         {dist: loguniform, low: 0.16, high: 0.41, best: 0.24, unit: "Earth-size HZ planets per M dwarf",
                    source: "Dressing & Charbonneau 2015 ApJ 807, 45 (0.16 conservative, 0.24 broad HZ); 2026 Astronomy & Computing Archive reanalysis (M ~0.41)", url: "https://arxiv.org/abs/1501.01623"}
       th_gyr:     {dist: loguniform, low: 10.0, high: 50.0, best: 20.0, unit: "Gyr habitable window", source: "Rushby et al. 2013 Astrobiology 13, 833 (HZ lifetimes up to 54.7 Gyr)", url: "https://research-repository.st-andrews.ac.uk/handle/10023/5071"}
@@ -150,16 +152,16 @@ star_classes:
       penalty_params: [f_m_habitable]      # tidal locking + pre-main-sequence water loss (params.f_m_habitable); flares = multipliers.f_m_flares
     K:
       f_star:     {dist: uniform, low: 0.077, high: 0.116, unit: "fraction of stars formed that are K dwarfs",
-                   source: "Kroupa 2001 IMF 0.6-0.9 Msun = 0.077 (integrated here); RECONS 44/378 = 0.116", url: "http://www.recons.org/census.posted.htm"}
+                   source: "Kroupa 2001 IMF 0.6-0.9 Msun = 0.077 (integrated here); RECONS 44/378 = 0.116; Gaia-EDR3 10-pc census 38/338 = 0.112 (Reyle+2021) lies inside", url: "http://www.recons.org/census.posted.htm ; https://arxiv.org/abs/2104.14972"}
       ne:         {dist: loguniform, low: 0.27, high: 0.88, best: 0.49, unit: "rocky HZ planets per K dwarf",
                    source: "2026 Astronomy & Computing Archive reanalysis K ~0.27 (low); Bryson+2021 AJ 161, 36 G-mid-K 0.37-0.60 conservative / 0.58-0.88 optimistic (high)", url: "https://arxiv.org/abs/2010.14812 ; https://astrobiology.com/2026/08/06/quantifying-detection-bias-and-recovering-habitable-zone-occurrence-rates-in-the-nasa-exoplanet-archive/"}
-      th_gyr:     {dist: loguniform, low: 8.0, high: 30.0, best: 15.0, unit: "Gyr habitable window",
-                   source: "ASSUMED bracket informed by Rushby+2013 (Earth 6.29-7.79 Gyr; K/M hosts longer because of slower HZ migration; Kepler candidates up to 18.8 Gyr)", url: "https://research-repository.st-andrews.ac.uk/handle/10023/5071"}
+      th_gyr:     {dist: loguniform, low: 16.0, high: 41.4, best: 21.9, unit: "Gyr habitable window",
+                   source: "LITERATURE (2026-10-06; was ASSUMED loguniform 8-30, best 15). Continuously-habitable-zone durations t_ev from Cuntz & Guinan 2016 ApJ 827, 79 Table 2: K0 16.0 (conservative HZ) / 24.8 (general HZ), K2 21.9 / 32.0, K5 30.4 / 41.4, K8 >50 Gyr. Low = K0 conservative, high = K5 general (K8 >50 not used, conservative), best = K2 conservative. Same mapping as the G class, whose 5-10 Gyr range matches the G2 values 4.8 / 9.9 Gyr in the same table", url: "https://iopscience.iop.org/article/10.3847/0004-637X/827/1/79"}
       n_giant_hz: {dist: uniform, low: 0.084, high: 0.146, unit: "HZ giants per star", source: "Hill et al. 2018: K 11.5+/-3.1% (+/-1 sigma)", url: "https://arxiv.org/abs/1805.03370"}
       penalty_params: []                   # K activity/tidal penalty = multipliers.f_k_activity
     G:
-      f_star:     {dist: uniform, low: 0.026, high: 0.050, unit: "fraction of stars formed that are G dwarfs",
-                   source: "Kroupa 2001 IMF 0.9-1.1 Msun = 0.026 (integrated here); RECONS 19/378 = 0.050", url: "http://www.recons.org/census.posted.htm"}
+      f_star:     {dist: uniform, low: 0.026, high: 0.056, unit: "fraction of stars formed that are G dwarfs",
+                   source: "Kroupa 2001 IMF 0.9-1.1 Msun = 0.026 (integrated here); RECONS 19/378 = 0.050; Gaia-EDR3 10-pc census (18 + Sun)/338 = 0.056 (Reyle+2021 A&A 650, A201). (2026-10-06: high 0.050 -> 0.056)", url: "http://www.recons.org/census.posted.htm ; https://arxiv.org/abs/2104.14972"}
       ne:         {dist: loguniform, low: 0.10, high: 0.88, best: 0.30, unit: "rocky HZ planets per G dwarf",
                    source: "2026 Astronomy & Computing Archive reanalysis F/G ~0.10 (low); Bryson+2021 G-mid-K up to 0.88 optimistic (high)", url: "https://arxiv.org/abs/2010.14812"}
       th_gyr:     {dist: loguniform, low: 5.0, high: 10.0, best: 6.5, unit: "Gyr habitable window",
@@ -168,11 +170,11 @@ star_classes:
       penalty_params: []
     F:
       f_star:     {dist: uniform, low: 0.0185, high: 0.0285, unit: "fraction of stars formed that are F dwarfs",
-                   source: "RECONS 7/378 = 0.0185 (present day; some F stars have already died); Kroupa 2001 IMF 1.1-1.5 Msun = 0.0285 (integrated here)", url: "http://www.recons.org/census.posted.htm"}
-      ne:         {dist: loguniform, low: 0.03, high: 0.60, best: 0.10, unit: "rocky HZ planets per F dwarf",
-                   source: "2026 Archive reanalysis F/G ~0.10 (best); Bryson+2021 sample extends only to 6300 K (upper 0.60 = its conservative upper bound); low 0.03 ASSUMED (poor Kepler completeness for F hosts)", url: "https://arxiv.org/abs/2010.14812"}
-      th_gyr:     {dist: loguniform, low: 1.5, high: 5.0, best: 2.7, unit: "Gyr habitable window",
-                   source: "ASSUMED; F stars (1.2-1.5 Msun) have short main-sequence lifetimes that constrain habitability (Sato et al. 2014 Int.J.Astrobiol. 13, 244); Rushby+2013 only modelled 0.2-1.2 Msun", url: "https://arxiv.org/abs/1312.7431"}
+                   source: "RECONS 7/378 = 0.0185 (present day; some F stars have already died); Kroupa 2001 IMF 1.1-1.5 Msun = 0.0285 (integrated here); Gaia-EDR3 10-pc census 8/338 = 0.024 (Reyle+2021) lies inside", url: "http://www.recons.org/census.posted.htm ; https://arxiv.org/abs/2104.14972"}
+      ne:         {dist: loguniform, low: 0.039, high: 0.60, best: 0.10, unit: "rocky HZ planets per F dwarf",
+                   source: "2026 Archive reanalysis F/G ~0.10 (best); Bryson+2021 sample extends only to 6300 K (upper 0.60 = its conservative upper bound). Low (2026-10-06: 0.03 ASSUMED -> 0.039 DERIVED) = G-class low 0.10 x the Kepler F/G small-planet occurrence ratio 0.26/0.67 = 0.39 (1-2.83 R_earth, P<200 d; Kunimoto & Matthews 2020 AJ 159, 248; F-star HZ rates themselves are unmeasured)", url: "https://arxiv.org/abs/2010.14812 ; https://arxiv.org/abs/2004.05296"}
+      th_gyr:     {dist: loguniform, low: 1.4, high: 5.0, best: 2.8, unit: "Gyr habitable window",
+                   source: "LITERATURE (2026-10-06; was ASSUMED loguniform 1.5-5.0, best 2.7). Continuously-habitable-zone durations t_ev from Cuntz & Guinan 2016 ApJ 827, 79 Table 2: F0 1.4 (conservative HZ) / 2.1 (general HZ), F2 1.8 / 2.4, F5 2.3 / 3.1, F8 2.8 / 5.0 Gyr. Low = F0 conservative, high = F8 general, best = F8 conservative (late F most numerous under the IMF). Consistent with main-sequence lifetimes 2.6-4.3 Gyr for 1.2-1.5 Msun (Sato et al. 2014 Int.J.Astrobiol. 13, 244)", url: "https://iopscience.iop.org/article/10.3847/0004-637X/827/1/79 ; https://arxiv.org/abs/1312.7431"}
       n_giant_hz: {dist: uniform, low: 0.046, high: 0.084, unit: "HZ giants per star", source: "ASSUMED = G value (Hill et al. 2018 report no F-star rate)", url: "https://arxiv.org/abs/1805.03370"}
       penalty_params: []                   # UV penalty = multipliers.f_f_uv
 
@@ -205,13 +207,13 @@ multiphase:
                          source: "Earth anchor 1895 -> 1957 (Sputnik 1) = 62 yr; range Earth/10 .. x10 ASSUMED",
                          url: "https://www.nasa.gov/history/sputnik/"}
     stage_h_agri_per_yr:  {dist: loguniform, low: 1.0e-7, high: 1.0e-3, unit: "per yr, world-wide collapse hazard of the agricultural stage",
-                         source: "ASSUMED. Earth: farming has persisted ~11.5 kyr world-wide despite many regional collapses (Tainter 1988, The Collapse of Complex Societies); one world gives no galactic rate",
+                         source: "ASSUMED. Earth: farming has persisted ~11.5 kyr world-wide despite many regional collapses (Tainter 1988, The Collapse of Complex Societies); one world gives no galactic rate. Regional data do not map onto a world-wide rate: Kemp 2019 (87 civilisations 3000 BCE-600 CE: mean lifespan 336 yr, median ~250 yr) and Scheffer et al. 2023 PNAS 120, e2218834120 (hundreds of premodern states, Seshat and MOROS data: termination risk rises over the first ~200 yr, then plateaus) measure the end of polities, after which farming continued; the regional rate (~3e-3/yr) is only a loose upper context. URLs: https://www.bbc.com/future/article/20190218-the-lifespans-of-ancient-civilisations-compared ; https://www.pnas.org/doi/10.1073/pnas.2218834120",
                          url: "https://doi.org/10.1086/659307"}
     stage_h_ind_per_yr:   {dist: loguniform, low: 1.0e-6, high: 1.0e-2, unit: "per yr, world-wide collapse hazard of the industrial stage",
                          source: "ASSUMED (Earth: ~265 yr industrial so far). Natural extinction alone is < 6.9e-5/yr (Snyder-Beattie, Ord & Bonsall 2019 Sci.Rep. 9, 11054), so most of this range is anthropogenic risk, which that bound does not cover",
                          url: "https://www.nature.com/articles/s41598-019-47540-7"}
     stage_h_radio_per_yr: {dist: loguniform, low: 1.0e-10, high: 1.0e-2, unit: "per yr, collapse hazard of the radio-capable stage",
-                         source: "1/L with L log-uniform 1e2 .. 1e10 yr = Sandberg, Drexler & Ord 2018 Table 1 (lifetime of a detectable civilisation)",
+                         source: "1/L with L log-uniform 1e2 .. 1e10 yr = Sandberg, Drexler & Ord 2018 Table 1 (lifetime of a detectable civilisation). SETI gives no duration: Breakthrough Listen non-detections limit prevalence only (<0.066% of stellar systems within 50 pc host continuous transmitters with EIRP >~1e13 W, Wlodarczyk-Sroka, Garrett & Siemion 2020 MNRAS 498, 5720; <0.45% / <0.37% of GBT L/S-band targets above 2.1e12 W, Price+2020 AJ 159, 86), orders of magnitude above the model's radio-capable fraction, so no constraint. URLs: https://arxiv.org/abs/2006.09756 ; https://iopscience.iop.org/article/10.3847/1538-3881/ab65f1",
                          url: "https://arxiv.org/abs/1806.02404"}
     stage_h_space_per_yr: {dist: loguniform, low: 1.0e-10, high: 1.0e-2, unit: "per yr, collapse hazard of the spacefaring stage",
                          source: "Same as radio stage (SDO 2018 L 1e2 .. 1e10 yr); ASSUMED that orbital capability does not by itself lower the hazard",
@@ -286,7 +288,7 @@ scenarios:
                        source: "ASSUMED (user-suggested 1-3x). Schulze-Makuch+2020 and Heller & Armstrong 2014 (Astrobiology 14, 50) argue qualitatively for higher habitability/biomass but give no numeric factor",
                        url: "https://doi.org/10.1089/ast.2013.1088"}
       n_tool_origins: {dist: loguniform, low: 3.0, high: 7.0, best: 6.0, unit: "effective number of independent origins of tool use among complex animals on Earth; tau_stone_tool_intelligence = 0.5967 Gyr (Earth's multicellularity->stone-tools interval) / n",
-                       source: "Low 3 = independent lithic-flake-producing primate lineages (hominins, Harmand+2015; bearded capuchins, Proffitt+2016 Nature 539, 85; long-tailed macaques, Proffitt+2023 Sci.Adv. 9, eade8159). Best 6 = the user's list, each verified: primates (Goodall 1964 Nature 201, 1264), corvids (Hunt 1996 Nature 379, 249), octopus (Finn, Tregenza & Norman 2009 Curr.Biol. 19, R1069), sea otters (Hall & Schaller 1964 J.Mammal. 45, 287), dolphins (Kruetzen+2005 PNAS 102, 8939), elephants (Hart+2001 Anim.Behav. 62, 839). High 7 = classes with documented tool use (Bentley-Condit & Smith 2010 Behaviour 147, 185: three phyla, seven classes). Mapping origins -> Poisson rate (n events in ~0.6 Gyr => expected first-origin time 0.6/n Gyr) is ASSUMED",
+                       source: "Low 3 = independent lithic-flake-producing primate lineages (hominins, Harmand+2015; bearded capuchins, Proffitt+2016 Nature 539, 85; long-tailed macaques, Proffitt+2023 Sci.Adv. 9, eade8159). Dated non-hominin stone-tool archaeology: capuchins >=3,000 yr (Falotico+2019 Nat.Ecol.Evol. 3, 1034), chimpanzees >=4.3 kyr (Mercader+2007 PNAS); behaviour rarely fossilises, so origin dates (and the count) stay uncertain. Best 6 = the user's list, each verified: primates (Goodall 1964 Nature 201, 1264), corvids (Hunt 1996 Nature 379, 249), octopus (Finn, Tregenza & Norman 2009 Curr.Biol. 19, R1069), sea otters (Hall & Schaller 1964 J.Mammal. 45, 287), dolphins (Kruetzen+2005 PNAS 102, 8939), elephants (Hart+2001 Anim.Behav. 62, 839). High 7 = classes with documented tool use (Bentley-Condit & Smith 2010 Behaviour 147, 185: three phyla, seven classes). Mapping origins -> Poisson rate (n events in ~0.6 Gyr => expected first-origin time 0.6/n Gyr) is ASSUMED",
                        url: "https://doi.org/10.1038/nature20112 ; https://www.science.org/doi/10.1126/sciadv.ade8159 ; https://brill.com/view/journals/beh/147/2/article-p185_3.xml"}
   nathan_headline_no_superhab:
     multispectral: true      # v2: M/K/G/F host classes
@@ -304,7 +306,7 @@ scenarios:
       f_superhab:     {dist: fixed, value: 0.0}     # kept (fixed) so the random stream stays paired with nathan_headline
       superhab_boost: {dist: fixed, value: 1.0}
       n_tool_origins: {dist: loguniform, low: 3.0, high: 7.0, best: 6.0, unit: "effective number of independent origins of tool use among complex animals on Earth; tau_stone_tool_intelligence = 0.5967 Gyr (Earth's multicellularity->stone-tools interval) / n",
-                       source: "Low 3 = independent lithic-flake-producing primate lineages (hominins, Harmand+2015; bearded capuchins, Proffitt+2016 Nature 539, 85; long-tailed macaques, Proffitt+2023 Sci.Adv. 9, eade8159). Best 6 = the user's list, each verified: primates (Goodall 1964 Nature 201, 1264), corvids (Hunt 1996 Nature 379, 249), octopus (Finn, Tregenza & Norman 2009 Curr.Biol. 19, R1069), sea otters (Hall & Schaller 1964 J.Mammal. 45, 287), dolphins (Kruetzen+2005 PNAS 102, 8939), elephants (Hart+2001 Anim.Behav. 62, 839). High 7 = classes with documented tool use (Bentley-Condit & Smith 2010 Behaviour 147, 185: three phyla, seven classes). Mapping origins -> Poisson rate (n events in ~0.6 Gyr => expected first-origin time 0.6/n Gyr) is ASSUMED",
+                       source: "Low 3 = independent lithic-flake-producing primate lineages (hominins, Harmand+2015; bearded capuchins, Proffitt+2016 Nature 539, 85; long-tailed macaques, Proffitt+2023 Sci.Adv. 9, eade8159). Dated non-hominin stone-tool archaeology: capuchins >=3,000 yr (Falotico+2019 Nat.Ecol.Evol. 3, 1034), chimpanzees >=4.3 kyr (Mercader+2007 PNAS); behaviour rarely fossilises, so origin dates (and the count) stay uncertain. Best 6 = the user's list, each verified: primates (Goodall 1964 Nature 201, 1264), corvids (Hunt 1996 Nature 379, 249), octopus (Finn, Tregenza & Norman 2009 Curr.Biol. 19, R1069), sea otters (Hall & Schaller 1964 J.Mammal. 45, 287), dolphins (Kruetzen+2005 PNAS 102, 8939), elephants (Hart+2001 Anim.Behav. 62, 839). High 7 = classes with documented tool use (Bentley-Condit & Smith 2010 Behaviour 147, 185: three phyla, seven classes). Mapping origins -> Poisson rate (n events in ~0.6 Gyr => expected first-origin time 0.6/n Gyr) is ASSUMED",
                        url: "https://doi.org/10.1038/nature20112 ; https://www.science.org/doi/10.1126/sciadv.ade8159 ; https://brill.com/view/journals/beh/147/2/article-p185_3.xml"}
   nathan_headline_no_tooluse:
     multispectral: true      # v2: M/K/G/F host classes

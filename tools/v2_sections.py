@@ -46,7 +46,7 @@ def section(S, cfg, E, head, lit, v1=None, level="##", img_prefix="results/"):
                         "adds K-activity and F-UV penalties and per-type ESI weights, and adds stage-specific collapse hazards after the lithic stage.\n")
     L.append(f"![Multi-spectral breakdown]({img_prefix}spectral_breakdown.png)\n")
     L.append(f"{level}# By host star type\n")
-    L.append("Each type has its own star fraction (RECONS 10-pc census vs Kroupa IMF), η⊕, habitable window, HZ giants for exomoons, activity/UV/tidal penalties, and similarity weight "
+    L.append("Each type has its own star fraction (RECONS and Gaia-EDR3 10-pc censuses vs Kroupa IMF), η⊕, habitable window, HZ giants for exomoons, activity/UV/tidal penalties, and similarity weight "
              "(its own Archive ESI list if it has ≥ 3 HZ rocky planets, otherwise the pooled list). The superhabitability boost applies only to K hosts. "
              "*Share* = that type's fraction of the posterior-mean N; *median share* = per-sample median of the type's fraction.\n")
     L.append("| scenario | host type | median N now | 10th–90th pct | P(N<1) | share of mean N | median share [10th, 90th] | median N ever |")
@@ -103,6 +103,6 @@ def section(S, cfg, E, head, lit, v1=None, level="##", img_prefix="results/"):
     return "\n".join(L) + "\n"
 
 def caveats():
-    return """* **Multi-spectral (v2).** The F-star η⊕ low end and habitable window, the K-activity and F-UV penalties, the F-star HZ-giant rate, and the mass bins behind the Kroupa fractions are ASSUMED. Per-type ESI lists are tiny (M 22, K 3, G 1, F 0 conservative HZ planets), so G and F use the pooled list. The K share comes mainly from K stars being ~1.5–4.5× more common than G stars with a higher η⊕ range, and from the M-dwarf penalties; the K-only superhabitability boost moves the K share by only ~2–3 percentage points.
+    return """* **Multi-spectral (v2).** The K-activity and F-UV penalties, the F-star HZ-giant rate, and the mass bins behind the Kroupa fractions are ASSUMED. The F-star η⊕ low end is scaled from the Kepler F/G small-planet occurrence ratio (Kunimoto & Matthews 2020), not measured in the HZ; K and F habitable windows are continuously-habitable-zone durations from Cuntz & Guinan 2016. Per-type ESI lists are tiny (M 22, K 3, G 1, F 0 conservative HZ planets), so G and F use the pooled list. The K share comes mainly from K stars being ~1.4–4.5× more common than G stars with a higher η⊕ range, and from the M-dwarf penalties; the K-only superhabitability boost moves the K share by only ~2–3 percentage points.
 * **Multiphase (v2).** Stage advance times are Earth/10 to Earth×10 around one Earth history; the agricultural and industrial collapse hazards and the regress fraction are ASSUMED; the radio and spacefaring hazards reuse Sandberg, Drexler & Ord 2018's 1e2–1e10 yr lifetime prior. Stage shares use the long-run (stationary) occupancy of the stage chain, which ignores worlds that started their tool-using phase within the last few Myr. The stage-specific hazards are added on top of the v1 self-inflicted hazard `r_self_per_gyr`, so some self-inflicted risk may be counted twice (conservative for N).
 """

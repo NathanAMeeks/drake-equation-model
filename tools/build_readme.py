@@ -3,6 +3,7 @@
 import json, os, sys, yaml
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import v2_sections as v2
+import provenance as prov
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 cfg = yaml.safe_load(open("params.yaml")); S = json.load(open("results/results.json"))
 E = json.load(open("data/esi_hz.json")); SH = json.load(open("data/superhab.json")); HZ = json.load(open("data/hz_counts.json"))
@@ -94,6 +95,7 @@ for k in ("species_concurrent_per_tool_world", "species_cumulative_per_tool_worl
     s = cfg["species"][k]
     L.append(f"| `{k}` | {rng_(s)} | {s['best']} | {cell(s['unit'])} | {cell(s['source'])} — {cell(s['url'])} |")
 L.append("\nRanges marked **ASSUMED** have no quantitative literature value. **USER** marks Nathan's own inputs, which are kept separate from literature values.\n")
+L.append(prov.section(cfg))
 L.append("## Results: all scenarios\n")
 L.append("| scenario | samples | median worlds now | 10th–90th pct | mean | P(N<1) | median species now | median worlds ever | median NN distance (ly) |")
 L.append("|---|---|---|---|---|---|---|---|---|")
@@ -119,7 +121,7 @@ L.append(f"""* **If Earth's history is typical** (Nathan's headline), the Milky 
 * **What Nathan's two new factors do.** Superhabitable worlds change the answer only slightly (×{pf.get('nathan_headline_no_superhab', {}).get('ratio_of_medians', float('nan')):.2f}). Treating tool use as fast and repeatable matters more (×{pf.get('nathan_headline_no_tooluse', {}).get('ratio_of_medians', float('nan')):.1f}). This is probably mostly through faster re-emergence after a collapse, because the first arrival moves by only ~0.5 of ~4.4 Gyr.
 * **Stone-age worlds are effectively invisible** at interstellar distances, so a large N is consistent with the silence we observe.
 * **Most of these worlds would still be in the stone age.** In the stage breakdown, most tool-using time is spent in the lithic stage, because Earth took 3.3 Myr to get from stone tools to farming. Radio-capable worlds number about **{fmt(rc_h.get('median'))}** in the headline (P(N<1) ≈ {rc_h.get('P_lambda_lt1', float('nan')):.0%}) and **{fmt(rc_b.get('median'))}** in the literature baseline.
-* **K dwarfs dominate.** Orange K stars supply most of N in both framings ({100*H['by_type']['K']['share_of_mean']:.0f}% headline, {100*B['by_type']['K']['share_of_mean']:.0f}% baseline). They are ~1.5–4.5× more common than G stars, have a higher η⊕ range and long habitable windows. M dwarfs are ~6–10× more numerous than K dwarfs but carry the flare and tidal-locking/water-loss penalties. The superhabitability boost (K only) adds just a few percentage points. F stars contribute ~0.1%: they are rare (~2–3% of stars), their habitable windows (1.5–5 Gyr, ASSUMED) are mostly shorter than the ~4-Gyr Earth-like path to tool use, and they carry a UV penalty.
+* **K dwarfs dominate.** Orange K stars supply most of N in both framings ({100*H['by_type']['K']['share_of_mean']:.0f}% headline, {100*B['by_type']['K']['share_of_mean']:.0f}% baseline). They are ~1.4–4.5× more common than G stars, have a higher η⊕ range and long habitable windows. M dwarfs are ~6–10× more numerous than K dwarfs but carry the flare and tidal-locking/water-loss penalties. The superhabitability boost (K only) adds just a few percentage points. F stars contribute ~0.1%: they are rare (~2–3% of stars), their continuously-habitable-zone windows (1.4–5 Gyr, Cuntz & Guinan 2016) are mostly shorter than the ~4-Gyr Earth-like path to tool use, and they carry a UV penalty.
 """)
 L.append("## Caveats\n")
 L.append("""* **Prior-dominated.** Defensible priors move the median by more than 20 orders of magnitude (`snyder_beattie_priors` 5.5e-21 vs the headline). Read medians as summaries of the stated uncertainty, not measurements.
@@ -133,6 +135,10 @@ L.append("""* **Prior-dominated.** Defensible priors move the median by more tha
 * **Spacing assumptions.** Nearest-neighbour distances assume random placement in a 50,000-ly-radius, 1,000-ly-thick disk (≈7.9e12 ly³, a user-supplied figure). Below 1 expected world they are formal only.
 """ + v2.caveats() + """* **Sample sizes.** 2e5–1e6 per scenario. Importance-weighted scenarios have smaller effective sample sizes (see `results_summary.md`).
 """)
+if os.path.exists("seti/summary.json"):
+    SE = json.load(open("seti/summary.json"))
+    L.append("## SETI scan log\n")
+    L.append(SE["readme_text"] + "\n")
 L.append("## Reproduce\n")
 L.append("""```bash
 python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt

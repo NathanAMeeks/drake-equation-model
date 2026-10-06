@@ -14,3 +14,12 @@ __pycache__/
 # not part of the public repo
 sb2021.*
 xpost/
+# SETI scan: raw/extracted data, envs and bulky search products stay local
+seti/data/
+seti/.venv/
+seti/out/**/*.h5
+seti/out/**/*.dat
+seti/out/**/*.log
+seti/out/**/*.lst
+seti/out/**/inject/
+seti/*.log
