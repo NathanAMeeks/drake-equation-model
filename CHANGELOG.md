@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-05 — Data refresh: NASA Exoplanet Archive re-pulled, no change
+- Re-ran `tools/fetch_data.py` on 5 Oct 2026 (`pscomppars` and the 22 Schulze-Makuch+2020 KOI rows from `cumulative`). Both files are byte-identical to the 1 Oct 2026 pull; the Archive's most recent weekly update is still 1 Oct 2026.
+- Re-ran `hz_archive.py`, `esi.py` and `superhab.py`; all derived files in `data/` are unchanged. 6,375 confirmed planets; HZ rocky planets (R < 1.8 R⊕) 23 conservative / 37 optimistic (26 / 41 with Teff clamped to 2600 K); mean ESI 0.849 conservative / 0.865 optimistic; 7 K-hosted HZ planets with R < 2 R⊕, none meeting all superhabitability criteria.
+- No model inputs changed, so the scenarios were not re-run and the results are unchanged: headline (`nathan_headline`) median 2.63e+03, literature `baseline` median 0.00179. A 2e5-sample reproducibility re-run of both from the same seed matched the published numbers.
+- README rebuilt with `tools/build_readme.py`; the Archive inputs line now records the re-pull date. Model by Nathan A. Meeks.
+
 ## 2026-10-02 — Multi-spectral and multiphase breakdowns, suggested by a friend of Nathan's
 - **Multi-spectral (v2 model):** N is broken down by host star type **M, K, G, F**. Each type has its own star fraction (RECONS 10-pc census vs Kroupa IMF), η⊕, habitable window, HZ giants for exomoons (Hill et al. 2018), activity/UV/tidal penalties (new `f_k_activity` and `f_f_uv` multipliers; M-dwarf penalties kept), and similarity weight (per-type Archive ESI lists). The superhabitability boost now applies to K hosts only (`f_superhab` rescaled to a fraction of K planets). Config: `star_classes:` in `params.yaml`; a scenario opts in with `multispectral: true`.
 - **Multiphase (v2 model):** civilisations move through stages (lithic → agricultural → industrial → radio-capable → spacefaring). Each stage has an advance time anchored on Earth's history, plus a collapse hazard (radio and spacefaring use Sandberg, Drexler & Ord 2018's L prior). A share of collapses regresses one stage and can recur. Config: `multiphase:`; opt in with `multiphase: true`.

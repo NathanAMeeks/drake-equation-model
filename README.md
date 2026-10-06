@@ -117,7 +117,7 @@ Inside each tool-using episode a world moves through **lithic → agricultural �
 
 **Literature baseline (`baseline`).** Hard-step expected times are log-uniform over 1e-3–1e3 Gyr, then updated on Earth's dated fossil record with the observer-selection correction of Snyder-Beattie et al. 2021, which favours slow, rare steps. **The choice between these two framings explains most of the ~6-orders-of-magnitude gap between the two headline numbers.**
 
-**Archive inputs** (pscomppars, pulled 1 Oct 2026: 6,375 confirmed planets):
+**Archive inputs** (pscomppars, Archive update of 1 Oct 2026, re-pulled 5 Oct 2026 with no change: 6,375 confirmed planets):
 * HZ rocky planets (R < 1.8 R⊕): 23 conservative and 37 optimistic, or 26 and 41 including TRAPPIST-1 with Teff clamped to 2600 K.
 * Mean ESI: 0.849 (conservative) and 0.865 (optimistic).
 * Top ESI: Teegarden's Star b 0.979, TOI-700 d 0.942, Kepler-1649 c 0.940, GJ 3378 b 0.938, TOI-700 e 0.932, GJ 1002 b 0.926.

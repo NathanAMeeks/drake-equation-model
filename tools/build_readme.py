@@ -6,6 +6,7 @@ import v2_sections as v2
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 cfg = yaml.safe_load(open("params.yaml")); S = json.load(open("results/results.json"))
 E = json.load(open("data/esi_hz.json")); SH = json.load(open("data/superhab.json")); HZ = json.load(open("data/hz_counts.json"))
+ARCHIVE_PULL = "Archive update of 1 Oct 2026, re-pulled 5 Oct 2026 with no change"   # edit when tools/fetch_data.py is re-run
 head = cfg["run"]["headline_scenario"]; lit = cfg["run"].get("literature_baseline", "baseline")
 def fmt(x):
     if x is None: return "–"
@@ -69,7 +70,7 @@ L.append("""**Target.** Worlds hosting a lineage that habitually makes stone too
 **Literature baseline (`baseline`).** Hard-step expected times are log-uniform over 1e-3–1e3 Gyr, then updated on Earth's dated fossil record with the observer-selection correction of Snyder-Beattie et al. 2021, which favours slow, rare steps. **The choice between these two framings explains most of the ~6-orders-of-magnitude gap between the two headline numbers.**
 """)
 c, o = E["conservative"], E["optimistic"]
-L.append(f"""**Archive inputs** (pscomppars, pulled 1 Oct 2026: {HZ['total_confirmed_rows']:,} confirmed planets):
+L.append(f"""**Archive inputs** (pscomppars, {ARCHIVE_PULL}: {HZ['total_confirmed_rows']:,} confirmed planets):
 * HZ rocky planets (R < 1.8 R⊕): {HZ['conservative_HZ_R_lt_1.8']} conservative and {HZ['optimistic_HZ_R_lt_1.8']} optimistic, or {HZ['conservative_rocky_incl_cool_hosts_clamped']} and {HZ['optimistic_rocky_incl_cool_hosts_clamped']} including TRAPPIST-1 with Teff clamped to 2600 K.
 * Mean ESI: {c['mean']:.3f} (conservative) and {o['mean']:.3f} (optimistic).
 * Top ESI: {', '.join(f"{n} {e:.3f}" for n, e in list(zip(o['names'], o['esi4']))[:6])}.
