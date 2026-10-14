@@ -1,5 +1,41 @@
 # Changelog
 
+## 2026-10-14
+
+Weekly update (also covers the interrupted 12 Oct run). All 11 scenarios rerun at n = 200,000. "Old" = published 2026-10-06 values.
+
+**Parameter changes (old -> new, source)**
+- `hard_steps.abiogenesis.earth_gya`: 3.9 -> 4.2 Ga. Moody et al. 2024, Nat. Ecol. Evol. (LUCA ~4.2 Ga, 95% CI 4.09-4.33 Ga); life must predate LUCA.
+- `multipliers.f_m_flares` upper bound: 1.0 -> 0.53. 0 of 4 M-dwarf rocky planets tested by thermal emission show a thick atmosphere: TRAPPIST-1 b (Greene+2023), TRAPPIST-1 c (Zieba+2023; Gillon+2025 phase curves), LHS 3844 b (Kreidberg+2019), GJ 1252 b (Crossfield+2022). The 95% binomial upper limit is 0.53. These planets are hotter than the HZ, so the mapping is ASSUMED.
+- `params.r_ster0_per_gyr` low end (12 Oct): 1e-3 -> 1e-5. Barnes et al. 2026 MNRAS 552 (EAGLE: CCSN extinction ~1e-5/Gyr, GRB ~1e-6/Gyr for a Milky-Way analogue). This also covers galactic-orbit / spiral-arm supernova and GRB exposure.
+- `f_m_habitable`: redefined to exclude pre-main-sequence water loss, which is now in `f_m_water`. The bracket is unchanged and still ASSUMED.
+
+**New multipliers**
+- `f_m_water` (M only): loguniform 0.01-0.1. Tian & Ida 2015 Nat. Geosci. find Earth-like water contents 10-100x rarer around M dwarfs; Luque & Palle 2022 Science find a water-world population.
+- `f_rocky_composition` (FGK): uniform 0.6-1.0. Brewer & Fischer 2016 ApJ 831, 20 find ~60% of stars with Earth-like Mg/Si. Putirka & Xu 2021 report exotic white-dwarf mantles. Mapping ASSUMED. Fixed at 1 in `similarity_weighted_no_rare_earth`.
+- `f_co_ratio` (FGK): uniform 0.9987-1.0. Brewer & Fischer 2016 find <0.13% carbon-rich stars. Negligible effect.
+
+**Considered, not changed (no usable quantitative constraint)**
+- `f_land_and_ocean` (FGK): unchanged.
+- `f_plate_tectonics`: unchanged. Unterborn+2022 stagnant-lid degassing lifetimes are noted.
+- `l_stone_yr`, `m_recurrence`, `stage_q_regress`: unchanged.
+- Eukaryogenesis and GOE dates: unchanged.
+- Dynamo lifetime: not added (no population fraction published).
+- Biosignature results: no likelihood update. Mars Cheyava Falls (Hurowitz+2025) is only a *potential* biosignature, and there is no robust exoplanet detection or meaningful null sample yet.
+
+**Medians N_now (10-90%, width in dex), old -> new**
+- nathan_headline: 2.79e3 (13.8-4.36e5, 4.50) -> 2.39e3 (12.8-3.55e5, 4.44)
+- baseline: 2.04e-3 (4.33e-7-7.99, 7.27) -> 3.57e-3 (8.58e-7-11.1, 7.11)
+- radio-capable, headline: 45.5 (0.0228-5.80e4, 6.40) -> 38.8 (0.0197-4.81e4, 6.39)
+- radio-capable, baseline: 3.01e-5 (1.56e-9-0.595, 8.58) -> 5.34e-5 (3.09e-9-0.863, 8.45)
+- nathan_headline_no_superhab: 2.61e3 -> 2.21e3
+- nathan_headline_no_tooluse: 719 -> 622
+- baseline_no_exomoons: 1.61e-3 -> 2.95e-3
+
+**Data and SETI**
+- NASA Exoplanet Archive re-pulled 12 and 14 Oct: 6,445 confirmed planets; HZ-rocky 23/37.
+- SETI jobs processed: blc24 cc27 (HI line, 12 Oct) and blc21 cc18 (2008-2011 MHz, 14 Oct). blc21 cc18 gave 0 filter-3 events; the only hit is a 2010.000 MHz line that is also present in the OFF scans (RFI). See the caveats in `seti/scan_log.md`.
+
 ## 2026-10-06 — Literature refresh of weakly sourced inputs, source-provenance table, first SETI scan log
 Each change below is old → new, with its source. Ranges for every other input are unchanged.
 - **`r_sn_per_gyr`** (core-collapse supernovae per Gyr within the lethal distance): fixed 1.5 (Gehrels et al. 2003, 8 pc) → log-uniform 0.11–3.6, best 2.5. Quintana, Wright & Martínez García 2025, MNRAS 538, 1367 (Gaia-based census of OB stars within 1 kpc) give a 20-pc rate of 2.0 (+0.9/−0.3) per Gyr with an upper progenitor-mass limit and 2.5 (+1.1/−0.3) without one (https://arxiv.org/abs/2503.08286). Thomas & Yelland 2023, ApJ 950, 41 put the lethal distance near 20 pc (https://iopscience.iop.org/article/10.3847/1538-4357/accf8a). The low end, 0.11, is the 20-pc rate scaled to 8 pc by volume.

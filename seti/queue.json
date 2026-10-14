@@ -826,8 +826,475 @@
    ],
    "coarse_chan": 27,
    "on_off_first": "ON",
-   "status": "pending",
-   "added": "2026-10-06T01:19:58-07:00"
+   "status": "done",
+   "added": "2026-10-06T01:19:58-07:00",
+   "result": {
+    "started": "2026-10-12T09:10:40-07:00",
+    "max_drift_hz_s": 4.0,
+    "snr_thresholds": [
+     10.0,
+     5.0
+    ],
+    "files": [
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc24_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.h5",
+      "local_mb": 157.7,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.199375,
+      "tsamp": 6.084537002666661,
+      "fch1": 1422.36328125,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     },
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc24_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.h5",
+      "local_mb": 154.6,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.203043981484,
+      "tsamp": 6.084537002666661,
+      "fch1": 1422.36328125,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     },
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc24_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.h5",
+      "local_mb": 154.1,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.206724537034,
+      "tsamp": 6.084537002666661,
+      "fch1": 1422.36328125,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     },
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc24_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.h5",
+      "local_mb": 153.7,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.21040509259,
+      "tsamp": 6.084537002666661,
+      "fch1": 1422.36328125,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     },
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc24_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.h5",
+      "local_mb": 152.1,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.21408564815,
+      "tsamp": 6.084537002666661,
+      "fch1": 1422.36328125,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     },
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc24_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.h5",
+      "local_mb": 151.8,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.21775462963,
+      "tsamp": 6.084537002666661,
+      "fch1": 1422.36328125,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     }
+    ],
+    "bytes_downloaded_mb": 924.0,
+    "roles": [
+     "ON",
+     "OFF",
+     "ON",
+     "OFF",
+     "ON",
+     "OFF"
+    ],
+    "by_snr": {
+     "10": {
+      "per_file": [
+       {
+        "file": "blc24_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc27.h5",
+        "role": "ON",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 1419.999998,
+          "drift_hz_s": 0.0146,
+          "snr": 29.32
+         }
+        ]
+       },
+       {
+        "file": "blc24_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc27.h5",
+        "role": "OFF",
+        "hits": 2,
+        "hits_nonzero_drift": 2,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 31.66
+         },
+         {
+          "freq_mhz": 1419.986646,
+          "drift_hz_s": -0.0729,
+          "snr": 10.76
+         }
+        ]
+       },
+       {
+        "file": "blc24_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc27.h5",
+        "role": "ON",
+        "hits": 2,
+        "hits_nonzero_drift": 2,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 35.92
+         },
+         {
+          "freq_mhz": 1419.986623,
+          "drift_hz_s": -0.0364,
+          "snr": 10.75
+         }
+        ]
+       },
+       {
+        "file": "blc24_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc27.h5",
+        "role": "OFF",
+        "hits": 2,
+        "hits_nonzero_drift": 2,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 30.36
+         },
+         {
+          "freq_mhz": 1419.986612,
+          "drift_hz_s": -0.0292,
+          "snr": 11.67
+         }
+        ]
+       },
+       {
+        "file": "blc24_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc27.h5",
+        "role": "ON",
+        "hits": 2,
+        "hits_nonzero_drift": 2,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 28.88
+         },
+         {
+          "freq_mhz": 1419.987464,
+          "drift_hz_s": 0.0073,
+          "snr": 12.45
+         }
+        ]
+       },
+       {
+        "file": "blc24_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc27.h5",
+        "role": "OFF",
+        "hits": 2,
+        "hits_nonzero_drift": 2,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 24.93
+         },
+         {
+          "freq_mhz": 1419.986604,
+          "drift_hz_s": 0.0073,
+          "snr": 11.61
+         }
+        ]
+       }
+      ],
+      "hits_total": 11,
+      "events": {
+       "f1": {
+        "n_rows": 5,
+        "n_events": 5,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 35.92,
+          "status": "on_table_2"
+         },
+         {
+          "freq_mhz": 1419.999998,
+          "drift_hz_s": 0.0146,
+          "snr": 29.32,
+          "status": "on_table_1"
+         },
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 28.88,
+          "status": "on_table_3"
+         },
+         {
+          "freq_mhz": 1419.987464,
+          "drift_hz_s": 0.0073,
+          "snr": 12.45,
+          "status": "on_table_3"
+         },
+         {
+          "freq_mhz": 1419.986623,
+          "drift_hz_s": -0.0364,
+          "snr": 10.75,
+          "status": "on_table_2"
+         }
+        ],
+        "groups": []
+       },
+       "f2": {
+        "n_rows": 0,
+        "n_events": 0,
+        "top": [],
+        "groups": []
+       },
+       "f3": {
+        "n_rows": 0,
+        "n_events": 0,
+        "top": [],
+        "groups": []
+       }
+      }
+     },
+     "5": {
+      "per_file": [
+       {
+        "file": "blc24_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc27.h5",
+        "role": "ON",
+        "hits": 2,
+        "hits_nonzero_drift": 2,
+        "top": [
+         {
+          "freq_mhz": 1419.999998,
+          "drift_hz_s": 0.0146,
+          "snr": 29.32
+         },
+         {
+          "freq_mhz": 1419.986671,
+          "drift_hz_s": -0.0802,
+          "snr": 8.44
+         }
+        ]
+       },
+       {
+        "file": "blc24_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc27.h5",
+        "role": "OFF",
+        "hits": 2,
+        "hits_nonzero_drift": 2,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 31.66
+         },
+         {
+          "freq_mhz": 1419.986646,
+          "drift_hz_s": -0.0729,
+          "snr": 10.76
+         }
+        ]
+       },
+       {
+        "file": "blc24_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc27.h5",
+        "role": "ON",
+        "hits": 2,
+        "hits_nonzero_drift": 2,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 35.92
+         },
+         {
+          "freq_mhz": 1419.986623,
+          "drift_hz_s": -0.0364,
+          "snr": 10.75
+         }
+        ]
+       },
+       {
+        "file": "blc24_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc27.h5",
+        "role": "OFF",
+        "hits": 4,
+        "hits_nonzero_drift": 4,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 30.36
+         },
+         {
+          "freq_mhz": 1419.986612,
+          "drift_hz_s": -0.0292,
+          "snr": 11.67
+         },
+         {
+          "freq_mhz": 1420.564028,
+          "drift_hz_s": 0.4519,
+          "snr": 5.85
+         },
+         {
+          "freq_mhz": 1420.033889,
+          "drift_hz_s": -0.0146,
+          "snr": 5.36
+         }
+        ]
+       },
+       {
+        "file": "blc24_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc27.h5",
+        "role": "ON",
+        "hits": 3,
+        "hits_nonzero_drift": 3,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 28.88
+         },
+         {
+          "freq_mhz": 1419.987464,
+          "drift_hz_s": 0.0073,
+          "snr": 12.45
+         },
+         {
+          "freq_mhz": 1420.033889,
+          "drift_hz_s": -0.0146,
+          "snr": 5.15
+         }
+        ]
+       },
+       {
+        "file": "blc24_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc27.h5",
+        "role": "OFF",
+        "hits": 3,
+        "hits_nonzero_drift": 3,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 24.93
+         },
+         {
+          "freq_mhz": 1419.986604,
+          "drift_hz_s": 0.0073,
+          "snr": 11.61
+         },
+         {
+          "freq_mhz": 1420.033886,
+          "drift_hz_s": 0.0073,
+          "snr": 6.09
+         }
+        ]
+       }
+      ],
+      "hits_total": 16,
+      "events": {
+       "f1": {
+        "n_rows": 7,
+        "n_events": 7,
+        "top": [
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 35.92,
+          "status": "on_table_2"
+         },
+         {
+          "freq_mhz": 1419.999998,
+          "drift_hz_s": 0.0146,
+          "snr": 29.32,
+          "status": "on_table_1"
+         },
+         {
+          "freq_mhz": 1420.000001,
+          "drift_hz_s": -0.0073,
+          "snr": 28.88,
+          "status": "on_table_3"
+         },
+         {
+          "freq_mhz": 1419.987464,
+          "drift_hz_s": 0.0073,
+          "snr": 12.45,
+          "status": "on_table_3"
+         },
+         {
+          "freq_mhz": 1419.986623,
+          "drift_hz_s": -0.0364,
+          "snr": 10.75,
+          "status": "on_table_2"
+         }
+        ],
+        "groups": []
+       },
+       "f2": {
+        "n_rows": 0,
+        "n_events": 0,
+        "top": [],
+        "groups": []
+       },
+       "f3": {
+        "n_rows": 0,
+        "n_events": 0,
+        "top": [],
+        "groups": []
+       }
+      }
+     }
+    },
+    "plot": "out/blc24_guppi_61027_17226_DIAG_3I_ATLAS_00_cc27_3dae93af/top_hit.png",
+    "plot_what": "strongest hit in an ON/single file (SNR>5); no ON-only event survived",
+    "plot_hit": {
+     "freq_mhz": 1420.000001,
+     "drift_hz_s": -0.0073,
+     "snr": 35.92
+    },
+    "finished": "2026-10-12T09:18:33-07:00",
+    "runtime_min": 7.9
+   },
+   "processed": "2026-10-12T09:18:33-07:00",
+   "injection_test": {
+    "f0_mhz": 1421.4843772351742,
+    "drift_hz_s": 0.37,
+    "amp_sigma": 8.0,
+    "recovered": true,
+    "match": {
+     "hit_id": "DIAG_3I_ATLAS_0",
+     "drifts_hz_s": [
+      0.379
+     ],
+     "snrs": [
+      49.07
+     ],
+     "freqs_mhz": [
+      1421.484377
+     ]
+    },
+    "n_f3_events": 1,
+    "summary": "A tone of 8.0 x the per-channel noise per integration, drifting at 0.37 Hz/s from 1421.484377 MHz, was added to the three ON scans only. Recovered as filter-3 event `DIAG_3I_ATLAS_0` with ON-hit drifts [0.379] Hz/s and S/N [49.07]. The injected copy produced 1 filter-3 event(s) in total at S/N > 10."
+   },
+   "notes": "No ON-only signal survived: filter 2 and filter 3 are empty at both S/N 10 and S/N 5. The strongest hits are a steady, non-drifting tone at 1420.000001 MHz (|drift| <= 0.015 Hz/s, S/N 25-36) seen in all six scans, three ON and three OFF, plus a weaker line near 1419.9866 MHz also in ON and OFF scans. A tone sitting at a round-number frequency, not drifting and present off-source is typical of local/terrestrial RFI; the transmitter was not identified. The natural 21-cm hydrogen line (1420.406 MHz) is a broad emission feature (tens to hundreds of kHz wide), not a narrowband drifting signal, so this search is not sensitive to it. Positive control: the synthetic 0.37 Hz/s tone injected into the ON scans was flagged by find_event_pipeline as a filter-3 event at the right drift (0.379 Hz/s, S/N 49), but the saved event table lists only the first-ON hit (in_n_ons = 2), so the cadence logic recovered it only partly; treat the pipeline's completeness on this channel as not fully verified. Run on 12 Oct 2026 (~8 min search + injection test). Breakthrough Listen's own 1-12 GHz analysis of 3I/ATLAS found only terrestrial RFI (arXiv:2512.19763)."
   },
   {
    "id": "blc21_guppi_61027_17226_DIAG_3I_ATLAS_00_cc18_d2c0ccee",
@@ -843,8 +1310,376 @@
    ],
    "coarse_chan": 18,
    "on_off_first": "ON",
-   "status": "pending",
-   "added": "2026-10-06T01:19:59-07:00"
+   "status": "done",
+   "added": "2026-10-06T01:19:59-07:00",
+   "result": {
+    "started": "2026-10-14T06:03:49-07:00",
+    "max_drift_hz_s": 4.0,
+    "snr_thresholds": [
+     10.0,
+     5.0
+    ],
+    "files": [
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc21_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.h5",
+      "local_mb": 158.4,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.199375,
+      "tsamp": 6.084537002666661,
+      "fch1": 2011.23046875,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     },
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc21_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.h5",
+      "local_mb": 158.4,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.203043981484,
+      "tsamp": 6.084537002666661,
+      "fch1": 2011.23046875,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     },
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc21_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.h5",
+      "local_mb": 158.3,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.206724537034,
+      "tsamp": 6.084537002666661,
+      "fch1": 2011.23046875,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     },
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc21_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.h5",
+      "local_mb": 158.3,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.21040509259,
+      "tsamp": 6.084537002666661,
+      "fch1": 2011.23046875,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     },
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc21_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.h5",
+      "local_mb": 158.3,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.21408564815,
+      "tsamp": 6.084537002666661,
+      "fch1": 2011.23046875,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     },
+     {
+      "url": "https://bldata.berkeley.edu/ATLAS/GB_ATLAS/blc21_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.h5",
+      "local_mb": 158.3,
+      "source_name": "DIAG_3I_ATLAS",
+      "tstart": 61027.21775462963,
+      "tsamp": 6.084537002666661,
+      "fch1": 2011.23046875,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 1048576,
+      "telescope_id": 6,
+      "n_ints": 49
+     }
+    ],
+    "bytes_downloaded_mb": 950.0,
+    "roles": [
+     "ON",
+     "OFF",
+     "ON",
+     "OFF",
+     "ON",
+     "OFF"
+    ],
+    "by_snr": {
+     "10": {
+      "per_file": [
+       {
+        "file": "blc21_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc18.h5",
+        "role": "ON",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 44959.73
+         }
+        ]
+       },
+       {
+        "file": "blc21_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc18.h5",
+        "role": "OFF",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.000003,
+          "drift_hz_s": -0.0146,
+          "snr": 44564.81
+         }
+        ]
+       },
+       {
+        "file": "blc21_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc18.h5",
+        "role": "ON",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 45320.66
+         }
+        ]
+       },
+       {
+        "file": "blc21_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc18.h5",
+        "role": "OFF",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 44623.24
+         }
+        ]
+       },
+       {
+        "file": "blc21_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc18.h5",
+        "role": "ON",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 45602.05
+         }
+        ]
+       },
+       {
+        "file": "blc21_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc18.h5",
+        "role": "OFF",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 45039.45
+         }
+        ]
+       }
+      ],
+      "hits_total": 6,
+      "events": {
+       "f1": {
+        "n_rows": 3,
+        "n_events": 3,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 45602.05,
+          "status": "on_table_3"
+         },
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 45320.66,
+          "status": "on_table_2"
+         },
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 44959.73,
+          "status": "on_table_1"
+         }
+        ],
+        "groups": []
+       },
+       "f2": {
+        "n_rows": 0,
+        "n_events": 0,
+        "top": [],
+        "groups": []
+       },
+       "f3": {
+        "n_rows": 0,
+        "n_events": 0,
+        "top": [],
+        "groups": []
+       }
+      }
+     },
+     "5": {
+      "per_file": [
+       {
+        "file": "blc21_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc18.h5",
+        "role": "ON",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 44959.73
+         }
+        ]
+       },
+       {
+        "file": "blc21_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc18.h5",
+        "role": "OFF",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.000003,
+          "drift_hz_s": -0.0146,
+          "snr": 44564.81
+         }
+        ]
+       },
+       {
+        "file": "blc21_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc18.h5",
+        "role": "ON",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 45320.66
+         }
+        ]
+       },
+       {
+        "file": "blc21_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc18.h5",
+        "role": "OFF",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 44623.24
+         }
+        ]
+       },
+       {
+        "file": "blc21_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc18.h5",
+        "role": "ON",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 45602.05
+         }
+        ]
+       },
+       {
+        "file": "blc21_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc18.h5",
+        "role": "OFF",
+        "hits": 1,
+        "hits_nonzero_drift": 1,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 45039.45
+         }
+        ]
+       }
+      ],
+      "hits_total": 6,
+      "events": {
+       "f1": {
+        "n_rows": 3,
+        "n_events": 3,
+        "top": [
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 45602.05,
+          "status": "on_table_3"
+         },
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 45320.66,
+          "status": "on_table_2"
+         },
+         {
+          "freq_mhz": 2010.0,
+          "drift_hz_s": 0.0073,
+          "snr": 44959.73,
+          "status": "on_table_1"
+         }
+        ],
+        "groups": []
+       },
+       "f2": {
+        "n_rows": 0,
+        "n_events": 0,
+        "top": [],
+        "groups": []
+       },
+       "f3": {
+        "n_rows": 0,
+        "n_events": 0,
+        "top": [],
+        "groups": []
+       }
+      }
+     }
+    },
+    "plot": "out/blc21_guppi_61027_17226_DIAG_3I_ATLAS_00_cc18_d2c0ccee/top_hit.png",
+    "plot_what": "strongest hit in an ON/single file (SNR>5); no ON-only event survived",
+    "plot_hit": {
+     "freq_mhz": 2010.0,
+     "drift_hz_s": 0.0073,
+     "snr": 45602.05
+    },
+    "finished": "2026-10-14T06:11:26-07:00",
+    "runtime_min": 7.6
+   },
+   "processed": "2026-10-14T06:11:26-07:00",
+   "injection_test": {
+    "f0_mhz": 2010.3515647351742,
+    "drift_hz_s": 0.37,
+    "amp_sigma": 8.0,
+    "recovered": true,
+    "match": {
+     "hit_id": "DIAG_3I_ATLAS_0",
+     "drifts_hz_s": [
+      0.379
+     ],
+     "snrs": [
+      13011.06
+     ],
+     "freqs_mhz": [
+      2010.351565
+     ]
+    },
+    "n_f3_events": 1,
+    "summary": "A tone of 8.0 x the per-channel noise per integration, drifting at 0.37 Hz/s from 2010.351565 MHz, was added to the three ON scans only. Recovered as filter-3 event `DIAG_3I_ATLAS_0` with ON-hit drifts [0.379] Hz/s and S/N [13011.06]. The injected copy produced 1 filter-3 event(s) in total at S/N > 10."
+   },
+   "notes": "Honest caveats: the only hit in every file (ON and OFF alike) is a very strong, near-zero-drift (0.0073 Hz/s) line at exactly 2010.000000 MHz with S/N ~4.5e4. It is in the OFF scans too, so it is terrestrial/instrumental (a round-number frequency is typical of a test tone or local oscillator product), not a candidate; filter 2 and 3 give 0 events. Such a dominant line distorts turboSETI's per-channel noise normalisation: only 1 hit/file was found at S/N 5 as well as 10, and the injected 8-sigma tone came back at S/N ~1.3e4 instead of the ~25 seen in the blc23 test. So the reported S/N values are not calibrated and the effective sensitivity to weak signals in this coarse channel is uncertain; the injection still shows that a drifting ON-only tone survives filter 3. One coarse channel (~2.9 MHz) of one 5-min x 3 cadence on one target (3I/ATLAS); null result says nothing about ETI in general."
   },
   {
    "id": "blc20_guppi_61027_31308_DIAG_3I_ATLAS_00_cc34_b61007ca",

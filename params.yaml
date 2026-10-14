@@ -50,7 +50,7 @@ params:
   ne_m:               {dist: loguniform, low: 0.16, high: 0.41, best: 0.24, unit: "Earth-size HZ planets per M dwarf (before the M-dwarf habitability penalties)",
                        source: "Dressing & Charbonneau 2015 ApJ 807, 45 (0.16 conservative, 0.24 broad HZ); 2026 Astronomy & Computing Archive reanalysis (M ~0.41, completeness-corrected; raw 4.03%)",
                        url: "https://arxiv.org/abs/1501.01623 ; https://astrobiology.com/2026/08/06/quantifying-detection-bias-and-recovering-habitable-zone-occurrence-rates-in-the-nasa-exoplanet-archive/"}
-  f_m_habitable:      {dist: loguniform, low: 0.03, high: 1.0, unit: "M-dwarf penalty for tidal locking + pre-main-sequence water loss (flares are separate, see multipliers.f_m_flares)",
+  f_m_habitable:      {dist: loguniform, low: 0.03, high: 1.0, unit: "M-dwarf penalty for tidal locking and other non-water, non-flare effects (pre-main-sequence water loss now in multipliers.f_m_water; flares in multipliers.f_m_flares)",
                        source: "ASSUMED bracket informed by Shields+2016 Phys.Rep.; Luger & Barnes 2015; Lingam & Loeb 2018 JCAP; Haqq-Misra+2018 IJA; Snyder-Beattie+2021 prediction",
                        url: "https://arxiv.org/abs/1610.05765"}
   th_gk_gyr:          {dist: loguniform, low: 5.0, high: 20.0, best: 7.0, unit: "Gyr habitable window for complex life (G/K)",
@@ -73,8 +73,9 @@ params:
                        source: "ASSUMED range; Heller & Barnes 2013 Astrobiology 13, 18 (habitable edge; tidal heating can sterilise); Williams, Kasting & Wade 1997 Nature 385, 234 (habitable moons concept)",
                        url: "https://arxiv.org/abs/1209.5323"}
   # -------- hazards / resetting events --------
-  r_ster0_per_gyr:    {dist: loguniform, low: 1.0e-3, high: 0.25, unit: "per Gyr, whole-biosphere sterilisation rate today (scaled by SFR(t)/SFR_now in the past)",
-                       source: "ASSUMED; upper bound: Earth's biosphere unsterilised for ~4 Gyr; SFR scaling motivated by Piran & Jimenez 2014 PRL (GRB hazard higher in early Universe)", url: "https://arxiv.org/abs/1409.2506"}
+  r_ster0_per_gyr:    {dist: loguniform, low: 1.0e-5, high: 0.25, unit: "per Gyr, whole-biosphere sterilisation rate today (scaled by SFR(t)/SFR_now in the past)",
+                       source: "LITERATURE-INFORMED low end (2026-10-12; was ASSUMED loguniform 1e-3-0.25). Barnes, Lewis, Salcido, Elahi, Filipovic & Bower 2026 MNRAS 552, stag1750 (EAGLE simulations; 'extinction' = all existing life killed, fluence ~1e14 erg/cm2): for a Milky-Way-like galaxy the core-collapse SN extinction rate is ~1e-5 /Gyr and the GRB rate ~1e-6 /Gyr, star-star encounters dominate over the last 5-6 Gyr at <~1e-4 /Gyr, and only ~0.1% of present Milky Way stars are expected to have had such an event over the last 4.5 Gyr (~2e-4 /Gyr). Low 1e-5 = their Milky Way CCSN rate. High 0.25 kept (Earth's biosphere unsterilised for ~4 Gyr) because non-astrophysical sterilisers (giant impacts, runaway climates) are not covered by that paper; that part of the range is still ASSUMED. SFR scaling motivated by Piran & Jimenez 2014 PRL and by Barnes+2026 (early, high-SFR galaxies most dangerous)",
+                       url: "https://arxiv.org/abs/2610.07450 ; https://doi.org/10.1093/mnras/stag1750 ; https://arxiv.org/abs/1409.2506"}
   r_bigfive_per_gyr:  {dist: uniform, low: 9.3, high: 10.6, unit: "per Gyr, Big-Five-class mass extinctions (Earth analog)",
                        source: "Big Five at ~444, 372, 252, 201, 66 Ma (US NPS / geologic time scale): intervals 72,120,51,135 Myr (mean 94.5 Myr => 10.6/Gyr); 5 events in 539 Myr Phanerozoic => 9.3/Gyr; Raup & Sepkoski 1982",
                        url: "https://www.nps.gov/subjects/fossils/mass-extinctions-through-geologic-time.htm"}
@@ -108,6 +109,15 @@ multipliers:
   f_land_and_ocean:   {dist: loguniform, low: 2.0e-4, high: 1.0, applies_to: [gk, m],
                        source: "Stern & Gerya 2024 (f_oc 0.0002-0.01); Simpson 2017 MNRAS (most HZ worlds >90% ocean); stone tools need dry land",
                        url: "https://arxiv.org/abs/1607.03095"}
+  f_m_water:          {dist: loguniform, low: 0.01, high: 0.1, applies_to: [m],
+                       source: "Tian & Ida 2015 Nat.Geosci. 8, 177: HZ Earth-mass planets of M dwarfs are bimodal (ocean or desert); Earth-like water contents are 10-100x less frequent than around G dwarfs (1/55 HZ planets at 0.3 Msun, 12/292 at 0.5 Msun). Supported observationally by Luque & Palle 2022 Science 377, 1211 (distinct ~50% water-world population around M dwarfs). Added 2026-10-14",
+                       url: "https://www.nature.com/articles/ngeo2372"}
+  f_rocky_composition: {dist: uniform, low: 0.6, high: 1.0, applies_to: [gk],
+                       source: "Brewer & Fischer 2016 ApJ 831, 20: ~60% of 849 FGK dwarfs have Earth-like Mg/Si (1-2), 40% Mg/Si<1 (silicate-rich, possibly different interiors/tectonics). Polluted WDs show mostly exotic mantle rocks (Putirka & Xu 2021 Nat.Commun. 12, 6168). low=only Earth-like Mg/Si qualifies, high=composition irrelevant (mapping ASSUMED). Added 2026-10-14",
+                       url: "https://arxiv.org/abs/1608.06286"}
+  f_co_ratio:         {dist: uniform, low: 0.9987, high: 1.0, applies_to: [gk],
+                       source: "Brewer & Fischer 2016 ApJ 831, 20: carbon-rich (C/O>0.8) dwarfs <0.13% of the solar neighbourhood; none of 849 with C/O>0.7 (median 0.47). Negligible effect, included for completeness. Added 2026-10-14",
+                       url: "https://arxiv.org/abs/1608.06286"}
   f_large_moon:       {dist: loguniform, low: 0.022, high: 1.0, applies_to: [gk, m], applies_to_exomoons: false,
                        source: "Elser+2011 Icarus (massive moon for ~1/12 of terrestrial planets, range 1/45-1/4); Laskar+1993 vs Lissauer, Barnes & Chambers 2012 Icarus (moonless obliquity mostly modest -> moon may not be needed)",
                        url: "https://arxiv.org/abs/1105.4616"}
@@ -118,8 +128,8 @@ multipliers:
   f_binary_ok:        {dist: uniform, low: 0.8, high: 1.0, applies_to: [gk, m],
                        source: "Kraus+2016 AJ 152, 8 (close binaries <47 AU suppress planets; ~1/5 of solar-type stars disallowed); Raghavan+2010 ApJS (54% single). Upper bound 1 because Kepler eta-Earth may already include binaries",
                        url: "https://arxiv.org/abs/1604.05744"}
-  f_m_flares:         {dist: loguniform, low: 0.03, high: 1.0, applies_to: [m],
-                       source: "ASSUMED bracket (flare statistics exist but no published mapping to a habitable fraction). Data: TESS flares on >40% of mid-to-late M dwarfs vs ~5% of K dwarfs (Gunther+2020 AJ 159, 60); HZ X-ray and Ly-alpha irradiance tabulated by spectral type in Cuntz & Guinan 2016 ApJ 827, 79 Table 3. Flare/XUV/proton-event ozone & atmosphere erosion reviewed in Shields+2016 Phys.Rep.; Tilley+2019 (arXiv:1711.08484); Lingam & Loeb 2018. URLs: arXiv:1901.00443",
+  f_m_flares:         {dist: loguniform, low: 0.03, high: 0.53, applies_to: [m],  # high was 1.0 (2026-10-14)
+                       source: "ASSUMED bracket (flare statistics exist but no published mapping to a habitable fraction). Data: TESS flares on >40% of mid-to-late M dwarfs vs ~5% of K dwarfs (Gunther+2020 AJ 159, 60); HZ X-ray and Ly-alpha irradiance tabulated by spectral type in Cuntz & Guinan 2016 ApJ 827, 79 Table 3. Flare/XUV/proton-event ozone & atmosphere erosion reviewed in Shields+2016 Phys.Rep.; Tilley+2019 (arXiv:1711.08484); Lingam & Loeb 2018. URLs: arXiv:1901.00443. 2026-10-14 upper bound 1.0->0.53: 0 of 4 M-dwarf rocky planets with thermal-emission tests show a thick atmosphere (TRAPPIST-1 b Greene+2023 Nature 618, 39; TRAPPIST-1 c Zieba+2023 Nature 620, 746 and Gillon+2025 arXiv:2509.02128 phase curves; LHS 3844 b Kreidberg+2019; GJ 1252 b Crossfield+2022); binomial 95% upper limit 1-0.05^(1/4)=0.53. These planets are hotter than the HZ, so this is a conservative analogue (mapping ASSUMED)",
                        url: "https://arxiv.org/abs/1610.05765"}
   f_k_activity:       {dist: loguniform, low: 0.5, high: 1.0, applies_to: [K], multispectral_only: true,
                        source: "ASSUMED mild K-dwarf penalty (late-K flares/XUV and possible HZ tidal locking); no published survival fraction. Data: ~5% of K dwarfs show TESS flares vs >40% of mid/late M (Gunther+2020 AJ 159, 60, arXiv:1901.00443); HZ X-ray/Ly-alpha irradiance by spectral type in Cuntz & Guinan 2016 Table 3; HZ planets of stars cooler than ~K3 (4800 K) tidally lock within ~4.5 Gyr (Cuntz & Guinan 2016). Cuntz & Guinan 2016 ApJ 827, 79 (K dwarfs: favourable hosts, far lower activity than M dwarfs); Barnes 2017 Celest.Mech.Dyn.Astr. 129, 509 (HZ planets of low-mass stars can tidally lock within ~1 Gyr)",
@@ -226,7 +236,7 @@ multiphase:
 # Each step is a Poisson process with expected time tau (Gyr). tau prior is set per scenario.
 # earth_gya = when the step completed on Earth (used for the Bayesian timing update).
 hard_steps:
-  - {name: abiogenesis,             earth_gya: 3.9,    source: "Snyder-Beattie+2021 Table 1 (3.5->4.1 Gya range)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7997718/"}
+  - {name: abiogenesis,             earth_gya: 4.2,    source: "Moody+2024 Nat.Ecol.Evol. 8, 1654: LUCA ~4.2 Ga (95% CI 4.09-4.33 Ga, cross-braced molecular clock); life must predate LUCA. Was 3.9 (Snyder-Beattie+2021)", url: "https://www.nature.com/articles/s41559-024-02461-1"}
   - {name: oxygenic_photosynthesis_GOE, earth_gya: 2.4, source: "Lyons, Reinhard & Planavsky 2014 Nature (GOE ~2.4-2.3 Ga)", url: "https://www.nature.com/articles/nature13068"}
   - {name: eukaryogenesis,          earth_gya: 1.84,   source: "Betts+2018 via Snyder-Beattie+2021 Table 1 (<1.84 Ga)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7997718/"}
   - {name: complex_multicellularity, earth_gya: 0.6,   source: "Knoll 2011 Annu.Rev.EPS (animal complex multicellularity, Ediacaran)", url: "https://www.annualreviews.org/content/journals/10.1146/annurev.earth.031208.100209"}
@@ -340,6 +350,7 @@ scenarios:
     overrides:
       f_plate_tectonics: {dist: fixed, value: 1.0}
       f_land_and_ocean:  {dist: fixed, value: 1.0}
+      f_rocky_composition: {dist: fixed, value: 1.0}
       f_large_moon:      {dist: fixed, value: 1.0}
       f_jupiter_shield:  {dist: fixed, value: 1.0}
       f_binary_ok:       {dist: fixed, value: 1.0}
