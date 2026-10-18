@@ -123,6 +123,21 @@ L.append(f"""* **If Earth's history is typical** (Nathan's headline), the Milky 
 * **Most of these worlds would still be in the stone age.** In the stage breakdown, most tool-using time is spent in the lithic stage, because Earth took 3.3 Myr to get from stone tools to farming. Radio-capable worlds number about **{fmt(rc_h.get('median'))}** in the headline (P(N<1) ≈ {rc_h.get('P_lambda_lt1', float('nan')):.0%}) and **{fmt(rc_b.get('median'))}** in the literature baseline.
 * **K dwarfs dominate.** Orange K stars supply most of N in both framings ({100*H['by_type']['K']['share_of_mean']:.0f}% headline, {100*B['by_type']['K']['share_of_mean']:.0f}% baseline). They are ~1.4–4.5× more common than G stars, have a higher η⊕ range and long habitable windows. M dwarfs are ~6–10× more numerous than K dwarfs but carry the flare and tidal-locking/water-loss penalties. The superhabitability boost (K only) adds just a few percentage points. F stars contribute ~0.1%: they are rare (~2–3% of stars), their continuously-habitable-zone windows (1.4–5 Gyr, Cuntz & Guinan 2016) are mostly shorter than the ~4-Gyr Earth-like path to tool use, and they carry a UV penalty.
 """)
+if "nathan_headline_ocean" in S and "baseline_ocean" in S:
+    import math
+    def _r(sc):
+        a = S[sc]["N_now"]; r = S[sc]["radio_capable"]["N_now"]
+        return (f"| `{sc}` | {a['median']:.3g} | {a['p10']:.3g}–{a['p90']:.3g} | {math.log10(a['p90']/a['p10']):.2f} | {a['P_lambda_lt1']:.3f} | "
+                f"{r['median']:.3g} ({r['p10']:.3g}–{r['p90']:.3g}) | {S[sc]['by_type']['M']['share_median']:.4f} |")
+    L.append("## Ocean-intelligence path (2026-10-17)\n")
+    L.append("""Tool-using intelligence is not required to arise on land. The `*_ocean` scenarios add an **ocean path**: ocean-dominated worlds (FGK: `f_ocean_world_gk` 0.5–1, Simpson 2017; M: `f_ocean_world_m` 0.21–0.56, Tian & Ida 2015, Luque & Pallé 2022), each capped at 1 − (land-path fraction) so no body is counted twice, times an ASSUMED `f_ocean_fecundity` (0.01–1). `f_m_water` and `f_land_and_ocean` apply only to the land path. The tool-use step is unchanged (octopus and dolphin tool use are already counted in `n_tool_origins`). Ocean lineages reach industry, and so radio and spaceflight, only with `p_ocean_to_industrial` (ASSUMED log-uniform 1e-4–0.3; fire/metallurgy barrier: Lingam, Balbi & Mahajan 2023; Balbi & Frank 2024); the rest stay pre-industrial. The ocean parameters come from a separate random stream, so every other draw is identical to the parent scenario (paired comparison).
+
+| scenario | median N_now | 10–90% | width (dex) | P(N<1) | radio-capable median (10–90%) | M-dwarf share (median) |
+|---|---|---|---|---|---|---|
+""" + "\n".join(_r(x) for x in ("nathan_headline", "nathan_headline_ocean", "baseline", "baseline_ocean")) + """
+
+![ocean comparison](results/ocean_comparison.png)
+""")
 L.append("## Caveats\n")
 L.append("""* **Prior-dominated.** Defensible priors move the median by more than 20 orders of magnitude (`snyder_beattie_priors` 5.5e-21 vs the headline). Read medians as summaries of the stated uncertainty, not measurements.
 * **The headline assumes Earth's timeline is typical** and skips the observer-selection correction. ESI measures only bulk size, density, escape velocity and temperature; the temperature is assumed from insolation (Earth-like albedo and greenhouse). It says nothing about biology.
@@ -133,6 +148,7 @@ L.append("""* **Prior-dominated.** Defensible priors move the median by more tha
 * **Several brackets are ASSUMED:** M-dwarf penalties, sterilisation rate, recurrence, self-inflicted risk, metallicity ramp, moon-host fraction. The Rare-Earth multipliers are treated as independent.
 * **Species counts** assume Earth's hominin radiation is typical: on average 2.38 coexisting species, 15 over ~3.3 Myr (Smithsonian Human Origins). They depend on how finely taxonomists split species.
 * **Spacing assumptions.** Nearest-neighbour distances assume random placement in a 50,000-ly-radius, 1,000-ly-thick disk (≈7.9e12 ly³, a user-supplied figure). Below 1 expected world they are formal only.
+* **Ocean path.** `f_ocean_fecundity` and `p_ocean_to_industrial` are ASSUMED; a stalled ocean lineage is assumed to keep the same episode length as a full stage chain. It adds many pre-industrial worlds but few radio-capable ones.
 """ + v2.caveats() + """* **Sample sizes.** 2e5–1e6 per scenario. Importance-weighted scenarios have smaller effective sample sizes (see `results_summary.md`).
 """)
 if os.path.exists("seti/summary.json"):

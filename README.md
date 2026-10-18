@@ -23,7 +23,7 @@ Headline histogram: [`results/hist_log10N.png`](results/hist_log10N.png) · sens
 
 ## Multi-spectral and multiphase breakdowns (v2 model)
 
-Suggested by a friend of Nathan's (Oct 2026). Re-run with the v2 model (2e5 samples each): `baseline`, `baseline_no_exomoons`, `nathan_headline`, `nathan_headline_no_superhab`, `nathan_headline_no_tooluse`. Every other scenario is still the v1 model (two host classes, G/K and M, and one stone-age-or-greater phase).
+Suggested by a friend of Nathan's (Oct 2026). Re-run with the v2 model (2e5 samples each): `baseline`, `baseline_no_exomoons`, `nathan_headline`, `nathan_headline_no_superhab`, `nathan_headline_no_tooluse`, `nathan_headline_ocean`, `baseline_ocean`. Every other scenario is still the v1 model (two host classes, G/K and M, and one stone-age-or-greater phase).
 
 Change in the median N_now from v1 to v2: `nathan_headline` 3.18e+03 (v1) → 2.39e+03 (v2); `baseline` 0.00238 (v1) → 0.00357 (v2). The v2 total adds F stars, splits G from K (K now has its own, higher η⊕ and longer habitable window), adds K-activity and F-UV penalties and per-type ESI weights, and adds stage-specific collapse hazards after the lithic stage.
 
@@ -117,7 +117,7 @@ Inside each tool-using episode a world moves through **lithic → agricultural �
 
 **Literature baseline (`baseline`).** Hard-step expected times are log-uniform over 1e-3–1e3 Gyr, then updated on Earth's dated fossil record with the observer-selection correction of Snyder-Beattie et al. 2021, which favours slow, rare steps. **The choice between these two framings explains most of the ~6-orders-of-magnitude gap between the two headline numbers.**
 
-**Archive inputs** (pscomppars, re-pulled 14 Oct 2026 (6,445 confirmed planets, unchanged since the 12 Oct pull; HZ-rocky 23 conservative / 37 optimistic, ESI and superhabitable lists unchanged): 6,375 confirmed planets):
+**Archive inputs** (pscomppars, re-pulled 14 Oct 2026 (6,445 confirmed planets, unchanged since the 12 Oct pull; HZ-rocky 23 conservative / 37 optimistic, ESI and superhabitable lists unchanged): 6,445 confirmed planets):
 * HZ rocky planets (R < 1.8 R⊕): 23 conservative and 37 optimistic, or 26 and 41 including TRAPPIST-1 with Teff clamped to 2600 K.
 * Mean ESI: 0.849 (conservative) and 0.865 (optimistic).
 * Top ESI: Teegarden's Star b 0.979, TOI-700 d 0.942, Kepler-1649 c 0.940, GJ 3378 b 0.938, TOI-700 e 0.932, GJ 1002 b 0.926.
@@ -212,7 +212,7 @@ Ranges marked **ASSUMED** have no quantitative literature value. **USER** marks 
 
 ## Source provenance
 
-Every sourced variable in [`params.yaml`](params.yaml), classified from its `source` field: **literature-sourced** (value or range taken or derived from cited published data), **literature + ASSUMED element** (cited data, but the mapping onto the model variable or part of the range is a judgement), **user-supplied** (Nathan's own inputs) and **ASSUMED** (no usable quantitative literature value; the reason is in the source text). Counts: literature-sourced 56, literature + ASSUMED element 12, user-supplied 4, ASSUMED 16.
+Every sourced variable in [`params.yaml`](params.yaml), classified from its `source` field: **literature-sourced** (value or range taken or derived from cited published data), **literature + ASSUMED element** (cited data, but the mapping onto the model variable or part of the range is a judgement), **user-supplied** (Nathan's own inputs) and **ASSUMED** (no usable quantitative literature value; the reason is in the source text). Counts: literature-sourced 58, literature + ASSUMED element 12, user-supplied 4, ASSUMED 18.
 
 <details><summary>Full provenance table (click to expand)</summary>
 
@@ -265,6 +265,8 @@ Every sourced variable in [`params.yaml`](params.yaml), classified from its `sou
 | `hard_steps.eukaryogenesis` | literature-sourced | Betts+2018 via Snyder-Beattie+2021 Table 1 (<1.84 Ga) | https://pmc.ncbi.nlm.nih.gov/articles/PMC7997718/ |
 | `hard_steps.complex_multicellularity` | literature-sourced | Knoll 2011 Annu.Rev.EPS (animal complex multicellularity, Ediacaran) | https://www.annualreviews.org/content/journals/10.1146/annurev.earth.031208.100209 |
 | `hard_steps.stone_tool_intelligence` | literature-sourced | Harmand+2015 Nature (Lomekwi 3, 3.3 Ma) | https://www.nature.com/articles/nature14464 |
+| `scenarios.nathan_headline_ocean.independent_params.f_ocean_world_gk` | literature-sourced | Simpson 2017 MNRAS 468, 2803 (arXiv:1607.03095): >99% confidence that most habitable planets are water-dominated (f_w>50%); 95% credible that most are >90% … | https://arxiv.org/abs/1607.03095 |
+| `scenarios.nathan_headline_ocean.independent_params.f_ocean_world_m` | literature-sourced | Tian & Ida 2015 Nat.Geosci. 8, 177: ocean planets 60/292 HZ Earth-mass planets (0.5 Msun) and 31/55 (0.3 Msun); the rest mostly desert. Water-world … | https://www.nature.com/articles/ngeo2372 |
 | `species.species_concurrent_per_tool_world` | literature-sourced | Derived from Smithsonian Human Origins 'When Lived' spans (21 species; 15 have fossils <=3.3 Ma): over 3.3 Ma-present the mean number of coexisting hominin … | https://humanorigins.si.edu/evidence/human-fossils/species |
 | `species.species_cumulative_per_tool_world` | literature-sourced | Smithsonian list: 8 Homo species, 15 hominin species with fossils in the stone-tool era (best); Wikipedia 'List of Homo species' names 16 Homo species incl. … | https://humanorigins.si.edu/evidence/human-fossils/species |
 | `species.context_total_named_species` | literature-sourced | VERIFIED: Catalogue of Life estimates ~2.3M extant species recognised by taxonomists; COL Base Release 2026-07-14 lists 2,258,977 accepted species (incl. … | https://www.checklistbank.org/dataset/278910 |
@@ -305,6 +307,8 @@ Every sourced variable in [`params.yaml`](params.yaml), classified from its `sou
 | `multiphase.stage_q_regress` | ASSUMED | ASSUMED (no quantitative literature). Earth's regional collapses mostly regressed rather than ended lineages (Tainter 1988) | https://www.cambridge.org/core/books/collapse-of-complex-societies/ |
 | `scenarios.nathan_headline.f_superhab` | ASSUMED | ASSUMED bracket around an Archive-derived 0.104 = P(1.0<=R<=1.5 given HZ, R<2) 25/49 x P(T_surf 282-302 K given HZ, R<2) 10/49 (superhab.py; independence … | https://pmc.ncbi.nlm.nih.gov/articles/PMC7757576/ |
 | `scenarios.nathan_headline.superhab_boost` | ASSUMED | ASSUMED (user-suggested 1-3x). Schulze-Makuch+2020 and Heller & Armstrong 2014 (Astrobiology 14, 50) argue qualitatively for higher habitability/biomass but … | https://doi.org/10.1089/ast.2013.1088 |
+| `scenarios.nathan_headline_ocean.independent_params.f_ocean_fecundity` | ASSUMED | ASSUMED. Lingam, Balbi & Mahajan 2023 ApJ 945, 23 (arXiv:2305.05989): to keep humans Copernican, either the TI emergence rate is much lower in ocean … | https://arxiv.org/abs/2305.05989 |
+| `scenarios.nathan_headline_ocean.independent_params.p_ocean_to_industrial` | ASSUMED | ASSUMED, wide. Barrier: fire, smelting and metallurgy need open-air combustion (pO2 >= 18%, Balbi & Frank 2024 Nat.Astron. 8, 39, arXiv:2308.01160); Lingam, … | https://arxiv.org/abs/2305.05989 |
 | `classic_static.f_stone` | ASSUMED | ASSUMED (replaces fc): fraction of intelligent lineages reaching habitual stone-tool use | https://www.pnas.org/doi/10.1073/pnas.0607909104 |
 
 </details>
@@ -325,6 +329,8 @@ Every sourced variable in [`params.yaml`](params.yaml), classified from its `sou
 | **nathan_headline** (headline) [v2] | 200000 | 2.39e+03 | 12.8 – 3.55e+05 | 5.72e+05 | 0.028 | 5.37e+03 | 5.16e+04 | 818 |
 | nathan_headline_no_superhab [v2] | 200000 | 2.21e+03 | 11.8 – 3.26e+05 | 5.22e+05 | 0.029 | 4.94e+03 | 4.82e+04 | 840 |
 | nathan_headline_no_tooluse [v2] | 200000 | 622 | 2.81 – 1.15e+05 | 2.54e+05 | 0.063 | 1.41e+03 | 4.86e+04 | 1.67e+03 |
+| nathan_headline_ocean [v2] | 200000 | 2.82e+04 | 294 – 1.62e+06 | 1.37e+06 | 0.002 | 6.34e+04 | 5.87e+05 | 359 |
+| baseline_ocean [v2] | 200000 | 0.0413 | 1.45e-05 – 83.9 | 5.68e+03 | 0.703 | 0.0926 | 27.1 | 2.05e+05 (N<1) |
 | classic_static_SDO_style | 1000000 | 28.8 | 3.14e-60 – 1.49e+06 | 8.05e+06 | 0.465 | 61.8 | – | 7.75e+03 |
 
 Effect of the headline's new factors (paired draws): without superhabitability the median is 2.21e+03 (headline ×1.08); without cross-lineage tool use it is 622 (×3.84).
@@ -343,6 +349,19 @@ Scenario definitions are in `params.yaml` under `scenarios:`. Full statistics, s
 * **Most of these worlds would still be in the stone age.** In the stage breakdown, most tool-using time is spent in the lithic stage, because Earth took 3.3 Myr to get from stone tools to farming. Radio-capable worlds number about **38.8** in the headline (P(N<1) ≈ 27%) and **5.34e-05** in the literature baseline.
 * **K dwarfs dominate.** Orange K stars supply most of N in both framings (87% headline, 85% baseline). They are ~1.4–4.5× more common than G stars, have a higher η⊕ range and long habitable windows. M dwarfs are ~6–10× more numerous than K dwarfs but carry the flare and tidal-locking/water-loss penalties. The superhabitability boost (K only) adds just a few percentage points. F stars contribute ~0.1%: they are rare (~2–3% of stars), their continuously-habitable-zone windows (1.4–5 Gyr, Cuntz & Guinan 2016) are mostly shorter than the ~4-Gyr Earth-like path to tool use, and they carry a UV penalty.
 
+## Ocean-intelligence path (2026-10-17)
+
+Tool-using intelligence is not required to arise on land. The `*_ocean` scenarios add an **ocean path**: ocean-dominated worlds (FGK: `f_ocean_world_gk` 0.5–1, Simpson 2017; M: `f_ocean_world_m` 0.21–0.56, Tian & Ida 2015, Luque & Pallé 2022), each capped at 1 − (land-path fraction) so no body is counted twice, times an ASSUMED `f_ocean_fecundity` (0.01–1). `f_m_water` and `f_land_and_ocean` apply only to the land path. The tool-use step is unchanged (octopus and dolphin tool use are already counted in `n_tool_origins`). Ocean lineages reach industry, and so radio and spaceflight, only with `p_ocean_to_industrial` (ASSUMED log-uniform 1e-4–0.3; fire/metallurgy barrier: Lingam, Balbi & Mahajan 2023; Balbi & Frank 2024); the rest stay pre-industrial. The ocean parameters come from a separate random stream, so every other draw is identical to the parent scenario (paired comparison).
+
+| scenario | median N_now | 10–90% | width (dex) | P(N<1) | radio-capable median (10–90%) | M-dwarf share (median) |
+|---|---|---|---|---|---|---|
+| `nathan_headline` | 2.39e+03 | 12.8–3.55e+05 | 4.44 | 0.028 | 38.8 (0.0197–4.81e+04) | 0.0038 |
+| `nathan_headline_ocean` | 2.82e+04 | 294–1.62e+06 | 3.74 | 0.002 | 61.1 (0.0361–6.35e+04) | 0.0363 |
+| `baseline` | 0.00357 | 8.58e-07–11.1 | 7.11 | 0.813 | 5.34e-05 (3.09e-09–0.863) | 0.0044 |
+| `baseline_ocean` | 0.0413 | 1.45e-05–83.9 | 6.76 | 0.703 | 8.81e-05 (5.34e-09–1.25) | 0.0408 |
+
+![ocean comparison](results/ocean_comparison.png)
+
 ## Caveats
 
 * **Prior-dominated.** Defensible priors move the median by more than 20 orders of magnitude (`snyder_beattie_priors` 5.5e-21 vs the headline). Read medians as summaries of the stated uncertainty, not measurements.
@@ -354,6 +373,7 @@ Scenario definitions are in `params.yaml` under `scenarios:`. Full statistics, s
 * **Several brackets are ASSUMED:** M-dwarf penalties, sterilisation rate, recurrence, self-inflicted risk, metallicity ramp, moon-host fraction. The Rare-Earth multipliers are treated as independent.
 * **Species counts** assume Earth's hominin radiation is typical: on average 2.38 coexisting species, 15 over ~3.3 Myr (Smithsonian Human Origins). They depend on how finely taxonomists split species.
 * **Spacing assumptions.** Nearest-neighbour distances assume random placement in a 50,000-ly-radius, 1,000-ly-thick disk (≈7.9e12 ly³, a user-supplied figure). Below 1 expected world they are formal only.
+* **Ocean path.** `f_ocean_fecundity` and `p_ocean_to_industrial` are ASSUMED; a stalled ocean lineage is assumed to keep the same episode length as a full stage chain. It adds many pre-industrial worlds but few radio-capable ones.
 * **Multi-spectral (v2).** The K-activity and F-UV penalties, the F-star HZ-giant rate, and the mass bins behind the Kroupa fractions are ASSUMED. The F-star η⊕ low end is scaled from the Kepler F/G small-planet occurrence ratio (Kunimoto & Matthews 2020), not measured in the HZ; K and F habitable windows are continuously-habitable-zone durations from Cuntz & Guinan 2016. Per-type ESI lists are tiny (M 22, K 3, G 1, F 0 conservative HZ planets), so G and F use the pooled list. The K share comes mainly from K stars being ~1.4–4.5× more common than G stars with a higher η⊕ range, and from the M-dwarf penalties; the K-only superhabitability boost moves the K share by only ~2–3 percentage points.
 * **Multiphase (v2).** Stage advance times are Earth/10 to Earth×10 around one Earth history; the agricultural and industrial collapse hazards and the regress fraction are ASSUMED; the radio and spacefaring hazards reuse Sandberg, Drexler & Ord 2018's 1e2–1e10 yr lifetime prior. Stage shares use the long-run (stationary) occupancy of the stage chain, which ignores worlds that started their tool-using phase within the last few Myr. The stage-specific hazards are added on top of the v1 self-inflicted hazard `r_self_per_gyr`, so some self-inflicted risk may be counted twice (conservative for N).
 * **Sample sizes.** 2e5–1e6 per scenario. Importance-weighted scenarios have smaller effective sample sizes (see `results_summary.md`).

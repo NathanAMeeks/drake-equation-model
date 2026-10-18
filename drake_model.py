@@ -169,11 +169,17 @@ class Model:
             specs[name] = {**specs.get(name, {}), **s}
         for name, s in self.scn.get("extra_params", {}).items():   # scenario-only parameters (drawn last => pairing kept)
             specs[name] = s
+        for name, s in self.scn.get("independent_params", {}).items():   # drawn from a separate RNG stream => main stream identical to parent
+            specs[name] = s
         return specs
 
     def draw(self, n, rng):
-        extra = self.scn.get("extra_params", {})
-        P = {k: sample(v, n, rng) for k, v in self.param_specs().items() if k not in extra}
+        extra = self.scn.get("extra_params", {}); indep = self.scn.get("independent_params", {})
+        P = {k: sample(v, n, rng) for k, v in self.param_specs().items() if k not in extra and k not in indep}
+        if indep:
+            if not hasattr(self, "_rng_indep"):
+                self._rng_indep = np.random.default_rng(int(self.cfg["run"]["seed"]) + 7919)
+            for k, v in indep.items(): P[k] = sample(v, n, self._rng_indep)
         sim = self.scn.get("similarity")
         if sim:   # per-sample bootstrap mean of ESI^k over the Archive HZ-rocky population (aux_* = other variants)
             E = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), sim["esi_file"])))
@@ -246,13 +252,30 @@ class Model:
             for c in cls:
                 wc = P.get(f"w_similarity_{c}", P["w_similarity"])
                 mult[c] = mult[c] * wc; multm[c] = multm[c] * wc
-        if "f_superhab" in P:     # superhabitable fraction: step-success probability x boost (capped at 1); planets only, not moons
+        # ocean-intelligence path (scenario flag ocean_path): habitable bodies whose surface is ocean-dominated.
+        # Land path = existing multipliers (f_land_and_ocean, and f_m_water for M). Ocean path replaces those two
+        # land-only factors by O_c = min(f_ocean_world_x, 1 - L_c) x f_ocean_fecundity, so land + ocean fractions
+        # of the same bodies can never exceed 1 (no double counting).
+        ocean = bool(self.scn.get("ocean_path", False))
+        if ocean:
+            land_only = self.scn.get("ocean_replaces", ["f_land_and_ocean", "f_m_water"])
+            act = self.active_multipliers(); mult_o, multm_o = {}, {}
+            for c in cls:
+                Lc = np.ones(n)
+                for nm in land_only:
+                    if nm in act and c in self._targets(act[nm]): Lc = Lc * P[nm]
+                Ow = P["f_ocean_world_m"] if c in ("m", "M") else P["f_ocean_world_gk"]
+                Oc = np.minimum(Ow, 1.0 - Lc) * P["f_ocean_fecundity"]
+                r = Oc / Lc
+                mult_o[c] = mult[c] * r; multm_o[c] = multm[c] * r
+        sh = (self.cfg["star_classes"].get("superhab_classes", ["K"]) if self.ms else ["gk"]) if "f_superhab" in P else []
+        for c in sh:     # superhabitable fraction: step-success probability x boost (capped at 1); planets only, not moons
             f = P["f_superhab"]
-            for c in (self.cfg["star_classes"].get("superhab_classes", ["K"]) if self.ms else ["gk"]):
-                mult[c] = (1 - f) * mult[c] + f * np.minimum(mult[c] * P["superhab_boost"], 1.0)
+            mult[c] = (1 - f) * mult[c] + f * np.minimum(mult[c] * P["superhab_boost"], 1.0)
+            if ocean: mult_o[c] = (1 - f) * mult_o[c] + f * np.minimum(mult_o[c] * P["superhab_boost"], 1.0)
         moon = P.get("f_exomoon_host", np.zeros(n)) * P.get("f_exomoon_habitable", np.ones(n))
         base = sfr * 1e9 * dt * col(P["stars_per_msun"] * P["fp"] * P["f_ghz"]) * fZ
-        pl, th, moon_share = {}, {}, {}
+        pl, th, moon_share, pl_o = {}, {}, {}, {}
         for c in cls:
             if self.ms:
                 d = self.cfg["star_classes"]["classes"][c]
@@ -265,6 +288,8 @@ class Model:
             ne_eff = ne * mult[c] + ng * moon * multm[c]
             moon_share[c] = np.where(ne_eff > 0, ng * moon * multm[c] / np.where(ne_eff > 0, ne_eff, 1), 0.0)
             pl[c] = base * col(fs * ne_eff * pen); th[c] = thc
+            if ocean:
+                pl_o[c] = base * col(fs * (ne * mult_o[c] + ng * moon * multm_o[c]) * pen)
         # ---- 3. hard-step delay distribution g(d) via analytic DFTs
         G = np.ones((n, self.M // 2 + 1), dtype=complex)
         taus = np.stack([P["tau_" + s["name"]] for s in self.steps], axis=1)
@@ -304,22 +329,28 @@ class Model:
         Mc = self.Mc
         F = lambda x: np.fft.rfft(x, n=Mc)
         surv = np.exp(-(H[:, -1:] - H))[:, ::-1]           # indexed by age
-        Fsum = 0; Nnow_c, Never_c = {}, {}
+        Fsum = 0; Nnow_c, Never_c, Nnow_o = {}, {}, {}
         for c in cls:
-            Fc = F(pl[c] * eH) * F(Q * (age[None, :] < col(th[c])))
-            Fsum = Fsum + Fc
+            QW = F(Q * (age[None, :] < col(th[c])))
+            Fc = F(pl[c] * eH) * QW
             Nnow_c[c] = np.clip(np.fft.irfft(Fc, n=Mc)[:, I - 1], 0, None) * np.exp(-H[:, -1])
             # worlds that EVER produced tool users by now (archaeological form, Frank & Sullivan 2016)
             cg = np.where(age[None, :] < col(th[c]), cdf_g,
                           np.take_along_axis(cdf_g, np.minimum((col(th[c]) / dt).astype(int), I - 1), 1))
             Never_c[c] = (pl[c][:, ::-1] * cg * surv).sum(1)
+            if ocean:   # N is linear in planet production, so the ocean path is the same kernel on pl_o
+                Fo = F(pl_o[c] * eH) * QW; Fc = Fc + Fo
+                Nnow_o[c] = np.clip(np.fft.irfft(Fo, n=Mc)[:, I - 1], 0, None) * np.exp(-H[:, -1])
+                Nnow_c[c] = Nnow_c[c] + Nnow_o[c]
+                Never_c[c] = Never_c[c] + (pl_o[c][:, ::-1] * cg * surv).sum(1)
+            Fsum = Fsum + Fc
         Nt = np.clip(np.fft.irfft(Fsum, n=Mc)[:, :I], 0, None) * np.exp(-H)
         N_now = Nt[:, -1].copy()
         N_ever = sum(Never_c.values())
         th0 = th[cls[0]] if not self.ms else th["G"]
         out = dict(N_now=N_now, N_timeavg=Nt.mean(1), N_peak=Nt.max(1),
                    t_peak=t[np.argmax(Nt, 1)], N_ever=N_ever, logw=logw,
-                   N_now_gk=None, n_hab_total=sum(p.sum(1) for p in pl.values()),
+                   N_now_gk=None, n_hab_total=sum(p.sum(1) for p in pl.values()) + (sum(p.sum(1) for p in pl_o.values()) if ocean else 0),
                    p_tool_gk_window=np.take_along_axis(cdf_g, np.minimum((col(th0) / dt).astype(int), I - 1), 1)[:, 0])
         tot = sum(Nnow_c.values())
         sun_like = [c for c in cls if c != "m" and c != "M"]
@@ -328,13 +359,23 @@ class Model:
         if self.ms:
             for c in cls:
                 out[f"N_now_{c}"] = Nnow_c[c]; out[f"N_ever_{c}"] = Never_c[c]; out[f"exomoon_share_{c}"] = moon_share[c]
-                out[f"n_hab_{c}"] = pl[c].sum(1)
+                out[f"n_hab_{c}"] = pl[c].sum(1) + (pl_o[c].sum(1) if ocean else 0)
         if self.mp:
             out["L_episode_yr"] = 1e9 / alpha
             for nm, ph in stage_out.items():
                 out[f"phi_{nm}"] = ph; out[f"N_now_stage_{nm}"] = N_now * ph
+            if ocean:   # ocean lineages reach industrial+ only with prob p_ocean_to_industrial; the rest stay agricultural-equivalent
+                No = sum(Nnow_o.values()); Nl = N_now - No; p = P["p_ocean_to_industrial"]
+                stalled = 0.0
+                for nm in self.stages[self.stages.index("industrial"):]:
+                    out[f"N_now_stage_{nm}"] = Nl * stage_out[nm] + No * stage_out[nm] * p
+                    stalled = stalled + No * stage_out[nm] * (1 - p)
+                out["N_now_stage_agricultural"] = out["N_now_stage_agricultural"] + stalled
+        if ocean:
+            out["N_now_ocean"] = sum(Nnow_o.values())
+            out["ocean_share"] = np.where(N_now > 0, out["N_now_ocean"] / np.where(N_now > 0, N_now, 1), np.nan)
         # mean planet age-at-formation of habitable planets (sanity vs Lineweaver 2001)
-        w_age = sum(pl.values())
+        w_age = sum(pl.values()) + (sum(pl_o.values()) if ocean else 0)
         out["mean_planet_age"] = (w_age * (T - t)[None, :]).sum(1) / w_age.sum(1)
         return out, Nt
 

@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-10-18
+
+Ocean-intelligence path. Adds paired `*_ocean` scenarios so tool-using intelligence is not required to arise on land. Land-parent medians are unchanged from 2026-10-14; the new scenarios share every non-ocean draw with their parent (separate RNG stream).
+
+**Model / parameter changes**
+- Split land vs ocean: `f_land_and_ocean` and `f_m_water` apply only to the land path; ocean-dominated worlds use `f_ocean_world_gk` (FGK, uniform 0.5–1; Simpson 2017) and `f_ocean_world_m` (M, uniform 0.21–0.56; Tian & Ida 2015, Luque & Pallé 2022), each capped at 1 − (land-path fraction).
+- New ASSUMED multipliers: `f_ocean_fecundity` (loguniform 0.01–1) and `p_ocean_to_industrial` (loguniform 1e-4–0.3; fire/metallurgy barrier: Lingam, Balbi & Mahajan 2023; Balbi & Frank 2024). Ocean lineages that fail the industrial gate stay pre-industrial.
+- New scenarios: `nathan_headline_ocean` (parent `nathan_headline`) and `baseline_ocean` (parent `baseline`). Tool-use step unchanged (octopus/dolphin already in `n_tool_origins`).
+- Artifacts: `results/ocean_comparison.png`, best/hist/tornado for both ocean scenarios, `tools/ocean_chart.py`, README ocean section + provenance rows, updated `params.yaml` / `drake_model.py` / `results.json` / `results_summary.md`.
+
+**Medians N_now (10–90%, width in dex), land parent → ocean variant**
+- nathan_headline → nathan_headline_ocean: 2.39e3 (12.8–3.55e5, 4.44) → 2.82e4 (294–1.62e6, 3.74)
+- baseline → baseline_ocean: 3.57e-3 (8.58e-7–11.1, 7.11) → 4.13e-2 (1.45e-5–83.9, 6.76)
+- radio-capable, headline → ocean: 38.8 (0.0197–4.81e4) → 61.1 (0.0361–6.35e4)
+- radio-capable, baseline → ocean: 5.34e-5 (3.09e-9–0.863) → 8.81e-5 (5.34e-9–1.25)
+
+Ocean path raises total stone-age-or-greater worlds ~12× but only modestly raises radio-capable counts, because most ocean lineages stall before industry.
+
 ## 2026-10-14
 
 Weekly update (also covers the interrupted 12 Oct run). All 11 scenarios rerun at n = 200,000. "Old" = published 2026-10-06 values.

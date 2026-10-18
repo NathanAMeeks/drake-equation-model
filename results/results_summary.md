@@ -2,7 +2,7 @@
 
 **Headline scenario: `nathan_headline`** (user-approved). Literature baseline for comparison: `baseline`.
 
-Model versions: **v2** (multi-spectral M/K/G/F host classes + multiphase civilisation stages) for `baseline`, `baseline_no_exomoons`, `nathan_headline`, `nathan_headline_no_superhab`, `nathan_headline_no_tooluse`; all other scenarios are **v1** (two host classes G/K + M, single stone-age-or-greater phase). v1 numbers for the re-run scenarios are kept in results/v1/.
+Model versions: **v2** (multi-spectral M/K/G/F host classes + multiphase civilisation stages) for `baseline`, `baseline_no_exomoons`, `nathan_headline`, `nathan_headline_no_superhab`, `nathan_headline_no_tooluse`, `nathan_headline_ocean`, `baseline_ocean`; all other scenarios are **v1** (two host classes G/K + M, single stone-age-or-greater phase). v1 numbers for the re-run scenarios are kept in results/v1/.
 
 N = expected number of Milky Way worlds with stone-age-or-greater tool users alive at the same time (present day, other than Earth). Percentiles are over parameter uncertainty (posterior after the Earth-timing update where enabled).
 
@@ -19,6 +19,8 @@ N = expected number of Milky Way worlds with stone-age-or-greater tool users ali
 | nathan_headline | 2.39e+03 | 5.72e+05 | 12.8 | 3.55e+05 | 0.028 | 0.024 | 0.023 | median 924 / mean 2.24e+05 | 5.16e+04 | 200000 |
 | nathan_headline_no_superhab | 2.21e+03 | 5.22e+05 | 11.8 | 3.26e+05 | 0.029 | 0.025 | 0.024 | median 859 / mean 2.06e+05 | 4.82e+04 | 200000 |
 | nathan_headline_no_tooluse | 622 | 2.54e+05 | 2.81 | 1.15e+05 | 0.063 | 0.054 | 0.040 | median 229 / mean 9.36e+04 | 4.86e+04 | 200000 |
+| nathan_headline_ocean | 2.82e+04 | 1.37e+06 | 294 | 1.62e+06 | 0.002 | 0.002 | 0.003 | median 1.09e+04 / mean 5.32e+05 | 5.87e+05 | 200000 |
+| baseline_ocean | 0.0413 | 5.68e+03 | 1.45e-05 | 83.9 | 0.703 | 0.665 | 0.062 | median 0.00771 / mean 1.56e+03 | 27.1 | 13890 |
 | classic_static_SDO_style | 28.8 | 8.05e+06 | 3.14e-60 | 1.49e+06 | 0.465 | 0.463 | 0.007 | (static) | – | – |
 
 ## Worlds vs tool-using species (species_per_tool_world)
@@ -38,6 +40,8 @@ species_now = N_now x concurrent hominin-grade species per tool world (log-unifo
 | nathan_headline | 2.39e+03 | 5.37e+03 | 27.6 – 8.20e+05 | 1.41e+06 | 5.16e+04 | 6.05e+05 | 3.54e+04 |
 | nathan_headline_no_superhab | 2.21e+03 | 4.94e+03 | 25.5 – 7.56e+05 | 1.29e+06 | 4.82e+04 | 5.67e+05 | 3.32e+04 |
 | nathan_headline_no_tooluse | 622 | 1.41e+03 | 6.08 – 2.65e+05 | 6.24e+05 | 4.86e+04 | 5.72e+05 | 7.08e+03 |
+| nathan_headline_ocean | 2.82e+04 | 6.34e+04 | 633 – 3.76e+06 | 3.38e+06 | 5.87e+05 | 6.91e+06 | 2.35e+05 |
+| baseline_ocean | 0.0413 | 0.0926 | 3.15e-05 – 187 | 1.86e+04 | 27.1 | 320 | 5.25e+04 |
 | classic_static_SDO_style | 28.8 | 61.8 | 6.93e-60 – 3.40e+06 | 2.00e+07 | – | – | – |
 
 ## Similarity-weight variants — similarity_weighted
@@ -125,6 +129,23 @@ p = ESI^k per body; weight = bootstrap mean over the Archive HZ-rocky ESI popula
 | optimistic_k3 | 0.655 | 479 | 1.96e+05 | 2.17 – 8.9e+04 | 0.071 | 0.043 | 3.75e+04 |
 | optimistic_k5 | 0.505 | 369 | 1.51e+05 | 1.67 – 6.86e+04 | 0.080 | 0.047 | 2.89e+04 |
 
+## Similarity-weight variants — nathan_headline_ocean
+
+p = ESI^k per body; weight = bootstrap mean over the Archive HZ-rocky ESI population (conservative n=26 / optimistic n=41). Approximate rescaling of the same draws by the pooled-weight ratio (v2 uses per-type weights for M and K, whose means are within 0.01 of the pooled mean).
+
+| population, exponent | median weight | median N_now | mean | 10th–90th | P(N<1) | P(1<=N<=3) | median N_ever |
+|---|---|---|---|---|---|---|---|
+| conservative_k1 | 0.850 | 2.82e+04 | 1.37e+06 | 294 – 1.62e+06 | 0.002 | 0.003 | 5.87e+05 |
+| conservative_k10 | 0.243 | 8.02e+03 | 3.93e+05 | 83.7 – 4.61e+05 | 0.005 | 0.008 | 1.67e+05 |
+| conservative_k2 | 0.725 | 2.41e+04 | 1.17e+06 | 250 – 1.38e+06 | 0.002 | 0.003 | 5.01e+05 |
+| conservative_k3 | 0.623 | 2.07e+04 | 1.00e+06 | 215 – 1.19e+06 | 0.002 | 0.004 | 4.30e+05 |
+| conservative_k5 | 0.466 | 1.54e+04 | 7.50e+05 | 161 – 8.87e+05 | 0.003 | 0.005 | 3.21e+05 |
+| optimistic_k1 | 0.865 | 2.88e+04 | 1.39e+06 | 299 – 1.65e+06 | 0.002 | 0.003 | 5.98e+05 |
+| optimistic_k10 | 0.281 | 9.35e+03 | 4.53e+05 | 96.7 – 5.36e+05 | 0.005 | 0.007 | 1.94e+05 |
+| optimistic_k2 | 0.751 | 2.5e+04 | 1.21e+06 | 260 – 1.43e+06 | 0.002 | 0.003 | 5.19e+05 |
+| optimistic_k3 | 0.655 | 2.18e+04 | 1.05e+06 | 227 – 1.25e+06 | 0.002 | 0.004 | 4.52e+05 |
+| optimistic_k5 | 0.505 | 1.68e+04 | 8.13e+05 | 175 – 9.64e+05 | 0.003 | 0.004 | 3.49e+05 |
+
 ## nathan_headline: effect of each new factor (paired draws: per comparison (see table))
 
 | comparison | median N_now of comparison | nathan_headline median / comparison median | per-sample log10(N_headline/N_comparison): median [10th, 90th] |
@@ -164,6 +185,16 @@ Each host type has its own star fraction (RECONS / Kroupa IMF), eta-Earth, habit
 | nathan_headline_no_tooluse | G | 57.8 | 0.256 – 1.1e+04 | 2.79e+04 | 0.170 | 11.0% | 9.9% [2.9, 27.5] | 1.06e+04 | 208 | 0.85 |
 | nathan_headline_no_tooluse | F | 0.301 | 0.00108 – 72.6 | 299 | 0.608 | 0.1% | 0.1% [0.0, 0.5] | 401 | 0.86 | 0.85 |
 | nathan_headline_no_tooluse | **all** | 622 | 2.81 – 1.15e+05 | 2.54e+05 | 0.063 | 100% | – | 4.86e+04 | 2.98e+03 | – |
+| nathan_headline_ocean | M | 913 | 7.12 – 7.4e+04 | 1.14e+05 | 0.036 | 8.4% | 3.6% [0.4, 22.4] | 1.61e+04 | 5.39e+03 | 0.849 |
+| nathan_headline_ocean | K | 2.2e+04 | 224 – 1.28e+06 | 1.11e+06 | 0.002 | 80.8% | 82.6% [59.6, 93.9] | 3.85e+05 | 8.63e+04 | 0.841 |
+| nathan_headline_ocean | G | 2.52e+03 | 25.9 – 1.53e+05 | 1.46e+05 | 0.014 | 10.7% | 9.5% [2.9, 26.1] | 1.21e+05 | 7.05e+03 | 0.85 |
+| nathan_headline_ocean | F | 16.4 | 0.134 – 1.32e+03 | 1.8e+03 | 0.226 | 0.1% | 0.1% [0.0, 0.5] | 5.86e+03 | 38.1 | 0.85 |
+| nathan_headline_ocean | **all** | 2.82e+04 | 294 – 1.62e+06 | 1.37e+06 | 0.002 | 100% | – | 5.87e+05 | 9.88e+04 | – |
+| baseline_ocean | M | 0.0015 | 4.65e-07 – 3.73 | 853 | 0.857 | 15.0% | 4.1% [0.5, 25.0] | 0.911 | 1.28e+03 | – |
+| baseline_ocean | K | 0.0342 | 1.19e-05 – 68.2 | 4.41e+03 | 0.714 | 77.6% | 88.5% [64.7, 97.3] | 20.6 | 1.92e+04 | – |
+| baseline_ocean | G | 0.00126 | 3.89e-07 – 3.36 | 413 | 0.862 | 7.3% | 3.6% [0.5, 17.2] | 2.67 | 1.54e+03 | – |
+| baseline_ocean | F | 1.17e-06 | 2.51e-10 – 0.00458 | 3.95 | 0.984 | 0.1% | 0.0% [0.0, 0.1] | 0.00982 | 6.38 | – |
+| baseline_ocean | **all** | 0.0413 | 1.45e-05 – 83.9 | 5.68e+03 | 0.703 | 100% | – | 27.1 | 2.2e+04 | – |
 
 Top Archive planets by ESI per host type (Kopparapu+2014 HZ, R < 1.8 R_earth; conservative / optimistic counts):
 
@@ -210,6 +241,18 @@ Stage chain inside each tool-using episode: lithic -> agricultural -> industrial
 | nathan_headline_no_tooluse | radio | 0.00567 | 1.53e-05 – 1.49 | 10.2 | 0.882 | 8.51e-06 [5.05e-07, 1.57e-04] | 0.0622 |
 | nathan_headline_no_tooluse | spacefaring | 9.18 | 0.00392 – 1.65e+04 | 1.25e+05 | 0.362 | 0.0202 [1.42e-04, 0.797] | 865 |
 | nathan_headline_no_tooluse | **radio-capable (radio + spacefaring)** | 9.59 | 0.00438 – 1.66e+04 | 1.25e+05 | 0.358 | – | 865 |
+| nathan_headline_ocean | lithic | 1.75e+04 | 235 – 8.99e+05 | 8.02e+05 | 0.002 | 0.97 [0.2, 0.999] | 6.99e+04 |
+| nathan_headline_ocean | agricultural | 494 | 1.09 – 1.56e+05 | 3.13e+05 | 0.097 | 0.00116 [1.14e-04, 0.0129] | 2.45e+04 |
+| nathan_headline_ocean | industrial | 0.0521 | 2.26e-04 – 7.57 | 20.3 | 0.772 | 1.33e-05 [9.62e-07, 1.82e-04] | 0.397 |
+| nathan_headline_ocean | radio | 0.034 | 1.26e-04 – 6.16 | 37.5 | 0.794 | 8.51e-06 [5.05e-07, 1.57e-04] | 0.321 |
+| nathan_headline_ocean | spacefaring | 58.9 | 0.0316 – 6.34e+04 | 2.53e+05 | 0.250 | 0.0202 [1.42e-04, 0.797] | 4.46e+03 |
+| nathan_headline_ocean | **radio-capable (radio + spacefaring)** | 61.1 | 0.0361 – 6.35e+04 | 2.53e+05 | 0.245 | – | 4.46e+03 |
+| baseline_ocean | lithic | 0.0256 | 1.09e-05 – 44.2 | 4.52e+03 | 0.731 | 0.969 [0.182, 0.999] | 1.56e+04 |
+| baseline_ocean | agricultural | 7.19e-04 | 1.00e-07 – 4.27 | 735 | 0.853 | 0.00117 [1.10e-04, 0.013] | 5.47e+03 |
+| baseline_ocean | industrial | 7.36e-08 | 1.76e-11 – 2.40e-04 | 0.0559 | 0.998 | 1.35e-05 [9.51e-07, 1.80e-04] | 0.0884 |
+| baseline_ocean | radio | 5.20e-08 | 1.07e-11 – 1.90e-04 | 0.227 | 0.998 | 8.42e-06 [5.11e-07, 1.61e-04] | 0.0713 |
+| baseline_ocean | spacefaring | 8.40e-05 | 4.90e-09 – 1.23 | 418 | 0.895 | 0.0208 [1.57e-04, 0.817] | 992 |
+| baseline_ocean | **radio-capable (radio + spacefaring)** | 8.81e-05 | 5.34e-09 – 1.25 | 418 | 0.895 | – | 992 |
 
 Radio-capable N vs classic SETI-style Drake: Sandberg, Drexler & Ord 2018's 'current knowledge' sketch gives median N = 0.32, mean 27 million, P(N<1) = 52% (communicating civilisations; their Table 1). This model's static SDO-style stone-age variant: median 28.8.
 
@@ -220,6 +263,8 @@ Radio-capable N vs classic SETI-style Drake: Sandberg, Drexler & Ord 2018's 'cur
 | nathan_headline | 1.21e+06 [3.09e+04, 1.83e+07] | 6.68e+03 | l_stone_yr 4.2; stage_h_space_per_yr 3.4; f_land_and_ocean 3.3; f_plate_tectonics 1.8; m_recurrence 1.4 |
 | nathan_headline_no_superhab | 1.21e+06 [3.09e+04, 1.83e+07] | 6.96e+03 | l_stone_yr 4.2; stage_h_space_per_yr 3.4; f_land_and_ocean 3.3; f_plate_tectonics 1.8; m_recurrence 1.4 |
 | nathan_headline_no_tooluse | 1.21e+06 [3.09e+04, 1.83e+07] | 1.34e+04 | l_stone_yr 4.4; stage_h_space_per_yr 3.5; f_land_and_ocean 3.3; f_plate_tectonics 1.8; m_recurrence 1.6 |
+| nathan_headline_ocean | 1.21e+06 [3.09e+04, 1.83e+07] | 5.33e+03 | l_stone_yr 4.2; stage_h_space_per_yr 3.4; f_land_and_ocean 2.6; f_plate_tectonics 1.7; m_recurrence 1.5 |
+| baseline_ocean | 1.18e+06 [3.18e+04, 1.87e+07] | 4.43e+06 (N<1) | l_stone_yr 4.5; tau_stone_tool_intelligence 4.2; stage_h_space_per_yr 3.4; tau_abiogenesis 2.6; f_land_and_ocean 2.5 |
 
 ## Spacing: equal-cube side and median nearest-neighbour distance (disk volume ~7.9e12 ly³, user-supplied)
 
@@ -238,6 +283,8 @@ Cube side = (V/N)^(1/3). Nearest-neighbour: random (Poisson) placement; 3D media
 | nathan_headline | 2.39e+03 | 1.49e+03 | 818 | 3D | 154 | 1.16e+04 |
 | nathan_headline_no_superhab | 2.21e+03 | 1.53e+03 | 840 | 3D | 159 | 1.21e+04 |
 | nathan_headline_no_tooluse | 622 | 2.33e+03 | 1.67e+03 | 2D thin disk | 225 | 2.48e+04 |
+| nathan_headline_ocean | 2.82e+04 | 654 | 359 | 3D | 93.1 | 2.43e+03 |
+| baseline_ocean | 0.0413 | 5.76e+04 | 2.05e+05 (N<1: none expected) | 2D thin disk | 4.54e+03 | 1.09e+07 (N<1: none expected) |
 | classic_static_SDO_style | 28.8 | 6.49e+03 | 7.75e+03 | 2D thin disk | 95.7 | 2.35e+34 (N<1: none expected) |
 
 ## Comparison with the user's claims
@@ -255,6 +302,8 @@ Cube side = (V/N)^(1/3). Nearest-neighbour: random (Poisson) placement; 3D media
 | nathan_headline | 2.39e+03 | 0.023 | 0.972 | 5.16e+04 | 0.011 | 0.986 |
 | nathan_headline_no_superhab | 2.21e+03 | 0.024 | 0.971 | 4.82e+04 | 0.012 | 0.985 |
 | nathan_headline_no_tooluse | 622 | 0.040 | 0.937 | 4.86e+04 | 0.012 | 0.985 |
+| nathan_headline_ocean | 2.82e+04 | 0.003 | 0.998 | 5.87e+05 | 0.000 | 1.000 |
+| baseline_ocean | 0.0413 | 0.062 | 0.297 | 27.1 | 0.057 | 0.450 |
 
 ## Exomoon effect (paired, same draws)
 Median N_now with exomoons 0.00357 vs without 0.00295; per-sample log10(N_with/N_without): median 0.008 dex, 90th pct 0.326, 99th pct 1.077. Median share of habitable bodies that are moons: M 0.0111, K 0.0196, G 0.0178, F 0.0339.
@@ -277,6 +326,8 @@ All parameters at their `best` values; hard-step expected times set equal to Ear
 | nathan_headline | 1.49e+04 | 5.89e+03 | 7.61e+04 | 0.996 |
 | nathan_headline_no_superhab | 1.39e+04 | 5.55e+03 | 7.22e+04 | 0.996 |
 | nathan_headline_no_tooluse | 2.98e+03 | 1.11e+03 | 7.25e+04 | 0.996 |
+| nathan_headline_ocean | 9.88e+04 | 3.89e+04 | 5.01e+05 | 0.945 |
+| baseline_ocean | 2.2e+04 | 8.22e+03 | 5.37e+05 | 0.942 |
 
 ## Sensitivity — baseline
 
@@ -530,3 +581,49 @@ P(tau_abiogenesis<1 Gyr): prior 1.00 -> posterior 1.00; posterior P(tau_intellig
 | m_disk_now | +0.042 | 2.62 | 2.89 | 0.27 |
 | f_k_activity | +0.043 | 2.67 | 2.93 | 0.26 |
 | f_rocky_composition | +0.035 | 2.67 | 2.89 | 0.22 |
+
+## Sensitivity — nathan_headline_ocean
+
+ESS = 200000 of 200000 samples. Median share of N_now from G/K hosts: 0.964. Median epoch of peak N(t): 0.01 Gyr ago. Median mean-age of habitable planets: 7.43 Gyr.
+P(tau_abiogenesis<1 Gyr): prior 1.00 -> posterior 1.00; posterior P(tau_intelligence<5 Gyr) = 1.00.
+
+| parameter | Spearman rho vs log10 N | median log10N (param low 10%) | (param high 10%) | swing (dex) |
+|---|---|---|---|---|
+| l_stone_yr | +0.519 | 2.83 | 5.18 | 2.35 |
+| f_plate_tectonics | +0.395 | 3.58 | 5.37 | 1.79 |
+| m_recurrence | -0.309 | 5.10 | 3.69 | 1.41 |
+| f_large_moon | +0.282 | 3.84 | 5.12 | 1.29 |
+| f_ocean_fecundity | +0.270 | 3.86 | 5.11 | 1.25 |
+| r_ster0_per_gyr | -0.155 | 4.62 | 3.64 | 0.98 |
+| f_land_and_ocean | +0.191 | 4.18 | 5.11 | 0.94 |
+| f_jupiter_shield | +0.200 | 3.99 | 4.92 | 0.93 |
+| f_ghz | +0.195 | 4.00 | 4.91 | 0.91 |
+| f_exomoon_host | +0.068 | 4.38 | 4.75 | 0.37 |
+| stage_tau_agri_yr | +0.071 | 4.24 | 4.57 | 0.34 |
+| ne_K | +0.066 | 4.30 | 4.61 | 0.31 |
+| stage_h_space_per_yr | -0.073 | 4.60 | 4.30 | 0.31 |
+| m_disk_now | +0.053 | 4.30 | 4.56 | 0.26 |
+| f_k_activity | +0.050 | 4.34 | 4.59 | 0.25 |
+
+## Sensitivity — baseline_ocean
+
+ESS = 13890 of 200000 samples. Median share of N_now from G/K hosts: 0.959. Median epoch of peak N(t): 0.01 Gyr ago. Median mean-age of habitable planets: 7.43 Gyr.
+P(tau_abiogenesis<1 Gyr): prior 0.50 -> posterior 0.42; posterior P(tau_intelligence<5 Gyr) = 0.37.
+
+| parameter | Spearman rho vs log10 N | median log10N (param low 10%) | (param high 10%) | swing (dex) |
+|---|---|---|---|---|
+| tau_stone_tool_intelligence | -0.517 | 0.80 | -3.39 | 4.19 |
+| l_stone_yr | +0.316 | -3.14 | -0.45 | 2.69 |
+| tau_abiogenesis | -0.278 | -0.51 | -3.06 | 2.55 |
+| tau_oxygenic_photosynthesis_GOE | -0.284 | -0.25 | -2.74 | 2.49 |
+| tau_eukaryogenesis | -0.289 | -0.38 | -2.82 | 2.44 |
+| tau_complex_multicellularity | -0.282 | -0.22 | -2.62 | 2.40 |
+| f_plate_tectonics | +0.209 | -2.38 | -0.55 | 1.83 |
+| f_large_moon | +0.162 | -1.99 | -0.64 | 1.36 |
+| r_ster0_per_gyr | -0.109 | -1.22 | -2.54 | 1.32 |
+| f_ocean_fecundity | +0.144 | -1.90 | -0.73 | 1.17 |
+| f_land_and_ocean | +0.103 | -1.72 | -0.78 | 0.94 |
+| f_jupiter_shield | +0.109 | -1.91 | -1.00 | 0.91 |
+| m_recurrence | -0.127 | -0.92 | -1.80 | 0.88 |
+| f_ghz | +0.085 | -1.72 | -0.93 | 0.79 |
+| stage_h_space_per_yr | -0.070 | -1.05 | -1.54 | 0.50 |
