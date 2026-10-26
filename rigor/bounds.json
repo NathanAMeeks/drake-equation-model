@@ -1,0 +1,322 @@
+{
+ "method": "python-flint 0.9.0 (Arb ball arithmetic, 128-bit)",
+ "normal_truncation_sd": 6.0,
+ "inequalities": [
+  "Q(a) = (g*K)(a) <= cdf_g(a) <= prod_j P(X_j <= a)  (K<=1; each X_j <= sum of steps)",
+  "cdf_g(a) >= max over splits a=sum a_j of prod_j P(X_j <= a_j)  (all X_j <= a_j implies sum <= a); splits: equal, proportional to tau_hi",
+  "K(s) = pi_on + (1-pi_on)exp(-s/Lp) >= pi_on = beta/(alpha+beta), alpha = 1/(mean episode length) <= alpha_base + max_s h_s (exit rate from any stage <= alpha_base + (1-q) h_s)",
+  "sterilisation survival exp(-(H_now-H(t))) in [exp(-H_now_max), 1], H_now = r_ster0 * M_formed / (sfr_now * 1e9 yr)",
+  "metallicity ramp fZ <= 1; lower bound uses fZ at the oldest formation time of the chosen age window",
+  "upper bound: all stars ever formed (M_formed) counted with Q <= Q_max(th_c); lower bound: only thin-disk planets with ages in one window [a_lo,a_hi] inside every class's window",
+  "thin-disk exponent k from (exp(kD)-1)/k = target is monotone in target and D; window mass monotone in k; k clamped to [-20,20] as in solve_k",
+  "superhabitability: (1-f)m + f*min(m*b,1) in [m, m*b_max] for m <= 1",
+  "ocean path: land fraction L plus ocean fraction O=min(Ow,1-L)*fec lies in [L_lo + min(Ow_lo,1-L_hi)*fec_lo, min(1, L_hi + Ow_hi*fec_hi)]",
+  "dependent quantities (sfr_now in both target and window mass, etc.) treated as independent intervals: only widens bounds"
+ ],
+ "scenarios": {
+  "nathan_headline": {
+   "scenario": "nathan_headline",
+   "N_now_lower": 1.7458512944032345e-53,
+   "N_now_upper": 209857564187.79633,
+   "lower_window_age_gyr": {
+    "M": [
+     4.811,
+     8.5
+    ],
+    "K": [
+     4.811,
+     8.5
+    ],
+    "G": [
+     3.316,
+     5.0
+    ],
+    "F": [
+     1.091,
+     1.4
+    ]
+   },
+   "log10_width_dex": 64.07991737847156,
+   "pi_on_lower": 4.977813901262646e-07,
+   "k_thin_lower": -0.21291334478643162,
+   "survival_lower": 2.059969278208428e-43,
+   "per_class": {
+    "M": {
+     "per_planet_factor": [
+      1.8565263608610398e-15,
+      0.02145018821899405
+     ],
+     "Q_max": 0.9995171511546529,
+     "N_lower": 2.5464872816884505e-57
+    },
+    "K": {
+     "per_planet_factor": [
+      1.1767053127020677e-11,
+      0.28496868117791285
+     ],
+     "Q_max": 0.9995171511546529,
+     "N_lower": 1.6140170030773566e-53
+    },
+    "G": {
+     "per_planet_factor": [
+      2.732749967921808e-12,
+      0.050830405562452496
+     ],
+     "Q_max": 0.9958207749536806,
+     "N_lower": 1.3152398876720618e-54
+    },
+    "F": {
+     "per_planet_factor": [
+      1.0668394681317578e-13,
+      0.018355214990264688
+     ],
+     "Q_max": 0.9210697882477055,
+     "N_lower": 5.565383050271017e-58
+    }
+   },
+   "truncated_normal_params": [
+    "sfr_now",
+    "m_disk_now"
+   ],
+   "MC": {
+    "median": 2385.297889377689,
+    "p10": 12.830854422932635,
+    "p90": 354584.4246500341,
+    "width_10_90_dex": 4.441464077457734
+   },
+   "MC_all_samples_min_max": [
+    0.00013316712370747063,
+    1556135448.2078257
+   ],
+   "MC_samples_inside_bounds": true
+  },
+  "nathan_headline_ocean": {
+   "scenario": "nathan_headline_ocean",
+   "N_now_lower": 2.0132324589805216e-53,
+   "N_now_upper": 277263811496.7248,
+   "lower_window_age_gyr": {
+    "M": [
+     4.811,
+     8.5
+    ],
+    "K": [
+     4.811,
+     8.5
+    ],
+    "G": [
+     3.316,
+     5.0
+    ],
+    "F": [
+     1.091,
+     1.4
+    ]
+   },
+   "log10_width_dex": 64.1389992652806,
+   "pi_on_lower": 4.977813901262646e-07,
+   "k_thin_lower": -0.21291334478643162,
+   "survival_lower": 2.059969278208428e-43,
+   "per_class": {
+    "M": {
+     "per_planet_factor": [
+      1.9512092052649526e-12,
+      0.14157124224536075
+     ],
+     "Q_max": 0.9995171511546529,
+     "N_lower": 2.676358133054561e-54
+    },
+    "K": {
+     "per_planet_factor": [
+      1.1767053127020677e-11,
+      0.28496868117791285
+     ],
+     "Q_max": 0.9995171511546529,
+     "N_lower": 1.6140170030773566e-53
+    },
+    "G": {
+     "per_planet_factor": [
+      2.732749967921808e-12,
+      0.050830405562452496
+     ],
+     "Q_max": 0.9958207749536806,
+     "N_lower": 1.3152398876720618e-54
+    },
+    "F": {
+     "per_planet_factor": [
+      1.0668394681317578e-13,
+      0.018355214990264688
+     ],
+     "Q_max": 0.9210697882477055,
+     "N_lower": 5.565383050271017e-58
+    }
+   },
+   "truncated_normal_params": [
+    "sfr_now",
+    "m_disk_now"
+   ],
+   "MC": {
+    "median": 28249.447729630792,
+    "p10": 293.52187326436825,
+    "p90": 1621375.134274088,
+    "width_10_90_dex": 3.7422430378716642
+   },
+   "MC_all_samples_min_max": [
+    0.0053092227025658325,
+    2415291452.1120524
+   ],
+   "MC_samples_inside_bounds": true
+  },
+  "baseline": {
+   "scenario": "baseline",
+   "N_now_lower": 3.853776422534241e-71,
+   "N_now_upper": 120860487606.10168,
+   "lower_window_age_gyr": {
+    "M": [
+     6.851,
+     8.5
+    ],
+    "K": [
+     6.851,
+     8.5
+    ],
+    "G": [
+     4.113,
+     5.0
+    ],
+    "F": [
+     1.156,
+     1.4
+    ]
+   },
+   "log10_width_dex": 81.49639782667188,
+   "pi_on_lower": 9.900876777103336e-11,
+   "k_thin_lower": -0.21291334478643162,
+   "survival_lower": 2.059969278208428e-43,
+   "per_class": {
+    "M": {
+     "per_planet_factor": [
+      2.503984032e-15,
+      0.02278099
+     ],
+     "Q_max": 1.0,
+     "N_lower": 6.4218755746491e-75
+    },
+    "K": {
+     "per_planet_factor": [
+      1.4721224696640003e-11,
+      0.11901600000000001
+     ],
+     "Q_max": 1.0,
+     "N_lower": 3.775498249993374e-71
+    },
+    "G": {
+     "per_planet_factor": [
+      3.68578783872e-12,
+      0.053984000000000004
+     ],
+     "Q_max": 1.0,
+     "N_lower": 7.763304577873599e-73
+    },
+    "F": {
+     "per_planet_factor": [
+      1.4388963438528003e-13,
+      0.019494
+     ],
+     "Q_max": 1.0,
+     "N_lower": 2.9392046657132808e-77
+    }
+   },
+   "truncated_normal_params": [
+    "sfr_now",
+    "m_disk_now"
+   ],
+   "MC": {
+    "median": 0.0035747084684034716,
+    "p10": 8.583522608745931e-07,
+    "p90": 11.107948662870694,
+    "width_10_90_dex": 7.111968308524075
+   },
+   "MC_all_samples_min_max": [
+    4.2069154790180744e-13,
+    610281572.2896392
+   ],
+   "MC_samples_inside_bounds": true
+  },
+  "baseline_ocean": {
+   "scenario": "baseline_ocean",
+   "N_now_lower": 4.528073357872396e-71,
+   "N_now_upper": 192483302376.54236,
+   "lower_window_age_gyr": {
+    "M": [
+     6.851,
+     8.5
+    ],
+    "K": [
+     6.851,
+     8.5
+    ],
+    "G": [
+     4.113,
+     5.0
+    ],
+    "F": [
+     1.156,
+     1.4
+    ]
+   },
+   "log10_width_dex": 81.62847960701231,
+   "pi_on_lower": 9.900876777103336e-11,
+   "k_thin_lower": -0.21291334478643162,
+   "survival_lower": 2.059969278208428e-43,
+   "per_class": {
+    "M": {
+     "per_planet_factor": [
+      2.631687217632e-12,
+      0.150354534
+     ],
+     "Q_max": 1.0,
+     "N_lower": 6.749391228956203e-72
+    },
+    "K": {
+     "per_planet_factor": [
+      1.4721224696640003e-11,
+      0.11901600000000001
+     ],
+     "Q_max": 1.0,
+     "N_lower": 3.775498249993374e-71
+    },
+    "G": {
+     "per_planet_factor": [
+      3.68578783872e-12,
+      0.053984000000000004
+     ],
+     "Q_max": 1.0,
+     "N_lower": 7.763304577873599e-73
+    },
+    "F": {
+     "per_planet_factor": [
+      1.4388963438528003e-13,
+      0.019494
+     ],
+     "Q_max": 1.0,
+     "N_lower": 2.9392046657132808e-77
+    }
+   },
+   "truncated_normal_params": [
+    "sfr_now",
+    "m_disk_now"
+   ],
+   "MC": {
+    "median": 0.04134109006620931,
+    "p10": 1.4540938765933538e-05,
+    "p90": 83.91735827272143,
+    "width_10_90_dex": 6.76125935819735
+   },
+   "MC_all_samples_min_max": [
+    3.1308777568095047e-12,
+    1981720012.906826
+   ],
+   "MC_samples_inside_bounds": true
+  }
+ }
+}

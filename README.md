@@ -25,8 +25,6 @@ Headline histogram: [`results/hist_log10N.png`](results/hist_log10N.png) · sens
 
 Suggested by a friend of Nathan's (Oct 2026). Re-run with the v2 model (2e5 samples each): `baseline`, `baseline_no_exomoons`, `nathan_headline`, `nathan_headline_no_superhab`, `nathan_headline_no_tooluse`, `nathan_headline_ocean`, `baseline_ocean`. Every other scenario is still the v1 model (two host classes, G/K and M, and one stone-age-or-greater phase).
 
-Change in the median N_now from v1 to v2: `nathan_headline` 3.18e+03 (v1) → 2.39e+03 (v2); `baseline` 0.00238 (v1) → 0.00357 (v2). The v2 total adds F stars, splits G from K (K now has its own, higher η⊕ and longer habitable window), adds K-activity and F-UV penalties and per-type ESI weights, and adds stage-specific collapse hazards after the lithic stage.
-
 ![Multi-spectral breakdown](results/spectral_breakdown.png)
 
 ### By host star type
@@ -212,104 +210,115 @@ Ranges marked **ASSUMED** have no quantitative literature value. **USER** marks 
 
 ## Source provenance
 
-Every sourced variable in [`params.yaml`](params.yaml), classified from its `source` field: **literature-sourced** (value or range taken or derived from cited published data), **literature + ASSUMED element** (cited data, but the mapping onto the model variable or part of the range is a judgement), **user-supplied** (Nathan's own inputs) and **ASSUMED** (no usable quantitative literature value; the reason is in the source text). Counts: literature-sourced 58, literature + ASSUMED element 12, user-supplied 4, ASSUMED 18.
+Every sourced variable in [`params.yaml`](params.yaml), classified from its `source` field: **literature-sourced** (value or range taken or derived from cited published data), **literature + ASSUMED element** (cited data, but the mapping onto the model variable or part of the range is a judgement), **user-supplied** (Nathan's own inputs) and **ASSUMED** (no usable quantitative literature value; the reason is in the source text). Counts: literature-sourced 62, literature + ASSUMED element 13, user-supplied 4, ASSUMED 22.
+
+Evidence tag (`tag:` in params.yaml): **[MEASURED]** direct observation, census or dated record; **[MODELED]** taken from a theoretical model or simulation, or a measurement mapped onto the variable by a judgement; **[GUESS]** ASSUMED or user-supplied (no quantitative literature value), plus the SDO 2018 Table-1 ranges, which compile published opinions. Tag counts: [MEASURED] 33, [MODELED] 35, [GUESS] 32.
 
 <details><summary>Full provenance table (click to expand)</summary>
 
-| variable | provenance | first source / note | URL |
-|---|---|---|---|
-| `sfr_now` | literature-sourced | Licquia & Newman 2015, ApJ 806, 96 | https://arxiv.org/abs/1407.1078 |
-| `m_disk_now` | literature-sourced | Licquia & Newman 2015 | https://arxiv.org/abs/1407.1078 |
-| `return_fraction` | literature-sourced | Madau & Dickinson 2014 ARA&A (R=0.27 Salpeter, 0.41 Chabrier) | https://ned.ipac.caltech.edu/level5/March14/Madau/paper.pdf |
-| `f_early_disk_mass` | literature-sourced | Snaith et al. 2015 A&A 578, A87 ('roughly half the stellar mass in first 4-5 Gyr') | https://www.aanda.org/articles/aa/full_html/2015/06/aa24281-14/aa24281-14.html |
-| `disk_start_gyr` | literature-sourced | Snaith et al. 2015 (thick disk 9-13 Gyr ago); CONFIRMED by Xiang & Rix 2022 Nature 603, 599 (Gaia EDR3 + LAMOST ages of ~250,000 subgiants: old disk began … | https://www.aanda.org/articles/aa/full_html/2015/06/aa24281-14/aa24281-14.html |
-| `thick_end_gyr` | literature-sourced | Snaith et al. 2015 (sharp SFR drop ~8-9 Gyr ago) | https://www.aanda.org/articles/aa/full_html/2015/06/aa24281-14/aa24281-14.html |
-| `stars_per_msun` | literature-sourced | Kroupa 2001 IMF: 1.64 H-burning stars/Msun (integrated here); 2.8 = 1/0.36 incl. brown dwarfs | https://adsabs.harvard.edu/pdf/2001mnras.322..231k |
-| `f_gk` | literature-sourced | RECONS 10-pc census (G 5.0% + K 11.6%); Kroupa IMF 0.6-1.1 Msun = 10%; Gaia-EDR3 10-pc census (Reyle+2021 A&A 650, A201: G 18 + Sun, K 38 of 338 stars incl. … | http://www.recons.org/census.posted.htm |
-| `f_m` | literature-sourced | Gaia-EDR3 10-pc census (Reyle+2021 A&A 650, A201: 249 M of 338 stars incl. white dwarfs and the Sun = 0.737; 0.762 with the 36 unresolved probable-M … | https://arxiv.org/abs/2104.14972 |
-| `fp` | literature-sourced | Cassan et al. 2012 Nature 481, 167 (>=1 bound planet per star) | https://www.nature.com/articles/nature10684 |
-| `ne_gk` | literature-sourced | Bryson+2021 AJ 161, 36 (G-mid-K: 0.37-0.60 conservative, 0.58-0.88 optimistic); 2026 Astronomy & Computing reanalysis of 4,510 Archive transit planets: K … | https://arxiv.org/abs/2010.14812 |
-| `ne_m` | literature-sourced | Dressing & Charbonneau 2015 ApJ 807, 45 (0.16 conservative, 0.24 broad HZ); 2026 Astronomy & Computing Archive reanalysis (M ~0.41, completeness-corrected; … | https://arxiv.org/abs/1501.01623 |
-| `th_gk_gyr` | literature-sourced | Rushby et al. 2013 Astrobiology (Earth HZ lifetime 6.29-7.79 Gyr; K dwarfs longer); Earth biosphere ends 0.8-1.5 Ga from now (Caldeira & Kasting 1992 via … | https://research-repository.st-andrews.ac.uk/handle/10023/5071 |
-| `th_m_gyr` | literature-sourced | Rushby et al. 2013 (HZ lifetimes up to 54.7 Gyr) | https://research-repository.st-andrews.ac.uk/handle/10023/5071 |
-| `f_ghz` | literature-sourced | Lineweaver, Fenner & Gibson 2004 Science (<10% incl. time/metallicity cuts); Prantzos 2008 SSRv (whole disk by now); Gowanlock+2011 (1.2% incl. more factors) | https://arxiv.org/abs/astro-ph/0401024 |
-| `n_giant_hz_gk` | literature-sourced | Hill et al. 2018 ApJ 860, 6 (G 6.5+/-1.9%, K 11.5+/-3.1%) | https://arxiv.org/abs/1805.03370 |
-| `r_bigfive_per_gyr` | literature-sourced | Big Five at ~444, 372, 252, 201, 66 Ma (US NPS / geologic time scale): intervals 72,120,51,135 Myr (mean 94.5 Myr => 10.6/Gyr); 5 events in 539 Myr … | https://www.nps.gov/subjects/fossils/mass-extinctions-through-geologic-time.htm |
-| `r_grb_per_gyr` | literature-sourced | Piran & Jimenez 2014 PRL (>90% in 5 Gyr => >=0.46/Gyr; 50% in 500 Myr => 1.4/Gyr) | https://arxiv.org/abs/1409.2506 |
-| `r_sn_per_gyr` | literature-sourced | LITERATURE (2026-10-06; was fixed 1.5 = Gehrels+2003 ApJ 585, 1169, 8 pc). Rate within 20 pc from the Gaia-based census of OB stars within 1 kpc: 2.0 … | https://arxiv.org/abs/2503.08286 |
-| `l_stone_yr` | literature-sourced | Earth: >=3.3 Myr so far (Harmand+2015 Nature); Gott 1993 Copernican estimate (best = 2x elapsed); chimp stone age >=4.3 kyr (Mercader+2007 PNAS); capuchin … | https://www.nature.com/articles/nature14464 |
-| `multipliers.f_plate_tectonics` | literature-sourced | Stern & Gerya 2024 Sci.Rep. (f_pt < 0.17); Valencia+2007 ApJL ('inevitable' on super-Earths) vs O'Neill & Lenardic 2007 GRL (stagnant lid); Stern 2016 GSF | https://www.nature.com/articles/s41598-024-54700-x |
-| `multipliers.f_land_and_ocean` | literature-sourced | Stern & Gerya 2024 (f_oc 0.0002-0.01); Simpson 2017 MNRAS (most HZ worlds >90% ocean); stone tools need dry land | https://arxiv.org/abs/1607.03095 |
-| `multipliers.f_m_water` | literature-sourced | Tian & Ida 2015 Nat.Geosci. 8, 177: HZ Earth-mass planets of M dwarfs are bimodal (ocean or desert); Earth-like water contents are 10-100x less frequent … | https://www.nature.com/articles/ngeo2372 |
-| `multipliers.f_co_ratio` | literature-sourced | Brewer & Fischer 2016 ApJ 831, 20: carbon-rich (C/O>0.8) dwarfs <0.13% of the solar neighbourhood; none of 849 with C/O>0.7 (median 0.47). Negligible … | https://arxiv.org/abs/1608.06286 |
-| `multipliers.f_large_moon` | literature-sourced | Elser+2011 Icarus (massive moon for ~1/12 of terrestrial planets, range 1/45-1/4); Laskar+1993 vs Lissauer, Barnes & Chambers 2012 Icarus (moonless … | https://arxiv.org/abs/1105.4616 |
-| `multipliers.f_jupiter_shield` | literature-sourced | Wittenmyer+2020 MNRAS (cool Jupiters around 6.73% of stars); Horner & Jones 2008 IJA (shield role ambiguous -> may not be needed) | https://arxiv.org/abs/1912.01821 |
-| `multipliers.f_binary_ok` | literature-sourced | Kraus+2016 AJ 152, 8 (close binaries <47 AU suppress planets; ~1/5 of solar-type stars disallowed); Raghavan+2010 ApJS (54% single). Upper bound 1 because … | https://arxiv.org/abs/1604.05744 |
-| `star_classes.M.f_star` | literature-sourced | Gaia-EDR3 10-pc census 249/338 = 0.737 (Reyle+2021 A&A 650, A201 Table 3; denominator = A 4 + F 8 + G 18 + Sun + K 38 + M 249 + white dwarfs 20; 0.762 if … | https://arxiv.org/abs/2104.14972 |
-| `star_classes.M.ne` | literature-sourced | Dressing & Charbonneau 2015 ApJ 807, 45 (0.16 conservative, 0.24 broad HZ); 2026 Astronomy & Computing Archive reanalysis (M ~0.41) | https://arxiv.org/abs/1501.01623 |
-| `star_classes.M.th_gyr` | literature-sourced | Rushby et al. 2013 Astrobiology 13, 833 (HZ lifetimes up to 54.7 Gyr) | https://research-repository.st-andrews.ac.uk/handle/10023/5071 |
-| `star_classes.K.f_star` | literature-sourced | Kroupa 2001 IMF 0.6-0.9 Msun = 0.077 (integrated here); RECONS 44/378 = 0.116; Gaia-EDR3 10-pc census 38/338 = 0.112 (Reyle+2021) lies inside | http://www.recons.org/census.posted.htm |
-| `star_classes.K.ne` | literature-sourced | 2026 Astronomy & Computing Archive reanalysis K ~0.27 (low); Bryson+2021 AJ 161, 36 G-mid-K 0.37-0.60 conservative / 0.58-0.88 optimistic (high) | https://arxiv.org/abs/2010.14812 |
-| `star_classes.K.th_gyr` | literature-sourced | LITERATURE (2026-10-06; was ASSUMED loguniform 8-30, best 15). Continuously-habitable-zone durations t_ev from Cuntz & Guinan 2016 ApJ 827, 79 Table 2: K0 … | https://iopscience.iop.org/article/10.3847/0004-637X/827/1/79 |
-| `star_classes.K.n_giant_hz` | literature-sourced | Hill et al. 2018: K 11.5+/-3.1% (+/-1 sigma) | https://arxiv.org/abs/1805.03370 |
-| `star_classes.G.f_star` | literature-sourced | Kroupa 2001 IMF 0.9-1.1 Msun = 0.026 (integrated here); RECONS 19/378 = 0.050; Gaia-EDR3 10-pc census (18 + Sun)/338 = 0.056 (Reyle+2021 A&A 650, A201). … | http://www.recons.org/census.posted.htm |
-| `star_classes.G.ne` | literature-sourced | 2026 Astronomy & Computing Archive reanalysis F/G ~0.10 (low); Bryson+2021 G-mid-K up to 0.88 optimistic (high) | https://arxiv.org/abs/2010.14812 |
-| `star_classes.G.th_gyr` | literature-sourced | Rushby+2013 (Earth HZ lifetime 6.29-7.79 Gyr); Earth biosphere ends 0.8-1.5 Ga from now (Caldeira & Kasting 1992 via Snyder-Beattie+2021) | https://research-repository.st-andrews.ac.uk/handle/10023/5071 |
-| `star_classes.G.n_giant_hz` | literature-sourced | Hill et al. 2018: G 6.5+/-1.9% (+/-1 sigma) | https://arxiv.org/abs/1805.03370 |
-| `star_classes.F.f_star` | literature-sourced | RECONS 7/378 = 0.0185 (present day; some F stars have already died); Kroupa 2001 IMF 1.1-1.5 Msun = 0.0285 (integrated here); Gaia-EDR3 10-pc census 8/338 = … | http://www.recons.org/census.posted.htm |
-| `star_classes.F.ne` | literature-sourced | 2026 Archive reanalysis F/G ~0.10 (best); Bryson+2021 sample extends only to 6300 K (upper 0.60 = its conservative upper bound). Low (2026-10-06: 0.03 … | https://arxiv.org/abs/2010.14812 |
-| `star_classes.F.th_gyr` | literature-sourced | LITERATURE (2026-10-06; was ASSUMED loguniform 1.5-5.0, best 2.7). Continuously-habitable-zone durations t_ev from Cuntz & Guinan 2016 ApJ 827, 79 Table 2: … | https://iopscience.iop.org/article/10.3847/0004-637X/827/1/79 |
-| `multiphase.stage_h_radio_per_yr` | literature-sourced | 1/L with L log-uniform 1e2 .. 1e10 yr = Sandberg, Drexler & Ord 2018 Table 1 (lifetime of a detectable civilisation). SETI gives no duration: Breakthrough … | https://arxiv.org/abs/1806.02404 |
-| `hard_steps.abiogenesis` | literature-sourced | Moody+2024 Nat.Ecol.Evol. 8, 1654: LUCA ~4.2 Ga (95% CI 4.09-4.33 Ga, cross-braced molecular clock); life must predate LUCA. Was 3.9 (Snyder-Beattie+2021) | https://www.nature.com/articles/s41559-024-02461-1 |
-| `hard_steps.oxygenic_photosynthesis_GOE` | literature-sourced | Lyons, Reinhard & Planavsky 2014 Nature (GOE ~2.4-2.3 Ga) | https://www.nature.com/articles/nature13068 |
-| `hard_steps.eukaryogenesis` | literature-sourced | Betts+2018 via Snyder-Beattie+2021 Table 1 (<1.84 Ga) | https://pmc.ncbi.nlm.nih.gov/articles/PMC7997718/ |
-| `hard_steps.complex_multicellularity` | literature-sourced | Knoll 2011 Annu.Rev.EPS (animal complex multicellularity, Ediacaran) | https://www.annualreviews.org/content/journals/10.1146/annurev.earth.031208.100209 |
-| `hard_steps.stone_tool_intelligence` | literature-sourced | Harmand+2015 Nature (Lomekwi 3, 3.3 Ma) | https://www.nature.com/articles/nature14464 |
-| `scenarios.nathan_headline_ocean.independent_params.f_ocean_world_gk` | literature-sourced | Simpson 2017 MNRAS 468, 2803 (arXiv:1607.03095): >99% confidence that most habitable planets are water-dominated (f_w>50%); 95% credible that most are >90% … | https://arxiv.org/abs/1607.03095 |
-| `scenarios.nathan_headline_ocean.independent_params.f_ocean_world_m` | literature-sourced | Tian & Ida 2015 Nat.Geosci. 8, 177: ocean planets 60/292 HZ Earth-mass planets (0.5 Msun) and 31/55 (0.3 Msun); the rest mostly desert. Water-world … | https://www.nature.com/articles/ngeo2372 |
-| `species.species_concurrent_per_tool_world` | literature-sourced | Derived from Smithsonian Human Origins 'When Lived' spans (21 species; 15 have fossils <=3.3 Ma): over 3.3 Ma-present the mean number of coexisting hominin … | https://humanorigins.si.edu/evidence/human-fossils/species |
-| `species.species_cumulative_per_tool_world` | literature-sourced | Smithsonian list: 8 Homo species, 15 hominin species with fossils in the stone-tool era (best); Wikipedia 'List of Homo species' names 16 Homo species incl. … | https://humanorigins.si.edu/evidence/human-fossils/species |
-| `species.context_total_named_species` | literature-sourced | VERIFIED: Catalogue of Life estimates ~2.3M extant species recognised by taxonomists; COL Base Release 2026-07-14 lists 2,258,977 accepted species (incl. … | https://www.checklistbank.org/dataset/278910 |
-| `classic_static.R_star` | literature-sourced | SDO 2018 Table 1 | https://arxiv.org/abs/1806.02404 |
-| `classic_static.fp` | literature-sourced | SDO 2018 Table 1 | https://arxiv.org/abs/1806.02404 |
-| `classic_static.ne` | literature-sourced | SDO 2018 Table 1 | https://arxiv.org/abs/1806.02404 |
-| `classic_static.log10_lambdaVt` | literature-sourced | SDO 2018: fl = 1-exp(-lambda V t), log-normal, sigma = 50 decades, median 1 | https://arxiv.org/abs/1806.02404 |
-| `classic_static.fi` | literature-sourced | SDO 2018 Table 1 | https://arxiv.org/abs/1806.02404 |
-| `classic_static.L_stone` | literature-sourced | same as l_stone_yr above | https://www.nature.com/articles/nature14464 |
-| `n_giant_hz_m` | literature + ASSUMED element | Hill et al. 2018 (M 6+/-6%); lower bound 0.01 ASSUMED | https://arxiv.org/abs/1805.03370 |
-| `f_exomoon_host` | literature + ASSUMED element | WIDE ASSUMED prior. Low end: Canup & Ward 2006 Nature (satellite systems ~1e-4 of planet mass -> in-situ moons Moon-to-Mars size); capture routes Williams … | https://www.nature.com/articles/nature04860 |
-| `r_ster0_per_gyr` | literature + ASSUMED element | LITERATURE-INFORMED low end (2026-10-12; was ASSUMED loguniform 1e-3-0.25). Barnes, Lewis, Salcido, Elahi, Filipovic & Bower 2026 MNRAS 552, stag1750 (EAGLE … | https://arxiv.org/abs/2610.07450 |
-| `p_bigfive_kills_toolusers` | literature + ASSUMED element | LITERATURE-INFORMED (2026-10-06; was ASSUMED loguniform 0.1-1). Low 0.16 = smallest Big-Five marine SPECIES loss (Frasnian 16-20%; Stanley 2016 PNAS 113, … | https://www.pnas.org/doi/10.1073/pnas.1613094113 |
-| `multipliers.f_rocky_composition` | literature + ASSUMED element | Brewer & Fischer 2016 ApJ 831, 20: ~60% of 849 FGK dwarfs have Earth-like Mg/Si (1-2), 40% Mg/Si<1 (silicate-rich, possibly different interiors/tectonics). … | https://arxiv.org/abs/1608.06286 |
-| `star_classes.M.n_giant_hz` | literature + ASSUMED element | Hill et al. 2018 ApJ 860, 67 Table: M 6.0+/-6.0%; lower bound 0.01 ASSUMED | https://arxiv.org/abs/1805.03370 |
-| `multiphase.stage_tau_agri_yr` | literature + ASSUMED element | Earth anchor 3.3 Ma (Harmand+2015 Lomekwi 3) -> ~11.5 ka (Zeder 2011 Curr.Anthropol. 52, S221) = 3.29 Myr; range = Earth/10 .. Earth x10 ASSUMED | https://www.nature.com/articles/nature14464 |
-| `multiphase.stage_tau_ind_yr` | literature + ASSUMED element | Earth anchor ~11.5 ka -> ~1760 CE (~11.2 kyr); range Earth/10 .. x10 ASSUMED | https://doi.org/10.1086/659307 |
-| `multiphase.stage_tau_radio_yr` | literature + ASSUMED element | Earth anchor ~1760 -> 1895 (Marconi's first radio transmissions) = ~135 yr (user: ~150 yr); range Earth/10 .. x10 ASSUMED | https://www.britannica.com/biography/Guglielmo-Marconi |
-| `multiphase.stage_tau_space_yr` | literature + ASSUMED element | Earth anchor 1895 -> 1957 (Sputnik 1) = 62 yr; range Earth/10 .. x10 ASSUMED | https://www.nasa.gov/history/sputnik/ |
-| `multiphase.stage_h_space_per_yr` | literature + ASSUMED element | Same as radio stage (SDO 2018 L 1e2 .. 1e10 yr); ASSUMED that orbital capability does not by itself lower the hazard | https://arxiv.org/abs/1806.02404 |
-| `scenarios.nathan_headline.n_tool_origins` | literature + ASSUMED element | Low 3 = independent lithic-flake-producing primate lineages (hominins, Harmand+2015; bearded capuchins, Proffitt+2016 Nature 539, 85; long-tailed macaques, … | https://doi.org/10.1038/nature20112 |
-| `multipliers.extra_worlds_per_system` | user-supplied | USER-PROPOSED (speculative past intelligence on Venus/Mars): low-weight bonus for >1 tool-using world per system; not literature | user research export |
-| `scenarios.user_inputs.l_stone_yr` | user-supplied | USER-PROPOSED 50-200 kyr extinction window (CONFLICTS with Big-Five spacing of ~50-135 Myr; kept as the user's scenario) |  |
-| `scenarios.user_inputs.th_gk_gyr` | user-supplied | USER: Sun ~4 Gyr remaining (+~4.4 Gyr elapsed) |  |
-| `geometry.disk_volume_ly3` | user-supplied | USER-SUPPLIED ~7.9e+12 ly^3 (cylinder r = 50000 ly, thickness 1000 ly); used only for spacing |  |
-| `f_m_habitable` | ASSUMED | ASSUMED bracket informed by Shields+2016 Phys.Rep.; Luger & Barnes 2015; Lingam & Loeb 2018 JCAP; Haqq-Misra+2018 IJA; Snyder-Beattie+2021 prediction | https://arxiv.org/abs/1610.05765 |
-| `t_metal_gyr` | ASSUMED | ASSUMED (no direct measurement of when Earth-forming metallicity was reached); informed by Lineweaver 2001 Icarus (metallicity selection; Earths avg … | https://ui.adsabs.harvard.edu/abs/2001Icar..151..307L/abstract |
-| `f_exomoon_habitable` | ASSUMED | ASSUMED range; Heller & Barnes 2013 Astrobiology 13, 18 (habitable edge; tidal heating can sterilise); Williams, Kasting & Wade 1997 Nature 385, 234 … | https://arxiv.org/abs/1209.5323 |
-| `r_self_per_gyr` | ASSUMED | ASSUMED, no galactic data. Earth-only context (NOT used as galactic L): Urban 2024 Science (climate threatens 7.6% of species avg; 1.6% at ~1.3 C; ~1/3 at … | https://www.science.org/doi/10.1126/science.adp4461 |
-| `p_lethal_astro` | ASSUMED | ASSUMED (Gehrels+2003 note SN pathway 'may be less important than previously thought') | https://arxiv.org/abs/astro-ph/0211361 |
-| `m_recurrence` | ASSUMED | ASSUMED (no quantitative literature); multiple independent stone-tool lineages on Earth (Mercader+2007) suggest re-evolution can be easier than the first time | https://www.pnas.org/doi/10.1073/pnas.0607909104 |
-| `multipliers.f_m_flares` | ASSUMED | ASSUMED bracket (flare statistics exist but no published mapping to a habitable fraction). Data: TESS flares on >40% of mid-to-late M dwarfs vs ~5% of K … | https://arxiv.org/abs/1610.05765 |
-| `multipliers.f_k_activity` | ASSUMED | ASSUMED mild K-dwarf penalty (late-K flares/XUV and possible HZ tidal locking); no published survival fraction. Data: ~5% of K dwarfs show TESS flares vs … | https://iopscience.iop.org/article/10.3847/0004-637X/827/1/79 |
-| `multipliers.f_f_uv` | ASSUMED | ASSUMED mapping of Sato et al. 2014 Int.J.Astrobiol. 13, 244 (F0-F8 V, 1.2-1.5 Msun: DNA damage at Earth-equivalent orbits 2.5-7.1x solar without … | https://arxiv.org/abs/1312.7431 |
-| `star_classes.F.n_giant_hz` | ASSUMED | ASSUMED = G value (Hill et al. 2018 report no F-star rate) | https://arxiv.org/abs/1805.03370 |
-| `multiphase.stage_h_agri_per_yr` | ASSUMED | ASSUMED. Earth: farming has persisted ~11.5 kyr world-wide despite many regional collapses (Tainter 1988, The Collapse of Complex Societies); one world … | https://doi.org/10.1086/659307 |
-| `multiphase.stage_h_ind_per_yr` | ASSUMED | ASSUMED (Earth: ~265 yr industrial so far). Natural extinction alone is < 6.9e-5/yr (Snyder-Beattie, Ord & Bonsall 2019 Sci.Rep. 9, 11054), so most of this … | https://www.nature.com/articles/s41598-019-47540-7 |
-| `multiphase.stage_q_regress` | ASSUMED | ASSUMED (no quantitative literature). Earth's regional collapses mostly regressed rather than ended lineages (Tainter 1988) | https://www.cambridge.org/core/books/collapse-of-complex-societies/ |
-| `scenarios.nathan_headline.f_superhab` | ASSUMED | ASSUMED bracket around an Archive-derived 0.104 = P(1.0<=R<=1.5 given HZ, R<2) 25/49 x P(T_surf 282-302 K given HZ, R<2) 10/49 (superhab.py; independence … | https://pmc.ncbi.nlm.nih.gov/articles/PMC7757576/ |
-| `scenarios.nathan_headline.superhab_boost` | ASSUMED | ASSUMED (user-suggested 1-3x). Schulze-Makuch+2020 and Heller & Armstrong 2014 (Astrobiology 14, 50) argue qualitatively for higher habitability/biomass but … | https://doi.org/10.1089/ast.2013.1088 |
-| `scenarios.nathan_headline_ocean.independent_params.f_ocean_fecundity` | ASSUMED | ASSUMED. Lingam, Balbi & Mahajan 2023 ApJ 945, 23 (arXiv:2305.05989): to keep humans Copernican, either the TI emergence rate is much lower in ocean … | https://arxiv.org/abs/2305.05989 |
-| `scenarios.nathan_headline_ocean.independent_params.p_ocean_to_industrial` | ASSUMED | ASSUMED, wide. Barrier: fire, smelting and metallurgy need open-air combustion (pO2 >= 18%, Balbi & Frank 2024 Nat.Astron. 8, 39, arXiv:2308.01160); Lingam, … | https://arxiv.org/abs/2305.05989 |
-| `classic_static.f_stone` | ASSUMED | ASSUMED (replaces fc): fraction of intelligent lineages reaching habitual stone-tool use | https://www.pnas.org/doi/10.1073/pnas.0607909104 |
+| variable | tag | provenance | first source / note | URL |
+|---|---|---|---|---|
+| `sfr_now` | [MEASURED] | literature-sourced | Licquia & Newman 2015, ApJ 806, 96 | https://arxiv.org/abs/1407.1078 |
+| `m_disk_now` | [MEASURED] | literature-sourced | Licquia & Newman 2015 | https://arxiv.org/abs/1407.1078 |
+| `return_fraction` | [MODELED] | literature-sourced | Madau & Dickinson 2014 ARA&A (R=0.27 Salpeter, 0.41 Chabrier) | https://ned.ipac.caltech.edu/level5/March14/Madau/paper.pdf |
+| `f_early_disk_mass` | [MODELED] | literature-sourced | Snaith et al. 2015 A&A 578, A87 ('roughly half the stellar mass in first 4-5 Gyr') | https://www.aanda.org/articles/aa/full_html/2015/06/aa24281-14/aa24281-14.html |
+| `disk_start_gyr` | [MODELED] | literature-sourced | Snaith et al. 2015 (thick disk 9-13 Gyr ago); CONFIRMED by Xiang & Rix 2022 Nature 603, 599 (Gaia EDR3 + LAMOST ages of ~250,000 subgiants: old disk began … | https://www.aanda.org/articles/aa/full_html/2015/06/aa24281-14/aa24281-14.html |
+| `thick_end_gyr` | [MODELED] | literature-sourced | Snaith et al. 2015 (sharp SFR drop ~8-9 Gyr ago) | https://www.aanda.org/articles/aa/full_html/2015/06/aa24281-14/aa24281-14.html |
+| `stars_per_msun` | [MODELED] | literature-sourced | Kroupa 2001 IMF: 1.64 H-burning stars/Msun (integrated here); 2.8 = 1/0.36 incl. brown dwarfs | https://adsabs.harvard.edu/pdf/2001mnras.322..231k |
+| `f_gk` | [MEASURED] | literature-sourced | RECONS 10-pc census (G 5.0% + K 11.6%); Kroupa IMF 0.6-1.1 Msun = 10%; Gaia-EDR3 10-pc census (Reyle+2021 A&A 650, A201: G 18 + Sun, K 38 of 338 stars incl. … | http://www.recons.org/census.posted.htm |
+| `f_m` | [MEASURED] | literature-sourced | Gaia-EDR3 10-pc census (Reyle+2021 A&A 650, A201: 249 M of 338 stars incl. white dwarfs and the Sun = 0.737; 0.762 with the 36 unresolved probable-M … | https://arxiv.org/abs/2104.14972 |
+| `fp` | [MEASURED] | literature-sourced | Cassan et al. 2012 Nature 481, 167 (>=1 bound planet per star) | https://www.nature.com/articles/nature10684 |
+| `ne_gk` | [MEASURED] | literature-sourced | Bryson+2021 AJ 161, 36 (G-mid-K: 0.37-0.60 conservative, 0.58-0.88 optimistic); 2026 Astronomy & Computing reanalysis of 4,510 Archive transit planets: K … | https://arxiv.org/abs/2010.14812 |
+| `ne_m` | [MEASURED] | literature-sourced | Dressing & Charbonneau 2015 ApJ 807, 45 (0.16 conservative, 0.24 broad HZ); 2026 Astronomy & Computing Archive reanalysis (M ~0.41, completeness-corrected; … | https://arxiv.org/abs/1501.01623 |
+| `th_gk_gyr` | [MODELED] | literature-sourced | Rushby et al. 2013 Astrobiology (Earth HZ lifetime 6.29-7.79 Gyr; K dwarfs longer); Earth biosphere ends 0.8-1.5 Ga from now (Caldeira & Kasting 1992 via … | https://research-repository.st-andrews.ac.uk/handle/10023/5071 |
+| `th_m_gyr` | [MODELED] | literature-sourced | Rushby et al. 2013 (HZ lifetimes up to 54.7 Gyr) | https://research-repository.st-andrews.ac.uk/handle/10023/5071 |
+| `f_ghz` | [MODELED] | literature-sourced | Lineweaver, Fenner & Gibson 2004 Science (<10% incl. time/metallicity cuts); Prantzos 2008 SSRv (whole disk by now); Gowanlock+2011 (1.2% incl. more factors) | https://arxiv.org/abs/astro-ph/0401024 |
+| `n_giant_hz_gk` | [MEASURED] | literature-sourced | Hill et al. 2018 ApJ 860, 6 (G 6.5+/-1.9%, K 11.5+/-3.1%) | https://arxiv.org/abs/1805.03370 |
+| `r_bigfive_per_gyr` | [MEASURED] | literature-sourced | Big Five at ~444, 372, 252, 201, 66 Ma (US NPS / geologic time scale): intervals 72,120,51,135 Myr (mean 94.5 Myr => 10.6/Gyr); 5 events in 539 Myr … | https://www.nps.gov/subjects/fossils/mass-extinctions-through-geologic-time.htm |
+| `r_grb_per_gyr` | [MODELED] | literature-sourced | Piran & Jimenez 2014 PRL (>90% in 5 Gyr => >=0.46/Gyr; 50% in 500 Myr => 1.4/Gyr) | https://arxiv.org/abs/1409.2506 |
+| `r_sn_per_gyr` | [MEASURED] | literature-sourced | LITERATURE (2026-10-06; was fixed 1.5 = Gehrels+2003 ApJ 585, 1169, 8 pc). Rate within 20 pc from the Gaia-based census of OB stars within 1 kpc: 2.0 … | https://arxiv.org/abs/2503.08286 |
+| `l_stone_yr` | [MODELED] | literature-sourced | Earth: >=3.3 Myr so far (Harmand+2015 Nature); Gott 1993 Copernican estimate (best = 2x elapsed); chimp stone age >=4.3 kyr (Mercader+2007 PNAS); capuchin … | https://www.nature.com/articles/nature14464 |
+| `multipliers.f_plate_tectonics` | [MODELED] | literature-sourced | Stern & Gerya 2024 Sci.Rep. (f_pt < 0.17); Valencia+2007 ApJL ('inevitable' on super-Earths) vs O'Neill & Lenardic 2007 GRL (stagnant lid); Stern 2016 GSF | https://www.nature.com/articles/s41598-024-54700-x |
+| `multipliers.f_land_and_ocean` | [MODELED] | literature-sourced | Stern & Gerya 2024 (f_oc 0.0002-0.01); Simpson 2017 MNRAS (most HZ worlds >90% ocean); stone tools need dry land | https://arxiv.org/abs/1607.03095 |
+| `multipliers.f_m_water` | [MODELED] | literature-sourced | Tian & Ida 2015 Nat.Geosci. 8, 177: HZ Earth-mass planets of M dwarfs are bimodal (ocean or desert); Earth-like water contents are 10-100x less frequent … | https://www.nature.com/articles/ngeo2372 |
+| `multipliers.f_co_ratio` | [MEASURED] | literature-sourced | Brewer & Fischer 2016 ApJ 831, 20: carbon-rich (C/O>0.8) dwarfs <0.13% of the solar neighbourhood; none of 849 with C/O>0.7 (median 0.47). Negligible … | https://arxiv.org/abs/1608.06286 |
+| `multipliers.f_large_moon` | [MODELED] | literature-sourced | Elser+2011 Icarus (massive moon for ~1/12 of terrestrial planets, range 1/45-1/4); Laskar+1993 vs Lissauer, Barnes & Chambers 2012 Icarus (moonless … | https://arxiv.org/abs/1105.4616 |
+| `multipliers.f_jupiter_shield` | [MODELED] | literature-sourced | Wittenmyer+2020 MNRAS (cool Jupiters around 6.73% of stars); Horner & Jones 2008 IJA (shield role ambiguous -> may not be needed) | https://arxiv.org/abs/1912.01821 |
+| `multipliers.f_binary_ok` | [MEASURED] | literature-sourced | Kraus+2016 AJ 152, 8 (close binaries <47 AU suppress planets; ~1/5 of solar-type stars disallowed); Raghavan+2010 ApJS (54% single). Upper bound 1 because … | https://arxiv.org/abs/1604.05744 |
+| `star_classes.M.f_star` | [MEASURED] | literature-sourced | Gaia-EDR3 10-pc census 249/338 = 0.737 (Reyle+2021 A&A 650, A201 Table 3; denominator = A 4 + F 8 + G 18 + Sun + K 38 + M 249 + white dwarfs 20; 0.762 if … | https://arxiv.org/abs/2104.14972 |
+| `star_classes.M.ne` | [MEASURED] | literature-sourced | Dressing & Charbonneau 2015 ApJ 807, 45 (0.16 conservative, 0.24 broad HZ); 2026 Astronomy & Computing Archive reanalysis (M ~0.41) | https://arxiv.org/abs/1501.01623 |
+| `star_classes.M.th_gyr` | [MODELED] | literature-sourced | Rushby et al. 2013 Astrobiology 13, 833 (HZ lifetimes up to 54.7 Gyr) | https://research-repository.st-andrews.ac.uk/handle/10023/5071 |
+| `star_classes.K.f_star` | [MEASURED] | literature-sourced | Kroupa 2001 IMF 0.6-0.9 Msun = 0.077 (integrated here); RECONS 44/378 = 0.116; Gaia-EDR3 10-pc census 38/338 = 0.112 (Reyle+2021) lies inside | http://www.recons.org/census.posted.htm |
+| `star_classes.K.ne` | [MEASURED] | literature-sourced | 2026 Astronomy & Computing Archive reanalysis K ~0.27 (low); Bryson+2021 AJ 161, 36 G-mid-K 0.37-0.60 conservative / 0.58-0.88 optimistic (high) | https://arxiv.org/abs/2010.14812 |
+| `star_classes.K.th_gyr` | [MODELED] | literature-sourced | LITERATURE (2026-10-06; was ASSUMED loguniform 8-30, best 15). Continuously-habitable-zone durations t_ev from Cuntz & Guinan 2016 ApJ 827, 79 Table 2: K0 … | https://iopscience.iop.org/article/10.3847/0004-637X/827/1/79 |
+| `star_classes.K.n_giant_hz` | [MEASURED] | literature-sourced | Hill et al. 2018: K 11.5+/-3.1% (+/-1 sigma) | https://arxiv.org/abs/1805.03370 |
+| `star_classes.G.f_star` | [MEASURED] | literature-sourced | Kroupa 2001 IMF 0.9-1.1 Msun = 0.026 (integrated here); RECONS 19/378 = 0.050; Gaia-EDR3 10-pc census (18 + Sun)/338 = 0.056 (Reyle+2021 A&A 650, A201). … | http://www.recons.org/census.posted.htm |
+| `star_classes.G.ne` | [MEASURED] | literature-sourced | 2026 Astronomy & Computing Archive reanalysis F/G ~0.10 (low); Bryson+2021 G-mid-K up to 0.88 optimistic (high) | https://arxiv.org/abs/2010.14812 |
+| `star_classes.G.th_gyr` | [MODELED] | literature-sourced | Rushby+2013 (Earth HZ lifetime 6.29-7.79 Gyr); Earth biosphere ends 0.8-1.5 Ga from now (Caldeira & Kasting 1992 via Snyder-Beattie+2021) | https://research-repository.st-andrews.ac.uk/handle/10023/5071 |
+| `star_classes.G.n_giant_hz` | [MEASURED] | literature-sourced | Hill et al. 2018: G 6.5+/-1.9% (+/-1 sigma) | https://arxiv.org/abs/1805.03370 |
+| `star_classes.F.f_star` | [MEASURED] | literature-sourced | RECONS 7/378 = 0.0185 (present day; some F stars have already died); Kroupa 2001 IMF 1.1-1.5 Msun = 0.0285 (integrated here); Gaia-EDR3 10-pc census 8/338 = … | http://www.recons.org/census.posted.htm |
+| `star_classes.F.ne` | [MEASURED] | literature-sourced | 2026 Archive reanalysis F/G ~0.10 (best); Bryson+2021 sample extends only to 6300 K (upper 0.60 = its conservative upper bound). Low (2026-10-06: 0.03 … | https://arxiv.org/abs/2010.14812 |
+| `star_classes.F.th_gyr` | [MODELED] | literature-sourced | LITERATURE (2026-10-06; was ASSUMED loguniform 1.5-5.0, best 2.7). Continuously-habitable-zone durations t_ev from Cuntz & Guinan 2016 ApJ 827, 79 Table 2: … | https://iopscience.iop.org/article/10.3847/0004-637X/827/1/79 |
+| `multiphase.stage_h_radio_per_yr` | [GUESS] | literature-sourced | 1/L with L log-uniform 1e2 .. 1e10 yr = Sandberg, Drexler & Ord 2018 Table 1 (lifetime of a detectable civilisation). SETI gives no duration: Breakthrough … | https://arxiv.org/abs/1806.02404 |
+| `hard_steps.abiogenesis` | [MEASURED] | literature-sourced | Moody+2024 Nat.Ecol.Evol. 8, 1654: LUCA ~4.2 Ga (95% CI 4.09-4.33 Ga, cross-braced molecular clock); life must predate LUCA. Was 3.9 (Snyder-Beattie+2021) | https://www.nature.com/articles/s41559-024-02461-1 |
+| `hard_steps.oxygenic_photosynthesis_GOE` | [MEASURED] | literature-sourced | Lyons, Reinhard & Planavsky 2014 Nature (GOE ~2.4-2.3 Ga) | https://www.nature.com/articles/nature13068 |
+| `hard_steps.eukaryogenesis` | [MEASURED] | literature-sourced | Betts+2018 via Snyder-Beattie+2021 Table 1 (<1.84 Ga) | https://pmc.ncbi.nlm.nih.gov/articles/PMC7997718/ |
+| `hard_steps.complex_multicellularity` | [MEASURED] | literature-sourced | Knoll 2011 Annu.Rev.EPS (animal complex multicellularity, Ediacaran) | https://www.annualreviews.org/content/journals/10.1146/annurev.earth.031208.100209 |
+| `hard_steps.stone_tool_intelligence` | [MEASURED] | literature-sourced | Harmand+2015 Nature (Lomekwi 3, 3.3 Ma) | https://www.nature.com/articles/nature14464 |
+| `scenarios.nathan_headline_ocean.independent_params.f_ocean_world_gk` | [MODELED] | literature-sourced | Simpson 2017 MNRAS 468, 2803 (arXiv:1607.03095): >99% confidence that most habitable planets are water-dominated (f_w>50%); 95% credible that most are >90% … | https://arxiv.org/abs/1607.03095 |
+| `scenarios.nathan_headline_ocean.independent_params.f_ocean_world_m` | [MODELED] | literature-sourced | Tian & Ida 2015 Nat.Geosci. 8, 177: ocean planets 60/292 HZ Earth-mass planets (0.5 Msun) and 31/55 (0.3 Msun); the rest mostly desert. Water-world … | https://www.nature.com/articles/ngeo2372 |
+| `scenarios.nathan_headline_ocean_mult.independent_params2.f_triple_plus_M` | [MEASURED] | literature-sourced | Offner+2023 PPVII Table 1 (Winters+2019, 20 pc): THF 3.6+/-1.0% (0.15-0.30 Msun), 6.3+/-1.4% (0.3-0.6 Msun); range spans both +/-1 sigma | https://arxiv.org/abs/2203.10066 |
+| `scenarios.nathan_headline_ocean_mult.independent_params2.f_triple_plus_K` | [MODELED] | literature-sourced | Bracketed between Offner+2023 Table 1 THF 6.3% (0.3-0.6 Msun) and 12% (0.75-1.25 Msun); Raghavan+2010 (F6-K3) 8+/-1% triple + 3+/-1% higher = 11% | https://arxiv.org/abs/2203.10066 |
+| `scenarios.nathan_headline_ocean_mult.independent_params2.f_triple_plus_G` | [MEASURED] | literature-sourced | Offner+2023 PPVII Table 1: THF 12+/-2% (0.75-1.25 Msun); consistent with Raghavan+2010 8%+3% = 11% | https://arxiv.org/abs/2203.10066 |
+| `scenarios.nathan_headline_ocean_mult.independent_params2.f_triple_plus_F` | [MEASURED] | literature-sourced | Offner+2023 PPVII Table 1: THF 14+/-2% (0.85-1.50 Msun) | https://arxiv.org/abs/2203.10066 |
+| `species.species_concurrent_per_tool_world` | [MEASURED] | literature-sourced | Derived from Smithsonian Human Origins 'When Lived' spans (21 species; 15 have fossils <=3.3 Ma): over 3.3 Ma-present the mean number of coexisting hominin … | https://humanorigins.si.edu/evidence/human-fossils/species |
+| `species.species_cumulative_per_tool_world` | [MEASURED] | literature-sourced | Smithsonian list: 8 Homo species, 15 hominin species with fossils in the stone-tool era (best); Wikipedia 'List of Homo species' names 16 Homo species incl. … | https://humanorigins.si.edu/evidence/human-fossils/species |
+| `species.context_total_named_species` | [MEASURED] | literature-sourced | VERIFIED: Catalogue of Life estimates ~2.3M extant species recognised by taxonomists; COL Base Release 2026-07-14 lists 2,258,977 accepted species (incl. … | https://www.checklistbank.org/dataset/278910 |
+| `classic_static.R_star` | [GUESS] | literature-sourced | SDO 2018 Table 1 | https://arxiv.org/abs/1806.02404 |
+| `classic_static.fp` | [GUESS] | literature-sourced | SDO 2018 Table 1 | https://arxiv.org/abs/1806.02404 |
+| `classic_static.ne` | [GUESS] | literature-sourced | SDO 2018 Table 1 | https://arxiv.org/abs/1806.02404 |
+| `classic_static.log10_lambdaVt` | [GUESS] | literature-sourced | SDO 2018: fl = 1-exp(-lambda V t), log-normal, sigma = 50 decades, median 1 | https://arxiv.org/abs/1806.02404 |
+| `classic_static.fi` | [GUESS] | literature-sourced | SDO 2018 Table 1 | https://arxiv.org/abs/1806.02404 |
+| `classic_static.L_stone` | [GUESS] | literature-sourced | same as l_stone_yr above | https://www.nature.com/articles/nature14464 |
+| `n_giant_hz_m` | [MODELED] | literature + ASSUMED element | Hill et al. 2018 (M 6+/-6%); lower bound 0.01 ASSUMED | https://arxiv.org/abs/1805.03370 |
+| `f_exomoon_host` | [MODELED] | literature + ASSUMED element | WIDE ASSUMED prior. Low end: Canup & Ward 2006 Nature (satellite systems ~1e-4 of planet mass -> in-situ moons Moon-to-Mars size); capture routes Williams … | https://www.nature.com/articles/nature04860 |
+| `r_ster0_per_gyr` | [MODELED] | literature + ASSUMED element | LITERATURE-INFORMED low end (2026-10-12; was ASSUMED loguniform 1e-3-0.25). Barnes, Lewis, Salcido, Elahi, Filipovic & Bower 2026 MNRAS 552, stag1750 (EAGLE … | https://arxiv.org/abs/2610.07450 |
+| `p_bigfive_kills_toolusers` | [MODELED] | literature + ASSUMED element | LITERATURE-INFORMED (2026-10-06; was ASSUMED loguniform 0.1-1). Low 0.16 = smallest Big-Five marine SPECIES loss (Frasnian 16-20%; Stanley 2016 PNAS 113, … | https://www.pnas.org/doi/10.1073/pnas.1613094113 |
+| `multipliers.f_rocky_composition` | [MODELED] | literature + ASSUMED element | Brewer & Fischer 2016 ApJ 831, 20: ~60% of 849 FGK dwarfs have Earth-like Mg/Si (1-2), 40% Mg/Si<1 (silicate-rich, possibly different interiors/tectonics). … | https://arxiv.org/abs/1608.06286 |
+| `star_classes.M.n_giant_hz` | [MODELED] | literature + ASSUMED element | Hill et al. 2018 ApJ 860, 67 Table: M 6.0+/-6.0%; lower bound 0.01 ASSUMED | https://arxiv.org/abs/1805.03370 |
+| `multiphase.stage_tau_agri_yr` | [MODELED] | literature + ASSUMED element | Earth anchor 3.3 Ma (Harmand+2015 Lomekwi 3) -> ~11.5 ka (Zeder 2011 Curr.Anthropol. 52, S221) = 3.29 Myr; range = Earth/10 .. Earth x10 ASSUMED | https://www.nature.com/articles/nature14464 |
+| `multiphase.stage_tau_ind_yr` | [MODELED] | literature + ASSUMED element | Earth anchor ~11.5 ka -> ~1760 CE (~11.2 kyr); range Earth/10 .. x10 ASSUMED | https://doi.org/10.1086/659307 |
+| `multiphase.stage_tau_radio_yr` | [MODELED] | literature + ASSUMED element | Earth anchor ~1760 -> 1895 (Marconi's first radio transmissions) = ~135 yr (user: ~150 yr); range Earth/10 .. x10 ASSUMED | https://www.britannica.com/biography/Guglielmo-Marconi |
+| `multiphase.stage_tau_space_yr` | [MODELED] | literature + ASSUMED element | Earth anchor 1895 -> 1957 (Sputnik 1) = 62 yr; range Earth/10 .. x10 ASSUMED | https://www.nasa.gov/history/sputnik/ |
+| `multiphase.stage_h_space_per_yr` | [MODELED] | literature + ASSUMED element | Same as radio stage (SDO 2018 L 1e2 .. 1e10 yr); ASSUMED that orbital capability does not by itself lower the hazard | https://arxiv.org/abs/1806.02404 |
+| `scenarios.nathan_headline.n_tool_origins` | [MODELED] | literature + ASSUMED element | Low 3 = independent lithic-flake-producing primate lineages (hominins, Harmand+2015; bearded capuchins, Proffitt+2016 Nature 539, 85; long-tailed macaques, … | https://doi.org/10.1038/nature20112 |
+| `scenarios.nathan_headline_ocean_moons.independent_params2.n_hab_moons_per_giant` | [MODELED] | literature + ASSUMED element | Solar System: Jupiter 4 large (Galilean) moons, Saturn 1 (Titan); Cilibrasi+2018 MNRAS 480, 4355 population synthesis: surviving systems most often 3 moons, … | https://arxiv.org/abs/1801.06094 |
+| `multipliers.extra_worlds_per_system` | [GUESS] | user-supplied | USER-PROPOSED (speculative past intelligence on Venus/Mars): low-weight bonus for >1 tool-using world per system; not literature | user research export |
+| `scenarios.user_inputs.l_stone_yr` | [GUESS] | user-supplied | USER-PROPOSED 50-200 kyr extinction window (CONFLICTS with Big-Five spacing of ~50-135 Myr; kept as the user's scenario) |  |
+| `scenarios.user_inputs.th_gk_gyr` | [GUESS] | user-supplied | USER: Sun ~4 Gyr remaining (+~4.4 Gyr elapsed) |  |
+| `geometry.disk_volume_ly3` |  | user-supplied | USER-SUPPLIED ~7.9e+12 ly^3 (cylinder r = 50000 ly, thickness 1000 ly); used only for spacing |  |
+| `f_m_habitable` | [GUESS] | ASSUMED | ASSUMED bracket informed by Shields+2016 Phys.Rep.; Luger & Barnes 2015; Lingam & Loeb 2018 JCAP; Haqq-Misra+2018 IJA; Snyder-Beattie+2021 prediction | https://arxiv.org/abs/1610.05765 |
+| `t_metal_gyr` | [GUESS] | ASSUMED | ASSUMED (no direct measurement of when Earth-forming metallicity was reached); informed by Lineweaver 2001 Icarus (metallicity selection; Earths avg … | https://ui.adsabs.harvard.edu/abs/2001Icar..151..307L/abstract |
+| `f_exomoon_habitable` | [GUESS] | ASSUMED | ASSUMED range; Heller & Barnes 2013 Astrobiology 13, 18 (habitable edge; tidal heating can sterilise); Williams, Kasting & Wade 1997 Nature 385, 234 … | https://arxiv.org/abs/1209.5323 |
+| `r_self_per_gyr` | [GUESS] | ASSUMED | ASSUMED, no galactic data. Earth-only context (NOT used as galactic L): Urban 2024 Science (climate threatens 7.6% of species avg; 1.6% at ~1.3 C; ~1/3 at … | https://www.science.org/doi/10.1126/science.adp4461 |
+| `p_lethal_astro` | [GUESS] | ASSUMED | ASSUMED (Gehrels+2003 note SN pathway 'may be less important than previously thought') | https://arxiv.org/abs/astro-ph/0211361 |
+| `m_recurrence` | [GUESS] | ASSUMED | ASSUMED (no quantitative literature); multiple independent stone-tool lineages on Earth (Mercader+2007) suggest re-evolution can be easier than the first time | https://www.pnas.org/doi/10.1073/pnas.0607909104 |
+| `multipliers.f_m_flares` | [GUESS] | ASSUMED | ASSUMED bracket (flare statistics exist but no published mapping to a habitable fraction). Data: TESS flares on >40% of mid-to-late M dwarfs vs ~5% of K … | https://arxiv.org/abs/1610.05765 |
+| `multipliers.f_k_activity` | [GUESS] | ASSUMED | ASSUMED mild K-dwarf penalty (late-K flares/XUV and possible HZ tidal locking); no published survival fraction. Data: ~5% of K dwarfs show TESS flares vs … | https://iopscience.iop.org/article/10.3847/0004-637X/827/1/79 |
+| `multipliers.f_f_uv` | [GUESS] | ASSUMED | ASSUMED mapping of Sato et al. 2014 Int.J.Astrobiol. 13, 244 (F0-F8 V, 1.2-1.5 Msun: DNA damage at Earth-equivalent orbits 2.5-7.1x solar without … | https://arxiv.org/abs/1312.7431 |
+| `star_classes.F.n_giant_hz` | [GUESS] | ASSUMED | ASSUMED = G value (Hill et al. 2018 report no F-star rate) | https://arxiv.org/abs/1805.03370 |
+| `multiphase.stage_h_agri_per_yr` | [GUESS] | ASSUMED | ASSUMED. Earth: farming has persisted ~11.5 kyr world-wide despite many regional collapses (Tainter 1988, The Collapse of Complex Societies); one world … | https://doi.org/10.1086/659307 |
+| `multiphase.stage_h_ind_per_yr` | [GUESS] | ASSUMED | ASSUMED (Earth: ~265 yr industrial so far). Natural extinction alone is < 6.9e-5/yr (Snyder-Beattie, Ord & Bonsall 2019 Sci.Rep. 9, 11054), so most of this … | https://www.nature.com/articles/s41598-019-47540-7 |
+| `multiphase.stage_q_regress` | [GUESS] | ASSUMED | ASSUMED (no quantitative literature). Earth's regional collapses mostly regressed rather than ended lineages (Tainter 1988) | https://www.cambridge.org/core/books/collapse-of-complex-societies/ |
+| `scenarios.nathan_headline.f_superhab` | [GUESS] | ASSUMED | ASSUMED bracket around an Archive-derived 0.104 = P(1.0<=R<=1.5 given HZ, R<2) 25/49 x P(T_surf 282-302 K given HZ, R<2) 10/49 (superhab.py; independence … | https://pmc.ncbi.nlm.nih.gov/articles/PMC7757576/ |
+| `scenarios.nathan_headline.superhab_boost` | [GUESS] | ASSUMED | ASSUMED (user-suggested 1-3x). Schulze-Makuch+2020 and Heller & Armstrong 2014 (Astrobiology 14, 50) argue qualitatively for higher habitability/biomass but … | https://doi.org/10.1089/ast.2013.1088 |
+| `scenarios.nathan_headline_ocean.independent_params.f_ocean_fecundity` | [GUESS] | ASSUMED | ASSUMED. Lingam, Balbi & Mahajan 2023 ApJ 945, 23 (arXiv:2305.05989): to keep humans Copernican, either the TI emergence rate is much lower in ocean … | https://arxiv.org/abs/2305.05989 |
+| `scenarios.nathan_headline_ocean.independent_params.p_ocean_to_industrial` | [GUESS] | ASSUMED | ASSUMED, wide. Barrier: fire, smelting and metallurgy need open-air combustion (pO2 >= 18%, Balbi & Frank 2024 Nat.Astron. 8, 39, arXiv:2308.01160); Lingam, … | https://arxiv.org/abs/2305.05989 |
+| `scenarios.nathan_headline_ocean_mult.independent_params2.f_hab_triple_plus` | [GUESS] | ASSUMED | ASSUMED; low-end range, near 0 but nonzero |  |
+| `scenarios.nathan_headline_ocean_moons.independent_params2.p_second_civ` | [GUESS] | ASSUMED | ASSUMED |  |
+| `scenarios.nathan_headline_ocean_moons.independent_params2.p_dominance` | [GUESS] | ASSUMED | ASSUMED |  |
+| `scenarios.nathan_headline_ocean_moons.independent_params2.tech_accel` | [GUESS] | ASSUMED | ASSUMED |  |
+| `classic_static.f_stone` | [GUESS] | ASSUMED | ASSUMED (replaces fc): fraction of intelligent lineages reaching habitual stone-tool use | https://www.pnas.org/doi/10.1073/pnas.0607909104 |
 
 </details>
 
@@ -362,6 +371,27 @@ Tool-using intelligence is not required to arise on land. The `*_ocean` scenario
 
 ![ocean comparison](results/ocean_comparison.png)
 
+## Rigor checks (interval bounds, held-out, leakage, sensitivity)
+
+Guaranteed bounds on N_now over the full prior support (python-flint/Arb interval arithmetic; normal priors without an upper limit are cut at +6 sd). They show what the priors make *possible*. The MC range shows what they make *likely*. Details: [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md).
+
+| scenario | guaranteed min | guaranteed max | MC median | MC 10–90% |
+|---|---|---|---|---|
+| `nathan_headline` | 1.75e-53 | 2.1e+11 | 2.39e+03 | 12.8–3.55e+05 |
+| `nathan_headline_ocean` | 2.01e-53 | 2.77e+11 | 2.82e+04 | 294–1.62e+06 |
+| `baseline` | 3.85e-71 | 1.21e+11 | 0.00357 | 8.58e-07–11.1 |
+| `baseline_ocean` | 4.53e-71 | 1.92e+11 | 0.0413 | 1.45e-05–83.9 |
+
+No factor is fitted to data, so there is no fitted trend to hold out; the two Archive-estimated quantities pass or fail as reported in the summary. Top first-order Sobol drivers of log10 N (headline): `f_land_and_ocean` 0.39, `l_stone_yr` 0.22, `f_plate_tectonics` 0.11, `m_recurrence` 0.07, `f_large_moon` 0.06.
+
+![sobol](rigor/sobol_ranking.png)
+
+**Tightened bounds (Oct 19).** The bounds were tightened with an exact hypoexponential CDF, a sharper occupancy floor and branch-and-bound; all remain rigorous for the model equations. Guaranteed min / max: `nathan_headline_ocean` 2.52e-47 / 2.75e+11 (was 2.01e-53 / 2.77e+11); `baseline_ocean` 7.78e-64 / 1.92e+11 (was 4.53e-71 / 1.92e+11); `nathan_headline` 9.63e-49 / 2.07e+11 (was 1.75e-53 / 2.1e+11); `baseline` 2.97e-65 / 1.21e+11 (was 3.85e-71 / 1.21e+11).
+
+**P-box 90% coverage interval** (95% confidence; holds if every [GUESS] range is honest): `nathan_headline_ocean` [9.12e-51, 2.63e+11]; `baseline_ocean` [1.12e-67, 1.92e+11]. This is nearly the full hard range: the guesses dominate. Also new: linked inputs (`links:`), binding factors, Sobol QMC, and an independent re-implementation, `rigor/check.py`, which agrees to within 1e-11 relative error.
+
+**Oct 21 features** (paired 1e5-draw variants `*_mult`, `*_moons`, `*_ab`). The multiplicity cut (triple+ systems; Raghavan+2010, Offner+2023, Winters+2019) changes the median by -0.039 dex. Multi-moon civilisations change it by +0.006 dex and put 3.4% of N (headline_ocean) in multi-civilisation systems. Full details: [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md).
+
 ## Caveats
 
 * **Prior-dominated.** Defensible priors move the median by more than 20 orders of magnitude (`snyder_beattie_priors` 5.5e-21 vs the headline). Read medians as summaries of the stated uncertainty, not measurements.
@@ -383,8 +413,10 @@ Tool-using intelligence is not required to arise on land. The `*_ocean` scenario
 Feasibility pass on Breakthrough Listen public data with turboSETI (`seti/scan.py`, queue in `seti/queue.json`). Full details in [`seti/scan_log.md`](seti/scan_log.md).
 
 * **3I/ATLAS GBT L-band (1618.65-1621.58 MHz, Iridium/GNSS region): blc23 scans 0013-0018, coarse channel 23** — hits at S/N>10: 438; ON-OFF filter-3 events: 1; at S/N>5: 828; ON-OFF filter-3 events: 1. Top plotted: 1618.785314 MHz, -2.121 Hz/s, S/N 23.38 ([plot](seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/top_hit.png)). Injection check: a synthetic drifting tone added to the ON scans was recovered as a filter-3 event.
+* **3I/ATLAS GBT L-band (1419.43-1422.36 MHz, includes HI 1420.41 MHz): blc24 scans 0013-0018, coarse channel 27** — hits at S/N>10: 11; ON-OFF filter-3 events: 0; at S/N>5: 16; ON-OFF filter-3 events: 0. Top plotted: 1420.000001 MHz, -0.0073 Hz/s, S/N 35.92 ([plot](seti/out/blc24_guppi_61027_17226_DIAG_3I_ATLAS_00_cc27_3dae93af/top_hit.png)). Injection check: a synthetic drifting tone added to the ON scans was recovered as a filter-3 event.
+* **3I/ATLAS GBT (2008.30-2011.23 MHz, strong line seen in mid-res bandpass): blc21 scans 0013-0018, coarse channel 18** — hits at S/N>10: 6; ON-OFF filter-3 events: 0; at S/N>5: 6; ON-OFF filter-3 events: 0. Top plotted: 2010.000000 MHz, 0.0073 Hz/s, S/N 45602.05 ([plot](seti/out/blc21_guppi_61027_17226_DIAG_3I_ATLAS_00_cc18_d2c0ccee/top_hit.png)). Injection check: a synthetic drifting tone added to the ON scans was recovered as a filter-3 event.
 
-Every hit is almost certainly RFI or noise; **no detection is claimed**, and anything interesting would need re-observation. 3 job(s) pending for the weekly run.
+Every hit is almost certainly RFI or noise; **no detection is claimed**, and anything interesting would need re-observation. 1 job(s) pending for the weekly run.
 
 ## Reproduce
 

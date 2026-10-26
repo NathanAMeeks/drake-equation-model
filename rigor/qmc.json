@@ -1,0 +1,55 @@
+{
+ "nathan_headline_ocean": {
+  "n_per_rep": 4096,
+  "reps": 16,
+  "dim": 59,
+  "var_of_mean": {
+   "mc": 0.0003001992176640468,
+   "mc_cv": 0.00024702586513746297,
+   "qmc": 4.765696612217193e-06,
+   "qmc_cv": 4.76569654175216e-06
+  },
+  "var_reduction_vs_mc": {
+   "mc": 1.0,
+   "mc_cv": 1.2152541900703164,
+   "qmc": 62.99167615799658,
+   "qmc_cv": 62.99167708938415
+  },
+  "mean_log10N_qmc_cv": 4.3870136693169215,
+  "secs": 431.5
+ },
+ "baseline_ocean": {
+  "n_per_rep": 4096,
+  "reps": 16,
+  "dim": 64,
+  "var_of_mean": {
+   "mc": 0.002324047947740458,
+   "mc_cv": 0.0016791420815058355,
+   "qmc": 4.1840170815582017e-07,
+   "qmc_cv": 4.184013510959727e-07
+  },
+  "var_reduction_vs_mc": {
+   "mc": 1.0,
+   "mc_cv": 1.3840686701486737,
+   "qmc": 5554.585228593143,
+   "qmc_cv": 5554.589968824858
+  },
+  "mean_log10N_qmc_cv": 1.3720102596884112,
+  "secs": 381.9
+ },
+ "pick_freeze_cache": {
+  "n": 2000,
+  "factors": [
+   "l_stone_yr",
+   "f_plate_tectonics",
+   "m_recurrence",
+   "f_land_and_ocean",
+   "sfr_now"
+  ],
+  "secs_plain": 32.84,
+  "secs_cached": 13.14,
+  "speedup": 2.5,
+  "cache_hit_rate": 0.786,
+  "identical_output": true
+ }
+}

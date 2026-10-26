@@ -1,0 +1,30 @@
+{
+ "nathan_headline_ocean": {
+  "n_checked": 1000,
+  "max_rel_err_N": 5.391403591261472e-13,
+  "median_rel_err_N": 8.175000835872316e-16,
+  "n_rel_err_gt_1em6": 0,
+  "max_abs_dlogw": 0.0,
+  "p10_p50_p90": [
+   293.5218732640565,
+   28249.447729438063,
+   1621375.1342652272
+  ],
+  "support_violations": [],
+  "samples_outside_bounds": 0
+ },
+ "baseline_ocean": {
+  "n_checked": 1000,
+  "max_rel_err_N": 3.391955784032142e-12,
+  "median_rel_err_N": 1.5115955728703206e-13,
+  "n_rel_err_gt_1em6": 0,
+  "max_abs_dlogw": 4.1815439999481896e-12,
+  "p10_p50_p90": [
+   1.4543455107738743e-05,
+   0.041348038342822364,
+   83.91855854695208
+  ],
+  "support_violations": [],
+  "samples_outside_bounds": 0
+ }
+}

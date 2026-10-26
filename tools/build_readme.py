@@ -138,6 +138,19 @@ if "nathan_headline_ocean" in S and "baseline_ocean" in S:
 
 ![ocean comparison](results/ocean_comparison.png)
 """)
+if os.path.exists("rigor/bounds.json"):
+    _B = json.load(open("rigor/bounds.json")); _S = json.load(open("rigor/sobol.json"))
+    L.append("## Rigor checks (interval bounds, held-out, leakage, sensitivity)\n")
+    L.append("Guaranteed bounds on N_now over the full prior support (python-flint/Arb interval arithmetic; normal priors without an upper limit are cut at +6 sd). They show what the priors make *possible*. The MC range shows what they make *likely*. Details: [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md).\n")
+    L.append("| scenario | guaranteed min | guaranteed max | MC median | MC 10–90% |\n|---|---|---|---|---|")
+    for _s, _b in _B["scenarios"].items():
+        L.append(f"| `{_s}` | {_b['N_now_lower']:.3g} | {_b['N_now_upper']:.3g} | {_b['MC']['median']:.3g} | {_b['MC']['p10']:.3g}–{_b['MC']['p90']:.3g} |")
+    L.append("\nNo factor is fitted to data, so there is no fitted trend to hold out; the two Archive-estimated quantities pass or fail as reported in the summary. Top first-order Sobol drivers of log10 N (headline): " + ", ".join(f"`{k}` {v:.2f}" for k, v in list(_S["nathan_headline"]["S1"].items())[:5]) + ".\n\n![sobol](rigor/sobol_ranking.png)\n")
+    if os.path.exists("rigor/bounds_v2.json"):
+        _B2 = json.load(open("rigor/bounds_v2.json")); _PB = json.load(open("rigor/pbox.json")); _V = json.load(open("rigor/v3.json"))
+        L.append("**Tightened bounds (Oct 19).** The bounds were tightened with an exact hypoexponential CDF, a sharper occupancy floor and branch-and-bound; all remain rigorous for the model equations. Guaranteed min / max: " + "; ".join(f"`{k}` {v['bnb'][0]:.3g} / {v['bnb'][1]:.3g} (was {v['old'][0]:.3g} / {v['old'][1]:.3g})" for k, v in _B2.items()) + ".")
+        L.append("\n**P-box 90% coverage interval** (95% confidence; holds if every [GUESS] range is honest): " + "; ".join(f"`{k}` [{v['coverage90'][0]:.3g}, {v['coverage90'][1]:.3g}]" for k, v in _PB.items()) + ". This is nearly the full hard range: the guesses dominate. Also new: linked inputs (`links:`), binding factors, Sobol QMC, and an independent re-implementation, `rigor/check.py`, which agrees to within 1e-11 relative error.")
+        L.append("\n**Oct 21 features** (paired 1e5-draw variants `*_mult`, `*_moons`, `*_ab`). The multiplicity cut (triple+ systems; Raghavan+2010, Offner+2023, Winters+2019) changes the median by " + f"{_V['nathan_headline_ocean_mult']['paired_median_log10_ratio']:+.3f} dex. Multi-moon civilisations change it by {_V['nathan_headline_ocean_moons']['paired_median_log10_ratio']:+.3f} dex and put {_V['nathan_headline_ocean_moons']['multi_civ_share_of_N']:.1%} of N (headline_ocean) in multi-civilisation systems. Full details: [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md).\n")
 L.append("## Caveats\n")
 L.append("""* **Prior-dominated.** Defensible priors move the median by more than 20 orders of magnitude (`snyder_beattie_priors` 5.5e-21 vs the headline). Read medians as summaries of the stated uncertainty, not measurements.
 * **The headline assumes Earth's timeline is typical** and skips the observer-selection correction. ESI measures only bulk size, density, escape velocity and temperature; the temperature is assumed from insolation (Earth-like albedo and greenhouse). It says nothing about biology.

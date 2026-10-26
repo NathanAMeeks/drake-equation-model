@@ -1,0 +1,67 @@
+{
+ "nathan_headline_ocean": {
+  "n_draws": 2000,
+  "dkw_eps": 0.030368073095415258,
+  "n_known": 4,
+  "n_guess": 63,
+  "known": [
+   "w_similarity_M",
+   "w_similarity_K",
+   "w_similarity_G",
+   "w_similarity_F"
+  ],
+  "coverage90": [
+   9.118243753445346e-51,
+   263416135975.27127
+  ],
+  "coverage_note": "[a,b] contains N with >=90% prob. (95% confidence, DKW) if every guess range is honest; unweighted prior draws",
+  "pbox_quantiles": {
+   "0.1": [
+    9.251558053360125e-51,
+    251233356431.27505
+   ],
+   "0.5": [
+    9.482678008325619e-51,
+    256113420305.726
+   ],
+   "0.9": [
+    9.715731450817636e-51,
+    260988797545.17465
+   ]
+  },
+  "hard_known_only_guess_at_median": [
+   2289.84605985279,
+   858362.9517221976
+  ]
+ },
+ "baseline_ocean": {
+  "n_draws": 2000,
+  "dkw_eps": 0.030368073095415258,
+  "n_known": 0,
+  "n_guess": 64,
+  "known": [],
+  "coverage90": [
+   1.1230165218765023e-67,
+   192483302376.54236
+  ],
+  "coverage_note": "[a,b] contains N with >=90% prob. (95% confidence, DKW) if every guess range is honest; unweighted prior draws (pre-Earth-timing weights: baseline taus are GUESS intervals)",
+  "pbox_quantiles": {
+   "0.1": [
+    1.1230165218765023e-67,
+    192483302376.54236
+   ],
+   "0.5": [
+    1.1230165218765023e-67,
+    192483302376.54236
+   ],
+   "0.9": [
+    1.1230165218765023e-67,
+    192483302376.54236
+   ]
+  },
+  "hard_known_only_guess_at_median": [
+   1489.1184089867688,
+   627018.3812951738
+  ]
+ }
+}

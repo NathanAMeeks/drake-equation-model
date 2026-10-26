@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-10-26
+
+Rigor work plus two new features. No headline scenario changed: the existing scenarios draw exactly as before (new inputs use separate random streams), so the medians in `results/results.json` are unchanged. Details and all numbers are in [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md).
+
+**Rigor checks (`rigor/`)**
+- Evidence tags [MEASURED]/[MODELED]/[GUESS] on params.yaml entries, with a tag column in the README provenance table.
+- Guaranteed interval bounds (python-flint/Arb), tightened with an exact hypoexponential CDF, a sharper occupancy floor and branch-and-bound. For example, the `nathan_headline_ocean` minimum rises from 2.01e-53 to 2.52e-47 (`bounds.json`, `bounds_v2.json`).
+- Held-out tests, an ESI leakage check, and a first-order Sobol ranking.
+- Linked inputs: a `links:` block (Gaussian copula, all strengths [GUESS]) and scenarios `*_ocean_linked`.
+- P-boxes with a 90% coverage interval, binding factors per tail, and Sobol QMC with a control variate plus a pick-freeze cache (`qmc.json`).
+- An independent re-implementation, `rigor/check.py`, which does not import drake_model and matches N_now to within 1e-11 relative error.
+
+**New features (paired variants `nathan_headline_ocean_*` / `baseline_ocean_*`: `_mult`, `_moons`, `_ab`)**
+- Star multiplicity cut: habitable worlds only in single or binary systems; `f_hab_triple_plus` [GUESS] lets a small fraction of triple+ systems through. Triple+ fractions per M/K/G/F come from Offner+2023 PPVII Table 1 (incl. Winters+2019) and Raghavan+2010. Paired median change −0.04 dex.
+- Multi-moon civilisations around HZ giants: `n_hab_moons_per_giant` [MODELED; Solar System, Cilibrasi+2018]; `p_second_civ`, `p_dominance` and `tech_accel` [GUESS]. New outputs: `N_now_multi_civ`, `multi_civ_share`, `N_civ_now` and `N_radio_capable`. Paired median change +0.006 dex, with 3.4% (headline_ocean) and 7.2% (baseline_ocean) of N in multi-civilisation systems.
+- `drake_model.py`: `inherit:` for variant scenarios and `independent_params2` (its own random stream).
+- `requirements.txt`: python-flint, mpmath and scipy (needed by the rigor scripts).
+
 ## 2026-10-18
 
 Ocean-intelligence path. Adds paired `*_ocean` scenarios so tool-using intelligence is not required to arise on land. Land-parent medians are unchanged from 2026-10-14; the new scenarios share every non-ocean draw with their parent (separate RNG stream).

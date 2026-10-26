@@ -1,0 +1,25 @@
+{
+ "earth_timeline": {
+  "nathan_headline": {
+   "hard_step_tau": "earth_interval",
+   "bayes_update": false
+  },
+  "nathan_headline_ocean": {
+   "hard_step_tau": "earth_interval",
+   "bayes_update": false
+  },
+  "baseline": {
+   "hard_step_tau": "loguniform",
+   "bayes_update": true
+  },
+  "baseline_ocean": {
+   "hard_step_tau": "loguniform",
+   "bayes_update": true
+  }
+ },
+ "selection_correction_in_code": true,
+ "esi_lists_contain_solar_system_bodies": false,
+ "params_reference_model_outputs": false,
+ "seti_results_used_as_inputs": false,
+ "n_tool_origins_includes_hominins": true
+}

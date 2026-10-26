@@ -1,0 +1,302 @@
+{
+ "nathan_headline_ocean": {
+  "old": [
+   2.0132324589805216e-53,
+   277263811496.7248
+  ],
+  "engine_v2": [
+   8.84003885463695e-51,
+   274564367333.576
+  ],
+  "bnb": [
+   2.520120903691537e-47,
+   274564367333.576
+  ],
+  "leaves": [
+   61,
+   1
+  ],
+  "width_dex_old": 64.1389992652806,
+  "width_dex_new": 58.03722279757722,
+  "binding_low_tail": [
+   [
+    "r_ster0_per_gyr",
+    "high end",
+    42.42
+   ],
+   [
+    "sfr_now",
+    "low end",
+    30.0
+   ],
+   [
+    "m_disk_now",
+    "high end",
+    17.73
+   ],
+   [
+    "return_fraction",
+    "high end",
+    4.53
+   ],
+   [
+    "f_land_and_ocean",
+    "low end",
+    1.79
+   ]
+  ],
+  "binding_high_tail": [
+   [
+    "f_plate_tectonics",
+    "high end",
+    1.0
+   ],
+   [
+    "f_large_moon",
+    "high end",
+    0.62
+   ],
+   [
+    "f_jupiter_shield",
+    "high end",
+    0.47
+   ],
+   [
+    "f_ghz",
+    "high end",
+    0.26
+   ],
+   [
+    "m_disk_now",
+    "high end",
+    0.23
+   ]
+  ],
+  "secs": 42.9
+ },
+ "baseline_ocean": {
+  "old": [
+   4.528073357872396e-71,
+   192483302376.54236
+  ],
+  "engine_v2": [
+   1.1230165218765023e-67,
+   192483302376.54236
+  ],
+  "bnb": [
+   7.783013296006527e-64,
+   192483302376.54236
+  ],
+  "leaves": [
+   61,
+   1
+  ],
+  "width_dex_old": 81.62847960701231,
+  "width_dex_new": 74.39324528874535,
+  "binding_low_tail": [
+   [
+    "r_ster0_per_gyr",
+    "high end",
+    42.42
+   ],
+   [
+    "sfr_now",
+    "low end",
+    30.0
+   ],
+   [
+    "m_disk_now",
+    "high end",
+    17.73
+   ],
+   [
+    "return_fraction",
+    "high end",
+    4.53
+   ],
+   [
+    "tau_stone_tool_intelligence",
+    "high end",
+    3.0
+   ]
+  ],
+  "binding_high_tail": [
+   [
+    "f_plate_tectonics",
+    "high end",
+    1.0
+   ],
+   [
+    "f_large_moon",
+    "high end",
+    0.53
+   ],
+   [
+    "f_jupiter_shield",
+    "high end",
+    0.42
+   ],
+   [
+    "f_ghz",
+    "high end",
+    0.26
+   ],
+   [
+    "m_disk_now",
+    "high end",
+    0.23
+   ]
+  ],
+  "secs": 22.5
+ },
+ "nathan_headline": {
+  "old": [
+   1.7458512944032345e-53,
+   209857564187.79633
+  ],
+  "engine_v2": [
+   7.689514444515734e-51,
+   207294410182.3099
+  ],
+  "bnb": [
+   9.633894114056291e-49,
+   207294410182.3099
+  ],
+  "leaves": [
+   61,
+   1
+  ],
+  "width_dex_old": 64.07991737847156,
+  "width_dex_new": 59.33278572255903,
+  "binding_low_tail": [
+   [
+    "r_ster0_per_gyr",
+    "high end",
+    42.42
+   ],
+   [
+    "sfr_now",
+    "low end",
+    30.0
+   ],
+   [
+    "m_disk_now",
+    "high end",
+    17.73
+   ],
+   [
+    "return_fraction",
+    "high end",
+    4.53
+   ],
+   [
+    "f_land_and_ocean",
+    "low end",
+    1.85
+   ]
+  ],
+  "binding_high_tail": [
+   [
+    "f_land_and_ocean",
+    "high end",
+    1.85
+   ],
+   [
+    "f_plate_tectonics",
+    "high end",
+    1.0
+   ],
+   [
+    "f_large_moon",
+    "high end",
+    0.68
+   ],
+   [
+    "f_jupiter_shield",
+    "high end",
+    0.51
+   ],
+   [
+    "f_ghz",
+    "high end",
+    0.26
+   ]
+  ],
+  "secs": 38.9
+ },
+ "baseline": {
+  "old": [
+   3.853776422534241e-71,
+   120860487606.10168
+  ],
+  "engine_v2": [
+   9.558203397646606e-68,
+   120860487606.10168
+  ],
+  "bnb": [
+   2.973609388481194e-65,
+   120860487606.10168
+  ],
+  "leaves": [
+   61,
+   1
+  ],
+  "width_dex_old": 81.49639782667188,
+  "width_dex_new": 75.60900042278335,
+  "binding_low_tail": [
+   [
+    "r_ster0_per_gyr",
+    "high end",
+    42.42
+   ],
+   [
+    "sfr_now",
+    "low end",
+    30.0
+   ],
+   [
+    "m_disk_now",
+    "high end",
+    17.73
+   ],
+   [
+    "return_fraction",
+    "high end",
+    4.53
+   ],
+   [
+    "tau_stone_tool_intelligence",
+    "high end",
+    3.0
+   ]
+  ],
+  "binding_high_tail": [
+   [
+    "f_land_and_ocean",
+    "high end",
+    1.85
+   ],
+   [
+    "f_plate_tectonics",
+    "high end",
+    1.0
+   ],
+   [
+    "f_large_moon",
+    "high end",
+    0.58
+   ],
+   [
+    "f_jupiter_shield",
+    "high end",
+    0.44
+   ],
+   [
+    "f_ghz",
+    "high end",
+    0.26
+   ]
+  ],
+  "secs": 21.4
+ }
+}

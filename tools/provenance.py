@@ -58,15 +58,17 @@ def section(cfg, level="##"):
          "**literature + ASSUMED element** (cited data, but the mapping onto the model variable or part of the range is a judgement), "
          "**user-supplied** (Nathan's own inputs) and **ASSUMED** (no usable quantitative literature value; the reason is in the source text). "
          "Counts: " + ", ".join(f"{c} {counts.get(c, 0)}" for c in order) + ".\n",
+         "Evidence tag (`tag:` in params.yaml): **[MEASURED]** direct observation, census or dated record; **[MODELED]** taken from a theoretical model or simulation, or a measurement mapped onto the variable by a judgement; **[GUESS]** ASSUMED or user-supplied (no quantitative literature value), plus the SDO 2018 Table-1 ranges, which compile published opinions. Tag counts: "
+         + ", ".join(f"{t} {sum(1 for _, _, s in R if s.get('tag') == t)}" for t in ("[MEASURED]", "[MODELED]", "[GUESS]")) + ".\n",
          "<details><summary>Full provenance table (click to expand)</summary>\n",
-         "| variable | provenance | first source / note | URL |", "|---|---|---|---|"]
+         "| variable | tag | provenance | first source / note | URL |", "|---|---|---|---|---|"]
     for c in order:
         for nm, cl, spec in R:
             if cl != c: continue
             src = cell(spec.get("source", ""))
             short = src if len(src) <= 160 else src[:157].rsplit(" ", 1)[0] + " …"
             url = cell(str(spec.get("url", "")).split(" ; ")[0])
-            L.append(f"| `{nm}` | {cl} | {short} | {url} |")
+            L.append(f"| `{nm}` | {spec.get('tag', '')} | {cl} | {short} | {url} |")
     L.append("\n</details>\n")
     return "\n".join(L) + "\n"
 

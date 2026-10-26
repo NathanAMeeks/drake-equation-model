@@ -117,6 +117,8 @@ class Model:
         self.Mc = 1 << int(math.ceil(math.log2(self.I * 2)))  # for galactic convolution
         self.steps = cfg["hard_steps"]
         self.scn = cfg["scenarios"][scenario]
+        if "inherit" in self.scn:   # v3: variant = parent scenario + these keys (independent_params2 / flags)
+            self.scn = {**cfg["scenarios"][self.scn["inherit"]], **{k: v for k, v in self.scn.items() if k != "inherit"}}
         self.scenario = scenario
         ts = run["earth_habitable_start_gya"]
         dates = [ts] + [s["earth_gya"] for s in self.steps]
@@ -171,15 +173,23 @@ class Model:
             specs[name] = s
         for name, s in self.scn.get("independent_params", {}).items():   # drawn from a separate RNG stream => main stream identical to parent
             specs[name] = s
+        for name, s in self.scn.get("independent_params2", {}).items():
+            specs[name] = s
         return specs
 
     def draw(self, n, rng):
         extra = self.scn.get("extra_params", {}); indep = self.scn.get("independent_params", {})
-        P = {k: sample(v, n, rng) for k, v in self.param_specs().items() if k not in extra and k not in indep}
+        indep2_ = self.scn.get("independent_params2", {})
+        P = {k: sample(v, n, rng) for k, v in self.param_specs().items() if k not in extra and k not in indep and k not in indep2_}
         if indep:
             if not hasattr(self, "_rng_indep"):
                 self._rng_indep = np.random.default_rng(int(self.cfg["run"]["seed"]) + 7919)
             for k, v in indep.items(): P[k] = sample(v, n, self._rng_indep)
+        indep2 = self.scn.get("independent_params2", {})
+        if indep2:   # v3 features (2026-10-21): own stream so ocean/indep draws stay paired with the parent
+            if not hasattr(self, "_rng_indep2"):
+                self._rng_indep2 = np.random.default_rng(int(self.cfg["run"]["seed"]) + 15485863)
+            for k, v in indep2.items(): P[k] = sample(v, n, self._rng_indep2)
         sim = self.scn.get("similarity")
         if sim:   # per-sample bootstrap mean of ESI^k over the Archive HZ-rocky population (aux_* = other variants)
             E = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), sim["esi_file"])))
@@ -198,8 +208,32 @@ class Model:
                         P[f"w_similarity_{c}"] = P["w_similarity"].copy()
         for k, v in extra.items():
             P[k] = sample(v, n, rng)
+        if self.scn.get("links"): self._apply_links(P)
         self._apply_tool_origins(P)
         return P
+
+    def _apply_links(self, P):
+        """Linked inputs (Gaussian copula through shared hidden log-space variables, cfg['links']). Each member keeps its
+        marginal prior: its own quantile u -> eps = Phi^-1(u); new z = sum_g rho_g h_g + sqrt(1 - sum rho_g^2) eps; u' = Phi(z).
+        Hidden h_g come from a separate RNG stream, so unlinked draws stay paired with the parent scenario."""
+        from statistics import NormalDist
+        nd = NormalDist(); Phi = np.vectorize(nd.cdf); iPhi = np.vectorize(lambda u: nd.inv_cdf(min(max(u, 1e-12), 1 - 1e-12)))
+        n = len(next(iter(P.values()))); specs = self.param_specs()
+        if not hasattr(self, "_rng_link"): self._rng_link = np.random.default_rng(int(self.cfg["run"]["seed"]) + 104729)
+        groups = self.cfg["links"]["groups"]; h = {g: self._rng_link.standard_normal(n) for g in groups}
+        load = {}
+        for g, d in groups.items():
+            for k, rho in d["members"].items(): load.setdefault(k, []).append((g, float(rho)))
+        for k, lst in load.items():
+            if k not in P: continue
+            sp = _num(specs[k]); lo, hi = float(sp["low"]), float(sp["high"])
+            if sp["dist"] == "loguniform": u = (np.log10(P[k]) - math.log10(lo)) / (math.log10(hi) - math.log10(lo))
+            elif sp["dist"] == "uniform": u = (P[k] - lo) / (hi - lo)
+            else: continue
+            r2 = sum(r * r for _, r in lst); assert r2 < 1
+            z = sum(r * h[g] for g, r in lst) + math.sqrt(1 - r2) * iPhi(u)
+            u2 = Phi(z)
+            P[k] = 10 ** (math.log10(lo) + u2 * (math.log10(hi) - math.log10(lo))) if sp["dist"] == "loguniform" else lo + u2 * (hi - lo)
 
     def _apply_tool_origins(self, P):
         """Cross-lineage tool use: last step's expected time = Earth's multicellularity->tools interval / n independent origins."""
@@ -275,7 +309,7 @@ class Model:
             if ocean: mult_o[c] = (1 - f) * mult_o[c] + f * np.minimum(mult_o[c] * P["superhab_boost"], 1.0)
         moon = P.get("f_exomoon_host", np.zeros(n)) * P.get("f_exomoon_habitable", np.ones(n))
         base = sfr * 1e9 * dt * col(P["stars_per_msun"] * P["fp"] * P["f_ghz"]) * fZ
-        pl, th, moon_share, pl_o = {}, {}, {}, {}
+        pl, th, moon_share, pl_o, moon_frac = {}, {}, {}, {}, {}
         for c in cls:
             if self.ms:
                 d = self.cfg["star_classes"]["classes"][c]
@@ -285,11 +319,20 @@ class Model:
             else:
                 fs, ne, ng, thc = P[f"f_{c}"], P[f"ne_{c}"], P.get(f"n_giant_hz_{c}", np.zeros(n)), P[f"th_{c}_gyr"]
                 pen = P["f_m_habitable"] if c == "m" else np.ones(n)
-            ne_eff = ne * mult[c] + ng * moon * multm[c]
+            if self.scn.get("multiplicity_cut") and self.ms:
+                # v3: habitable worlds only in single/binary systems (binary handling unchanged: f_binary_ok);
+                # triple+ systems (fraction f_triple_plus_<C> of primaries) pass only with f_hab_triple_plus.
+                # Product with f_binary_ok assumes the two removals are independent (see RIGOR_SUMMARY section 7).
+                pen = pen * (1.0 - P[f"f_triple_plus_{c}"] * (1.0 - P["f_hab_triple_plus"]))
+            mm = self._moon_mult(P) if self.scn.get("moon_civs") else 1.0
+            ne_eff = ne * mult[c] + ng * moon * multm[c] * mm
             moon_share[c] = np.where(ne_eff > 0, ng * moon * multm[c] / np.where(ne_eff > 0, ne_eff, 1), 0.0)
             pl[c] = base * col(fs * ne_eff * pen); th[c] = thc
             if ocean:
-                pl_o[c] = base * col(fs * (ne * mult_o[c] + ng * moon * multm_o[c]) * pen)
+                pl_o[c] = base * col(fs * (ne * mult_o[c] + ng * moon * multm_o[c] * mm) * pen)
+            # share of this class's (time-independent) production that is moon worlds (land + ocean paths)
+            mt = ng * moon * mm * (multm[c] + (multm_o[c] if ocean else 0)); tt = ne * (mult[c] + (mult_o[c] if ocean else 0)) + mt
+            moon_frac[c] = np.where(tt > 0, mt / np.where(tt > 0, tt, 1), 0.0)
         # ---- 3. hard-step delay distribution g(d) via analytic DFTs
         G = np.ones((n, self.M // 2 + 1), dtype=complex)
         taus = np.stack([P["tau_" + s["name"]] for s in self.steps], axis=1)
@@ -371,6 +414,32 @@ class Model:
                     out[f"N_now_stage_{nm}"] = Nl * stage_out[nm] + No * stage_out[nm] * p
                     stalled = stalled + No * stage_out[nm] * (1 - p)
                 out["N_now_stage_agricultural"] = out["N_now_stage_agricultural"] + stalled
+        if self.mp:
+            Nrad = out["N_now_stage_radio"] + out["N_now_stage_spacefaring"]
+        if self.scn.get("moon_civs"):
+            # multi-civilisation systems: k habitable moons per moon-hosting giant; first civ on any moon, each other moon
+            # independently with p_second_civ. X = 1 + Bin(k-1, p2): E[X] = 1 + (k-1) p2; worlds in multi-civ systems
+            # per occupied system = E[X] - P(X=1). N_now counts WORLDS: absorbed worlds stay occupied (dominance changes
+            # the number of independent civilisations N_civ_now, not N_now).
+            k, p2 = P["n_hab_moons_per_giant"], P["p_second_civ"]
+            EX = 1 + (k - 1) * p2; P1 = (1 - p2) ** (k - 1)
+            Nmoon = sum(Nnow_c[c] * moon_frac[c] for c in cls)
+            Nmulti = Nmoon * (EX - P1) / EX
+            out["N_now_multi_civ"] = Nmulti; out["multi_civ_share"] = np.where(N_now > 0, Nmulti / np.where(N_now > 0, N_now, 1), 0.0)
+            out["N_civ_now"] = N_now - P["p_dominance"] * Nmoon * (EX - 1) / EX
+            if self.mp:   # tech_accel: neighbour shortens industrial->radio->spacefaring advance and cuts hazards there
+                Pa = dict(P); ta = P["tech_accel"]
+                for nm in ("stage_tau_radio_yr", "stage_tau_space_yr"): Pa[nm] = P[nm] / ta
+                for nm in self.cfg["multiphase"]["hazard_params"]:
+                    if "ind" in nm or "radio" in nm: Pa[nm] = P[nm] / ta
+                a0 = 1.0 / (P["l_stone_yr"] / 1e9) + (P["r_bigfive_per_gyr"] * P["p_bigfive_kills_toolusers"]
+                     + P["p_lethal_astro"] * (P["r_grb_per_gyr"] + P["r_sn_per_gyr"]) + P["r_self_per_gyr"])
+                _, phia = self.stage_chain(Pa, a0)
+                i_r = self.stages.index("radio")
+                No = sum(Nnow_o.values()) if ocean else 0.0
+                pind = np.where(N_now > 0, (N_now - No + No * (P["p_ocean_to_industrial"] if ocean else 1)) / np.where(N_now > 0, N_now, 1), 1.0)
+                Nrad = Nrad + Nmulti * pind * ((phia[:, i_r] + phia[:, i_r + 1]) - (stage_out["radio"] + stage_out["spacefaring"]))
+        if self.mp: out["N_radio_capable"] = Nrad
         if ocean:
             out["N_now_ocean"] = sum(Nnow_o.values())
             out["ocean_share"] = np.where(N_now > 0, out["N_now_ocean"] / np.where(N_now > 0, N_now, 1), np.nan)
@@ -378,6 +447,13 @@ class Model:
         w_age = sum(pl.values()) + (sum(pl_o.values()) if ocean else 0)
         out["mean_planet_age"] = (w_age * (T - t)[None, :]).sum(1) / w_age.sum(1)
         return out, Nt
+
+    @staticmethod
+    def _moon_mult(P):
+        """Habitable-moon worlds per moon-hosting giant, counted as expected civ-bearing worlds per first civ: k (any of k
+        moons can host the first) x E[X]/... -> k * (1 + (k-1) p_second_civ): first civ may arise on any of the k moons (expected count kQ for small Q),
+        then each other moon gains one with p_second_civ (impact transfer). See evaluate()."""
+        k = P["n_hab_moons_per_giant"]; return k * (1 + (k - 1) * P["p_second_civ"])
 
     def stage_chain(self, P, alpha):
         """Multiphase civilisation stages inside one tool-using episode (continuous-time Markov chain).

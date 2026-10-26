@@ -1,0 +1,56 @@
+{
+ "fitted_factors": "none",
+ "superhab_independence_check": {
+  "n_planets": 49,
+  "n_size": 25,
+  "n_temp": 10,
+  "n_joint": 3,
+  "product_full": 0.10412328196584757,
+  "joint_full": 0.061224489795918366,
+  "splits": 5000,
+  "comparisons": {
+   "joint frequency (1 param)": {
+    "mean_abs_err_product": 0.05718123611111112,
+    "mean_abs_err_other": 0.05940566666666666,
+    "frac_splits_product_better": 0.5148,
+    "frac_ties": 0.0252,
+    "one_sided_p_product_not_better": 0.4852,
+    "bonferroni_p": 1.0
+   },
+   "prior-bracket midpoint 0.114 (0 params)": {
+    "mean_abs_err_product": 0.05718123611111112,
+    "mean_abs_err_other": 0.05352564405436892,
+    "frac_splits_product_better": 0.5192,
+    "frac_ties": 0.0,
+    "one_sided_p_product_not_better": 0.4808,
+    "bonferroni_p": 1.0
+   },
+   "random null (2 params, U(0,1) x U(0,1))": {
+    "mean_abs_err_product": 0.05718123611111112,
+    "mean_abs_err_other": 0.209446975432856,
+    "frac_splits_product_better": 0.7626,
+    "frac_ties": 0.0,
+    "one_sided_p_product_not_better": 0.2374,
+    "bonferroni_p": 0.7121999999999999
+   }
+  },
+  "bonferroni_m": 3,
+  "note": "Scored by |estimate(half A) - joint frequency(half B)|. Split p-values are a descriptive frequency over random splits, not independent tests; n is small."
+ },
+ "esi_split_half": {
+  "pooled": {
+   "n": 26,
+   "mean": 0.8494159784209834,
+   "split_half_abs_diff_median": 0.017402929993943994,
+   "split_half_abs_diff_p95": 0.04891019584771676,
+   "log10_effect_on_N_p95": 0.01232693889797727
+  },
+  "M": {
+   "n": 22,
+   "mean": 0.8492273481475533,
+   "split_half_abs_diff_median": 0.02020855470562488,
+   "split_half_abs_diff_p95": 0.05586036666021293,
+   "log10_effect_on_N_p95": 0.014053625132055032
+  }
+ }
+}
