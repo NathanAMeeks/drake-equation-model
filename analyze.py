@@ -135,7 +135,7 @@ def report(cfg, allres, Ncl, outdir):
                 ph = R[f"phi_{st}"]
                 S["stages"][st] = dict(N_now=stats(R[f"N_now_stage_{st}"], w), phi_median=wq(ph, w, 0.5), phi_p10=wq(ph, w, 0.1), phi_p90=wq(ph, w, 0.9),
                                        best_N_now=A["best"].get(f"N_now_stage_{st}"), best_phi=A["best"].get(f"phi_{st}"))
-            rc = sum(R[f"N_now_stage_{st}"] for st in stg if st in ("radio", "spacefaring"))
+            rc = R["N_radio_capable"] if "N_radio_capable" in R else sum(R[f"N_now_stage_{st}"] for st in stg if st in ("radio", "spacefaring"))   # v4+/v5 gates included
             S["radio_capable"] = dict(N_now=stats(rc, w), best_N_now=sum(A["best"].get(f"N_now_stage_{st}", 0) for st in ("radio", "spacefaring")),
                                       sens=sensitivity(P, rc, w)[:12])
             if cfg.get("geometry"):

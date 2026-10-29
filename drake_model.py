@@ -260,6 +260,9 @@ class Model:
 
     def evaluate(self, P):
         n = len(next(iter(P.values())))
+        V4 = set(self.scn.get("v4", []))   # v4 features (2026-10-26), see params.yaml v4 block
+        if "ghz" in V4 and "r_ster_astro_per_gyr" in P:   # (v4 only) whole-biosphere sterilisation = astrophysical (galaxy-wide, Barnes+2026) + non-astrophysical [GUESS]
+            P = dict(P); P["r_ster0_per_gyr"] = P["r_ster_astro_per_gyr"] + P["r_ster_nonastro_per_gyr"]
         dt, I, T, t = self.dt, self.I, self.T, self.t
         col = lambda a: np.asarray(a, float)[:, None]
         # ---- 1. star formation history (Msun/yr)
@@ -309,7 +312,7 @@ class Model:
             if ocean: mult_o[c] = (1 - f) * mult_o[c] + f * np.minimum(mult_o[c] * P["superhab_boost"], 1.0)
         moon = P.get("f_exomoon_host", np.zeros(n)) * P.get("f_exomoon_habitable", np.ones(n))
         base = sfr * 1e9 * dt * col(P["stars_per_msun"] * P["fp"] * P["f_ghz"]) * fZ
-        pl, th, moon_share, pl_o, moon_frac = {}, {}, {}, {}, {}
+        pl, th, moon_share, pl_o, moon_frac, sub_frac = {}, {}, {}, {}, {}, {}
         for c in cls:
             if self.ms:
                 d = self.cfg["star_classes"]["classes"][c]
@@ -324,10 +327,18 @@ class Model:
                 # triple+ systems (fraction f_triple_plus_<C> of primaries) pass only with f_hab_triple_plus.
                 # Product with f_binary_ok assumes the two removals are independent (see RIGOR_SUMMARY section 7).
                 pen = pen * (1.0 - P[f"f_triple_plus_{c}"] * (1.0 - P["f_hab_triple_plus"]))
+            if "metal" in V4:   # planet-metallicity relation (Wang & Fischer 2015) over the galactic MDF, relative to the Kepler field; P availability
+                R = P["metal_rocky_ratio"]
+                pen = pen * (1 + (R - 1) * P["f_metal_rich_galaxy"]) / (1 + (R - 1) * self.cfg["v4"]["f_metal_rich_kepler"]) * P.get("f_phosphorus_ok", 1.0)
+            if "climate" in V4: pen = pen * P["f_climate_stable"]
             mm = self._moon_mult(P) if self.scn.get("moon_civs") else 1.0
             ne_eff = ne * mult[c] + ng * moon * multm[c] * mm
             moon_share[c] = np.where(ne_eff > 0, ng * moon * multm[c] / np.where(ne_eff > 0, ne_eff, 1), 0.0)
             pl[c] = base * col(fs * ne_eff * pen); th[c] = thc
+            if "subsurface" in V4:   # ice-shell / subsurface-ocean bodies (icy moons + rogue planets), own path, no rare-Earth multipliers
+                sub_c = fs * P["n_subsurface_per_star"] * P["f_subsurface_fecundity"]
+                sub_frac[c] = sub_c / (fs * ne_eff * pen + (fs * (ne * mult_o[c] + ng * moon * multm_o[c] * mm) * pen if ocean else 0) + sub_c)
+                pl[c] = pl[c] + base * col(sub_c)
             if ocean:
                 pl_o[c] = base * col(fs * (ne * mult_o[c] + ng * moon * multm_o[c] * mm) * pen)
             # share of this class's (time-independent) production that is moon worlds (land + ocean paths)
@@ -357,7 +368,7 @@ class Model:
         if self.mp:   # multiphase: stage chain inside each tool-using episode; episode mean length replaces 1/alpha
             alpha, phi = self.stage_chain(P, alpha)
             for k, nm in enumerate(self.stages): stage_out[nm] = phi[:, k]
-        beta = 1.0 / (P["m_recurrence"] * taus[:, -1])
+        beta = 1.0 / (P["m_recurrence"] * taus[:, -1] + (P["t_recovery_gyr"] if "recovery" in V4 else 0.0))
         pi_on = beta / (alpha + beta); Lp = 1.0 / (alpha + beta)
         c_ = (Lp / dt) * (-np.expm1(-dt / Lp))
         Khat = col(pi_on) * dft_trunc_const(I, self.omega_log) + \
@@ -389,6 +400,34 @@ class Model:
             Fsum = Fsum + Fc
         Nt = np.clip(np.fft.irfft(Fsum, n=Mc)[:, :I], 0, None) * np.exp(-H)
         N_now = Nt[:, -1].copy()
+        nnow = lambda plc, Qw, Hs: (plc * np.exp(Hs - Hs[:, -1:]) * Qw[:, ::-1]).sum(1)   # direct form of the last-bin convolution
+        if "ghz" in V4:
+            # GHZ heterogeneity: a star's lifetime exposure = galaxy mean x X, X lognormal (mean 1, log-sd s_ghz, reduced by radial
+            # migration averaging; Frankel+2018). N is convex in exposure, so average N over X (Gauss-Hermite, 7 nodes).
+            xg, wg = np.polynomial.hermite_e.hermegauss(7); wg = wg / wg.sum(); sg = col(P["s_ghz"])
+            for c in cls:
+                Qw = Q * (age[None, :] < col(th[c])); tot = 0; toto = 0
+                for xk, wk in zip(xg, wg):
+                    Hs = H * np.exp(sg * xk - sg ** 2 / 2)
+                    tot = tot + wk * nnow(pl[c], Qw, Hs)
+                    if ocean: toto = toto + wk * nnow(pl_o[c], Qw, Hs)
+                Nnow_c[c] = tot + toto
+                if ocean: Nnow_o[c] = toto
+            N_now = sum(Nnow_c.values())
+        o2_ratio = 1.0
+        if "oxygen" in V4:
+            # industry needs O2 >= fire threshold: reached a lag D after complex multicellularity (Earth ~0.17 Gyr); tool-user occupancy
+            # earlier than that (time since the multicellularity step) cannot industrialise. Q_ind = g_prev * [(p_last * K) 1(u >= D)]
+            Gp = np.ones_like(G)
+            for j in range(taus.shape[1] - 1): Gp *= dft_trunc_exp(col(dt / taus[:, j]), I, self.omega_log)
+            Dl = dft_trunc_exp(col(dt / taus[:, -1]), I, self.omega_log)
+            hk = np.fft.irfft(Dl * Khat, n=self.M)[:, :I] * (age[None, :] >= col(P["o2_lag_gyr"] if "o2_lag_gyr" in P else P["o2_lag_scale"] * self.cfg["v4"]["o2_lag_earth_gyr"]))
+            Qi = np.clip(np.fft.irfft(Gp * np.fft.rfft(hk, n=self.M), n=self.M)[:, :I], 0, None)
+            num = den = 0
+            for c in cls:
+                win = (age[None, :] < col(th[c])); plc = pl[c] + (pl_o[c] if (ocean and not self.scn.get("o2_land_only")) else 0)
+                num = num + nnow(plc, Qi * win, H); den = den + nnow(plc, Q * win, H)
+            o2_ratio = np.where(den > 0, num / np.where(den > 0, den, 1), 1.0) * (1 - P.get("p_no_fire_o2", 0.0))
         N_ever = sum(Never_c.values())
         th0 = th[cls[0]] if not self.ms else th["G"]
         out = dict(N_now=N_now, N_timeavg=Nt.mean(1), N_peak=Nt.max(1),
@@ -439,6 +478,27 @@ class Model:
                 No = sum(Nnow_o.values()) if ocean else 0.0
                 pind = np.where(N_now > 0, (N_now - No + No * (P["p_ocean_to_industrial"] if ocean else 1)) / np.where(N_now > 0, N_now, 1), 1.0)
                 Nrad = Nrad + Nmulti * pind * ((phia[:, i_r] + phia[:, i_r + 1]) - (stage_out["radio"] + stage_out["spacefaring"]))
+        if self.mp and V4:
+            phs = stage_out["radio"] + stage_out["spacefaring"]
+            if "subsurface" in V4:   # subsurface worlds reach industry/radio only with p_subsurface_tech
+                Nsub = sum(Nnow_c[c] * sub_frac[c] for c in cls); out["N_now_subsurface"] = Nsub
+                Nrad = Nrad - Nsub * phs * (1 - P["p_subsurface_tech"])
+            gate = o2_ratio * (P["f_industrial_resources"] if "resources" in V4 else 1.0)
+            if ocean and self.scn.get("o2_land_only"):   # v5: ocean radio part keeps only p_ocean_to_industrial (no O2 gate)
+                Nro = sum(Nnow_o.values()) * phs * P["p_ocean_to_industrial"]
+                Nrad = (Nrad - Nro) * gate + Nro
+            else:
+                Nrad = Nrad * gate
+            if "expansion" in V4:
+                # settlement fronts (Carroll-Nellenback+2019): each expanding spacefaring civ holds rho f (4pi/3)(v L)^3 / 4 settled
+                # systems on average over its spacefaring time L (front radius grows linearly), capped at f x N_stars (galaxy full)
+                Nsp = out["N_now_stage_spacefaring"] * gate
+                Lsp_yr = stage_out["spacefaring"] / alpha * 1e9
+                Rpc = P["v_front_c"] * 0.3066 * Lsp_yr
+                Nst = P["m_disk_now"] * P["stars_per_msun"]; cap = P["f_settleable"] * Nst
+                per = np.minimum(self.cfg["v4"]["rho_stars_pc3"] * P["f_settleable"] * 4 / 3 * np.pi * Rpc ** 3 / 4, cap)
+                Nset = np.minimum(Nsp * P["p_expand"] * per, cap)
+                out["N_settled"] = Nset; Nrad = Nrad + Nset; N_now = N_now + Nset; out["N_now"] = N_now
         if self.mp: out["N_radio_capable"] = Nrad
         if ocean:
             out["N_now_ocean"] = sum(Nnow_o.values())
@@ -509,16 +569,17 @@ def run(cfg_path, n_override=None, outdir="results", scenarios=None, do_classic=
         store = {k: [] for k in keys}; res = {}
         Nt_w = np.zeros(m.I); wsum = 0.0
         t0 = time.time()
-        for i0 in range(0, n, chunk):
-            nn = min(chunk, n - i0)
+        ns = n if n_override else int(m.scn.get("n_samples", n))   # per-scenario sample count (v5 headline: 1e5)
+        for i0 in range(0, ns, chunk):
+            nn = min(chunk, ns - i0)
             P = m.draw(nn, rng)
             o, Nt = m.evaluate(P)
             for k in keys: store[k].append(P[k])
             for k, v in o.items():
                 if v is not None: res.setdefault(k, []).append(np.array(v, copy=True))  # copy: never keep views of big arrays
             if (i0 // chunk) % 50 == 0:
-                print(f"[{scen}] {i0+nn}/{n}  {time.time()-t0:.0f}s", flush=True)
-        print(f"[{scen}] DONE {n}/{n}  {time.time()-t0:.0f}s", flush=True)
+                print(f"[{scen}] {i0+nn}/{ns}  {time.time()-t0:.0f}s", flush=True)
+        print(f"[{scen}] DONE {ns}/{ns}  {time.time()-t0:.0f}s", flush=True)
         P = {k: np.concatenate(v) for k, v in store.items()}
         R = {k: np.concatenate(v) for k, v in res.items()}
         bp, _ = m.evaluate(m.best_point())

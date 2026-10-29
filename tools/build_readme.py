@@ -23,20 +23,22 @@ def rng_(s):
 def cell(x): return str(x).replace("|", "/").replace("\n", " ")
 H, B = S[head], S[lit]; h, b = H["N_now"], B["N_now"]
 L = []
-L.append("# Time-aware extended Drake equation: simultaneous stone-age-or-greater civilizations in the Milky Way\n")
+L.append("# Time-aware extended Drake equation: radio-or-better civilizations in the Milky Way right now\n")
 L.append("*Model by Nathan A. Meeks.* A Monte Carlo, time-resolved Drake model that counts how many worlds in the Milky Way "
-         "have stone-tool-using (or more advanced) life **at the same time as us**.\n")
+         "host a **radio-or-better** civilization (radio-capable or spacefaring stage) **at the same time as us**. "
+         "This is the headline metric (since 2026-10-26); the count of worlds with stone-age-or-greater tool users is kept as a secondary number.\n")
 L.append("## Headline\n")
 L.append("| | Nathan's headline (`%s`) | Literature baseline (`%s`) |" % (head, lit))
 L.append("|---|---|---|")
-L.append(f"| **Median (50/50) worlds now, other than Earth** | **{fmt(h['median'])}** | **{fmt(b['median'])}** |")
-L.append(f"| 10th–90th percentile | {fmt(h['p10'])} – {fmt(h['p90'])} | {fmt(b['p10'])} – {fmt(b['p90'])} |")
-L.append(f"| Mean | {fmt(h['mean'])} | {fmt(b['mean'])} |")
-L.append(f"| P(N < 1) | {h['P_lambda_lt1']:.3f} | {b['P_lambda_lt1']:.3f} |")
+hr, br = H["radio_capable"]["N_now"], B["radio_capable"]["N_now"]
+L.append(f"| **Median radio-or-better civilizations now (radio + spacefaring), other than Earth — HEADLINE** | **{fmt(hr['median'])}** | **{fmt(br['median'])}** |")
+L.append(f"| radio-or-better 10th–90th percentile | {fmt(hr['p10'])} – {fmt(hr['p90'])} | {fmt(br['p10'])} – {fmt(br['p90'])} |")
+L.append(f"| P(radio-or-better < 1) | {hr['P_lambda_lt1']:.3f} | {br['P_lambda_lt1']:.3f} |")
+L.append(f"| Median worlds with stone-age-or-greater tool users now (secondary) | {fmt(h['median'])} | {fmt(b['median'])} |")
+L.append(f"| stone-age-or-greater 10th–90th percentile | {fmt(h['p10'])} – {fmt(h['p90'])} | {fmt(b['p10'])} – {fmt(b['p90'])} |")
+L.append(f"| stone-age-or-greater mean; P(N < 1) | {fmt(h['mean'])}; {h['P_lambda_lt1']:.3f} | {fmt(b['mean'])}; {b['P_lambda_lt1']:.3f} |")
 L.append(f"| Median tool-using species now | {fmt(H['species_now']['median'])} | {fmt(B['species_now']['median'])} |")
 L.append(f"| Median worlds that ever had tool users (by now) | {fmt(H['N_ever']['median'])} | {fmt(B['N_ever']['median'])} |")
-if "radio_capable" in H and "radio_capable" in B:
-    L.append(f"| Median radio-capable worlds now (radio + spacefaring stages) | {fmt(H['radio_capable']['N_now']['median'])} | {fmt(B['radio_capable']['N_now']['median'])} |")
 if "by_type" in H and "by_type" in B:
     top_ = lambda X: max(X["by_type"].items(), key=lambda kv: kv[1]["share_of_mean"])
     L.append(f"| Largest host-type share of N (share of mean) | {top_(H)[0]} dwarfs {100*top_(H)[1]['share_of_mean']:.0f}% | {top_(B)[0]} dwarfs {100*top_(B)[1]['share_of_mean']:.0f}% |")
@@ -115,12 +117,13 @@ L.append("\nScenario definitions are in `params.yaml` under `scenarios:`. Full s
 ne_sw = next((f"~{o['swing']:.1f} orders of magnitude" for o in H["sens"] if o["param"] in ("ne_K", "ne_gk")), "less than one order of magnitude (it is not among the top 15 drivers)")
 rc_h = H.get("radio_capable", {}).get("N_now", {}); rc_b = B.get("radio_capable", {}).get("N_now", {})
 L.append("## What it means (plain language)\n")
-L.append(f"""* **If Earth's history is typical** (Nathan's headline), the Milky Way has about **{fmt(h['median'])}** worlds with stone-age-or-better tool users right now, and the typical distance to the nearest one is about **{fmt(hs['nn_median_ly'])} light-years**. The range is very wide ({fmt(h['p10'])} to {fmt(h['p90'])}), but under these assumptions it is unlikely we are alone (P(N<1) ≈ {h['P_lambda_lt1']:.0%}).
+L.append(f"""* **Headline: radio-or-better civilizations now.** About **{fmt(rc_h.get('median'))}** in Nathan's headline (P(<1) ≈ {rc_h.get('P_lambda_lt1', float('nan')):.0%}) and **{fmt(rc_b.get('median'))}** in the literature baseline (P(<1) ≈ {rc_b.get('P_lambda_lt1', float('nan')):.0%}). Radio-or-better is the stage we could in principle detect. The stone-age-or-greater counts below are the secondary metric.
+* **If Earth's history is typical** (Nathan's headline), the Milky Way has about **{fmt(h['median'])}** worlds with stone-age-or-better tool users right now, and the typical distance to the nearest one is about **{fmt(hs['nn_median_ly'])} light-years**. The range is very wide ({fmt(h['p10'])} to {fmt(h['p90'])}), but under these assumptions it is unlikely we are alone (P(N<1) ≈ {h['P_lambda_lt1']:.0%}).
 * **If Earth's history is treated as a lucky draw** that we see only because we exist (the literature baseline), the median falls to **{fmt(b['median'])}**, and we are probably the only such world right now (P(N<1) ≈ {b['P_lambda_lt1']:.0%}).
 * **The data cannot yet decide between those two views.** The biggest swings come from how often planets have both land and ocean, how long a stone-age-or-later phase lasts, plate tectonics, and the hard-step timescales. Star counts and η⊕ matter much less (η⊕ for K stars swings the headline by {ne_sw}).
 * **What Nathan's two new factors do.** Superhabitable worlds change the answer only slightly (×{pf.get('nathan_headline_no_superhab', {}).get('ratio_of_medians', float('nan')):.2f}). Treating tool use as fast and repeatable matters more (×{pf.get('nathan_headline_no_tooluse', {}).get('ratio_of_medians', float('nan')):.1f}). This is probably mostly through faster re-emergence after a collapse, because the first arrival moves by only ~0.5 of ~4.4 Gyr.
 * **Stone-age worlds are effectively invisible** at interstellar distances, so a large N is consistent with the silence we observe.
-* **Most of these worlds would still be in the stone age.** In the stage breakdown, most tool-using time is spent in the lithic stage, because Earth took 3.3 Myr to get from stone tools to farming. Radio-capable worlds number about **{fmt(rc_h.get('median'))}** in the headline (P(N<1) ≈ {rc_h.get('P_lambda_lt1', float('nan')):.0%}) and **{fmt(rc_b.get('median'))}** in the literature baseline.
+* **Most tool-using worlds would still be in the stone age.** That is why the radio-or-better headline is far below the stone-age count: in the stage breakdown, most tool-using time is spent in the lithic stage, because Earth took 3.3 Myr to get from stone tools to farming.
 * **K dwarfs dominate.** Orange K stars supply most of N in both framings ({100*H['by_type']['K']['share_of_mean']:.0f}% headline, {100*B['by_type']['K']['share_of_mean']:.0f}% baseline). They are ~1.4–4.5× more common than G stars, have a higher η⊕ range and long habitable windows. M dwarfs are ~6–10× more numerous than K dwarfs but carry the flare and tidal-locking/water-loss penalties. The superhabitability boost (K only) adds just a few percentage points. F stars contribute ~0.1%: they are rare (~2–3% of stars), their continuously-habitable-zone windows (1.4–5 Gyr, Cuntz & Guinan 2016) are mostly shorter than the ~4-Gyr Earth-like path to tool use, and they carry a UV penalty.
 """)
 if "nathan_headline_ocean" in S and "baseline_ocean" in S:
@@ -151,6 +154,12 @@ if os.path.exists("rigor/bounds.json"):
         L.append("**Tightened bounds (Oct 19).** The bounds were tightened with an exact hypoexponential CDF, a sharper occupancy floor and branch-and-bound; all remain rigorous for the model equations. Guaranteed min / max: " + "; ".join(f"`{k}` {v['bnb'][0]:.3g} / {v['bnb'][1]:.3g} (was {v['old'][0]:.3g} / {v['old'][1]:.3g})" for k, v in _B2.items()) + ".")
         L.append("\n**P-box 90% coverage interval** (95% confidence; holds if every [GUESS] range is honest): " + "; ".join(f"`{k}` [{v['coverage90'][0]:.3g}, {v['coverage90'][1]:.3g}]" for k, v in _PB.items()) + ". This is nearly the full hard range: the guesses dominate. Also new: linked inputs (`links:`), binding factors, Sobol QMC, and an independent re-implementation, `rigor/check.py`, which agrees to within 1e-11 relative error.")
         L.append("\n**Oct 21 features** (paired 1e5-draw variants `*_mult`, `*_moons`, `*_ab`). The multiplicity cut (triple+ systems; Raghavan+2010, Offner+2023, Winters+2019) changes the median by " + f"{_V['nathan_headline_ocean_mult']['paired_median_log10_ratio']:+.3f} dex. Multi-moon civilisations change it by {_V['nathan_headline_ocean_moons']['paired_median_log10_ratio']:+.3f} dex and put {_V['nathan_headline_ocean_moons']['multi_civ_share_of_N']:.1%} of N (headline_ocean) in multi-civilisation systems. Full details: [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md).\n")
+    if os.path.exists("rigor/v5.json"):
+        _5 = json.load(open("rigor/v5.json")); a5, b5 = _5["nathan_headline_ocean_linked"]["_v5"], _5["baseline_ocean_linked"]["_v5"]
+        L.append(f"**Oct 26 data-anchored new variables (v5).** These are metallicity occurrence (Wang & Fischer 2015 + Hayden+2015), galactic-habitable-zone exposure spread with radial migration (Frankel+2018), oxygenation timing for fire-level O2 (land path only) and extinction recovery (Kirchner & Weil 2000). Guess-based candidates were removed. **Radio-or-better median:** headline_ocean_linked {a5['parent_radio_p10_p50_p90'][1]:.3g} → **{a5['radio_p10_p50_p90'][1]:.3g}** (10–90% {a5['radio_p10_p50_p90'][0]:.3g}–{a5['radio_p10_p50_p90'][2]:.3g}, P(<1) {a5['P_radio_lt_1']:.2f}); baseline_ocean_linked {b5['parent_radio_p10_p50_p90'][1]:.3g} → **{b5['radio_p10_p50_p90'][1]:.3g}** (P(<1) {b5['P_radio_lt_1']:.2f}). Chart: ![v5](rigor/v5_radio.png)\n")
+    if False and os.path.exists("rigor/v4.json"):
+        _4 = json.load(open("rigor/v4.json")); a, bb = _4["nathan_headline_ocean_linked"], _4["baseline_ocean_linked"]
+        L.append(f"**Oct 26 new variables** (metallicity/phosphorus, GHZ sterilisation, oxygenation timing, extinction recovery, fuel/ore, climate thermostat, subsurface oceans; paired variants `*_linked_v4`). Radio-or-better median: headline_ocean_linked {a['_v4']['parent_radio_p10_p50_p90'][1]:.3g} → {a['_v4']['radio_p10_p50_p90'][1]:.3g}; baseline_ocean_linked {bb['_v4']['parent_radio_p10_p50_p90'][1]:.3g} → {bb['_v4']['radio_p10_p50_p90'][1]:.3g}. Interstellar expansion (`*_v4x`) is reported separately as an upper-tail wildcard: {a['_v4x']['radio_p10_p50_p90'][1]:.3g} and {bb['_v4x']['radio_p10_p50_p90'][1]:.3g}. Chart: ![v4](rigor/v4_radio.png)\n")
 L.append("## Caveats\n")
 L.append("""* **Prior-dominated.** Defensible priors move the median by more than 20 orders of magnitude (`snyder_beattie_priors` 5.5e-21 vs the headline). Read medians as summaries of the stated uncertainty, not measurements.
 * **The headline assumes Earth's timeline is typical** and skips the observer-selection correction. ESI measures only bulk size, density, escape velocity and temperature; the temperature is assumed from insolation (Earth-like albedo and greenhouse). It says nothing about biology.

@@ -3,7 +3,7 @@ import json, math, os
 H = os.path.dirname(os.path.abspath(__file__)); J = lambda f: json.load(open(os.path.join(H, f)))
 B, S, HO, LK = J("bounds.json"), J("sobol.json"), J("heldout.json"), J("leakage.json")
 g = lambda x: f"{x:.3g}"
-L = ["# Rigor add-on (draft, 2026-10-19; not published)\n",
+L = ["# Rigor add-on (2026-10-19, extended 2026-10-26)\n", "**Headline metric (from 2026-10-26):** the median number of radio-or-better civilizations (radio plus spacefaring stages) that exist now in the Milky Way. Worlds with stone-age-or-greater tool users (N_now) are kept as a secondary number. Sections 1–7 below were written for N_now; section 8 uses the new headline.\n",
 "## 1. Guaranteed bounds on N_now over the full prior support\n",
 f"Method: {B['method']}. Every factor is set to the full support of its prior. Two normal priors with no upper limit (`sfr_now`, `m_disk_now`) are cut at mean + {B['normal_truncation_sd']:.0f} sd; without that cut the upper bound is infinite, because N is linear in disk mass. "
 "The bounds apply to the continuous-time model equations. They are made conservative with the inequalities listed below. All 200,000 MC samples of each scenario fall inside them. "
@@ -103,5 +103,52 @@ L += ["",
 "**B. Multi-moon civilisations.** Each giant that hosts a habitable moon has `n_hab_moons_per_giant` = k habitable moons: [MODELED], uniform 1–3. Grounding: Jupiter has 4 large moons and Saturn has 1; Cilibrasi+2018 find surviving systems most often have 3 moons, with a maximum of 5. The upper limit of 3 is assumed. Expected civilisation-bearing moon worlds scale by k·(1+(k−1)·p_second_civ). The first civilisation can arise on any of the k moons, which is accurate for small occupancy. After that, each other moon gets a civilisation with probability `p_second_civ` [GUESS], loguniform 1e-3–0.5, through impact transfer.",
 "",
 "Worlds in multi-civilisation systems are counted as N_moon·(E[X] − P(X=1))/E[X], where X = 1 + Bin(k−1, p2). N_now counts worlds, so `p_dominance` [GUESS] does not reduce N_now: an absorbed world is still occupied. It reduces only the number of independent civilisations, N_civ_now (median 3.15e4 headline_ocean_moons, 0.0427 baseline_ocean_moons). `tech_accel` [GUESS], loguniform 1–10, divides the industrial→radio→spacefaring advance times and the industrial and radio hazards. It applies only to multi-civilisation worlds and changes the stage split (radio-capable). Its effect on episode length, and therefore on N_now, is left out, which is conservative. Planet–planet multi-civilisation systems are not modelled.", ""]
+
+# ---- section 8: v4 variables (2026-10-26)
+V4 = g("v4.json"); H4, B4 = V4["nathan_headline_ocean_linked"], V4["baseline_ocean_linked"]
+fq = lambda q: f"{f3(q[1])} ({f3(q[0])}–{f3(q[2])})"
+L += ["", "## 8. New variables, first pass (Oct 26; superseded by section 9, which removes the [GUESS]-based ones)", "",
+"Each variant is paired with its `*_linked` parent: all new inputs come from their own random stream. The variant `_v4` contains every new variable except interstellar expansion; `_v4x` adds expansion. Both use 1e5 draws, and each single-variable variant uses 5e4. Baseline numbers are weighted by Earth's timing.", "",
+"| run | radio-or-better median (10–90%) | P(radio-or-better < 1) | stone-age-or-greater median |", "|---|---|---|---|"]
+for nm, X in (("nathan_headline_ocean_linked", H4), ("baseline_ocean_linked", B4)):
+    a, x = X["_v4"], X["_v4x"]
+    L.append(f"| `{nm}` (parent) | {fq(a['parent_radio_p10_p50_p90'])} | {a['parent_P_radio_lt_1']:.2f} | {f3(a['parent_stone_median'])} |")
+    L.append(f"| `{nm}_v4` | {fq(a['radio_p10_p50_p90'])} | {a['P_radio_lt_1']:.2f} | {f3(a['stone_median'])} ({f3(a['stone_median_excl_subsurface'])} without the subsurface path) |")
+    L.append(f"| `{nm}_v4x` (with expansion) | {fq(x['radio_p10_p50_p90'])} | {x['P_radio_lt_1']:.2f} | {f3(x['stone_median'])} |")
+FE = ["metal", "ghz", "oxygen", "recovery", "resources", "climate", "subsurface", "expansion"]
+L += ["", "**Each variable alone** (paired dex shift in radio-or-better: median of the per-draw log ratio / shift of the median / shift of the 90th percentile):", "",
+"| variable | headline_ocean_linked | baseline_ocean_linked |", "|---|---|---|"]
+for f in FE:
+    c = lambda X: f"{X['_v4_'+f]['paired_dex_radio_median']:+.2f} / {X['_v4_'+f]['dex_shift_of_radio_median']:+.2f} / {X['_v4_'+f]['dex_shift_of_radio_p90']:+.2f}"
+    L.append(f"| {f} | {c(H4)} | {c(B4)} |")
+L += ["", "**Sobol top drivers of log10 radio-or-better** (first-order, `_v4`): headline " + ", ".join(f"{k} {v:.2f}" for k, v in H4["_v4"]["sobol_radio_top8"][:5]) + "; baseline " + ", ".join(f"{k} {v:.2f}" for k, v in B4["_v4"]["sobol_radio_top8"][:5]) + ". With expansion (`_v4x`), `v_front_c` enters the headline top 6. The S1 sums exceed 1 because linked and Bayes-updated inputs are correlated, so read these as rankings only.", "",
+"**How each variable enters the model** (tags are in params.yaml):",
+"- **Metallicity / phosphorus.** Factor (1+(R−1)·f_rich,gal)/(1+(R−1)·0.48) × f_P. R is the terrestrial-planet occurrence ratio, metal-rich vs metal-poor, [MEASURED] 1.72 +0.19/−0.17 (Wang & Fischer 2015). 0.48 is the metal-rich share of their Kepler sample. The galactic metal-rich fraction is [GUESS]; Hayden+2015 APOGEE gives the shape of the metallicity distribution but no galaxy-wide fraction. f_P is [GUESS] (Hinkel+2020: the Sun is relatively P-rich, and P is measured in only ~100 stars). Almost the whole shift comes from f_P.",
+"- **GHZ with radial migration.** r_ster0 = astrophysical [MODELED, Barnes+2026 galaxy-wide 1e-5–2e-4/Gyr] + non-astrophysical [GUESS 1e-6–0.25]. Each star's exposure is spread lognormally around the galaxy mean (log-sd [GUESS], smoothed by migration σ_RM8 = 3.6 kpc; Frankel+2018), and N is averaged over that spread. **The astrophysical part is now constrained to ≤2e-4/Gyr, but the low-tail risk sits in the assumed non-astrophysical part (giant impacts, runaway climate), which no GHZ data constrain.** Net effect: the median barely moves; the low tail rises slightly (p10 +0.04 to +0.06 dex, p01 up to +0.18 dex).",
+"- **Oxygenation timing.** Industry needs O2 at fire level. Earth reached it about 0.17 Gyr after complex multicellularity: 0.6 Ga to earliest charcoal ~0.43 Ga, with sustained fires needing ≥16% (Geology 50:1048, 2022; Belcher & McElwain 2008). The NOE is dated 0.85–0.54 Ga and the GOE ~2.4 Ga (Lyons+2014); the GOE is already a hard step. The lag scale and the never-oxygenated fraction are [GUESS]. Tool-user occupancy before the lag cannot industrialise. The gate applies to both the land path and the ocean path, the latter on top of p_ocean_to_industrial.",
+"- **Recovery time.** 5–20 Myr [MODELED, Kirchner & Weil 2000: ~10 Myr origination lag] is added to the tool-use re-evolution time. It matters only when re-evolution is fast, as in the headline.",
+"- **Fuel/ore** [GUESS 0.05–1] gates industry. **Climate thermostat** [GUESS 0.5–1] is linked to the geology hidden variable (0.5); Foley & Smye 2018 give the context: stagnant-lid planets stay temperate for 1–5 Gyr only in limited parameter ranges.",
+"- **Subsurface oceans** are a separate path. Number per star is [GUESS 0.1–10], with context from Solar System ocean moons and Sumi+2023 (21 free-floating planets per star). Fecundity is [GUESS 1e-6–1e-2] and the chance of reaching technology is [GUESS 1e-6–1e-3]. This path has no rare-Earth factors, so it dominates the stone-age count under these guesses (~96% by mean) but adds nothing to radio-or-better at the median.",
+"- **Interstellar expansion** (Carroll-Nellenback+2019 settlement fronts). Each expanding spacefaring civilisation holds on average ρ·f·(4π/3)(v·L)³/4 settled systems while it is spacefaring, capped at f × N_stars. ρ = 0.08 pc⁻³ (their value, citing Henry+2018). v is [MODELED]: 1e-3–0.1 c probes, with a ~100 km/s floor from stellar motions. f and p_expand are [GUESS]. **Settled worlds make up almost all of the radio-or-better mean when expansion is on**: the 90th percentile rises by 4.5–6.4 dex. Settlements are assumed to end with their parent's spacefaring phase, which is conservative.", ""]
+
+# ---- section 9: v5 = data-anchored subset (2026-10-26)
+V5 = g("v5.json"); H5, B5 = V5["nathan_headline_ocean_linked"], V5["baseline_ocean_linked"]
+L += ["", "## 9. v5: only the data-anchored new variables (Oct 26, current)", "",
+"Removed from the section-8 set because their effect rests on [GUESS] ranges: fossil fuel/ores, the phosphorus part of the metallicity variable, climate thermostat, subsurface/rogue habitats, and interstellar expansion. The older model's own [GUESS] factors are unchanged; this pass covers only the new batch. The oxygen gate now applies to the land path only. The ocean path already has `p_ocean_to_industrial`, so gating it again would double-count. Each `_v5` variant is paired with its `*_linked` parent: 1e5 draws, single-variable runs 5e4.", "",
+"| run | radio-or-better median (10–90%) | P(radio-or-better < 1) | stone-age-or-greater median |", "|---|---|---|---|"]
+for nm, X in (("nathan_headline_ocean_linked", H5), ("baseline_ocean_linked", B5)):
+    a = X["_v5"]
+    L.append(f"| `{nm}` (parent) | {fq(a['parent_radio_p10_p50_p90'])} | {a['parent_P_radio_lt_1']:.2f} | {f3(a['parent_stone_median'])} |")
+    L.append(f"| `{nm}_v5` | {fq(a['radio_p10_p50_p90'])} | {a['P_radio_lt_1']:.2f} | {f3(a['stone_median'])} |")
+L += ["", "| variable alone (paired dex shift, radio-or-better: per-draw median / median / p90) | headline | baseline |", "|---|---|---|"]
+for f in ["metal", "ghz", "oxygen", "recovery"]:
+    c = lambda X: f"{X['_v5_'+f]['paired_dex_radio_median']:+.2f} / {X['_v5_'+f]['dex_shift_of_radio_median']:+.2f} / {X['_v5_'+f]['dex_shift_of_radio_p90']:+.2f}"
+    L.append(f"| {f} | {c(H5)} | {c(B5)} |")
+L += ["", "**Top 5 Sobol drivers of log10 radio-or-better** (`_v5`): headline " + ", ".join(f"{k} {v:.2f}" for k, v in H5["_v5"]["sobol_radio_top8"][:5]) + "; baseline " + ", ".join(f"{k} {v:.2f}" for k, v in B5["_v5"]["sobol_radio_top8"][:5]) + ".", "",
+"**Inputs and how the ranges were set:**",
+"- **Metallicity occurrence.** R is [MEASURED] 1.72 +0.19/−0.17, the terrestrial-planet occurrence ratio for metal-rich vs metal-poor stars (Wang & Fischer 2015). The galactic metal-rich fraction is [MODELED] uniform 0.023–0.607. That range spans the six Hayden+2015 Table 1 midplane bins (R = 3–15 kpc), each converted to P([Fe/H] > 0.05) with a Gaussian(mean, σ) approximation. Any mass weighting of the bins must lie inside that span. Kepler-field reference: 0.48.",
+"- **GHZ + migration.** The star-to-star exposure spread s is [MODELED] uniform 0–√2. These are bounds, not a fit: 0 means complete radial mixing; √2 is the spread an exponential disk gives with no migration. Migration (Frankel+2018, 3.6 kpc over 8 Gyr) puts the truth between them. r_ster0 keeps its existing prior.",
+"- **Oxygenation.** The lag is [MEASURED] uniform 0.17–0.18 Gyr, spanning only the two sourced Earth anchors: complex multicellularity at 0.6 Ga, then the earliest charcoal (needing ≥16% O2) at ~0.43 Ga (Geology 2022) and ~0.42 Ga (Scott & Glasspool 2006). The previous [GUESS] spread and the never-oxygenated fraction were dropped. Applies to the land path only.",
+"- **Recovery.** Fixed at 10 Myr [MEASURED] (Kirchner & Weil 2000). The earlier 5–20 Myr spread was an assumption and has been removed.", ""]
 
 open(os.path.join(H, "RIGOR_SUMMARY.md"), "w").write("\n".join(L)); print("ok")

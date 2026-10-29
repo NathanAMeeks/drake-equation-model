@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-10-28
+
+Headline changed to **radio-or-better civilizations alive now** (radio-capable + spacefaring), from the new data-anchored v5 scenarios `nathan_headline_ocean_linked_v5` and `baseline_ocean_linked_v5` (1e5 draws each). Stone-age-or-greater tool users are kept as the secondary number. Details: section 9 of [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md), `rigor/v5.json`, `rigor/v5_radio.png`.
+
+| | headline v5 | baseline v5 |
+|---|---|---|
+| Radio-or-better now, median (10–90%) | 32.2 (0.016 – 5.09e4) | 7.75e-5 (4.54e-9 – 1.1) |
+| P(radio-or-better < 1) | 0.29 | 0.90 |
+| Stone-age-or-greater now, median | 1.57e4 | 0.0403 |
+
+- **Removed** the guess-based v4 variables (fossil fuel/ores, phosphorus, climate thermostat, subsurface/rogue worlds, interstellar expansion). Their code paths remain but are off in v5; the exploratory v4 results are kept in `rigor/v4.json` for reference.
+- **Kept** four new variables, each anchored to data: metallicity-dependent rocky-planet occurrence (Wang & Fischer 2015; Hayden+2015), galactic-habitable-zone exposure with radial migration (Frankel+2018), oxygen timing (lag anchored to the charcoal record, applied to the **land path only**), and post-extinction recovery time (Kirchner & Weil 2000).
+- The oxygen gate is no longer applied to the ocean path (`o2_land_only: true`), which removes a double count.
+- The older [GUESS]-tagged factors (e.g. the `links:` correlation strengths) remain in the model and are tagged as such in `params.yaml` and the README provenance table.
+- `params.yaml`: `headline_scenario` and `literature_baseline` now point at the v5 scenarios, which are added to `scenarios_to_run` with a per-scenario `n_samples: 100000` (supported in `drake_model.py`). `analyze.py` reads `N_radio_capable` directly so the v5 gates are included in the radio-or-better count.
+
 ## 2026-10-26
 
 Rigor work plus two new features. No headline scenario changed: the existing scenarios draw exactly as before (new inputs use separate random streams), so the medians in `results/results.json` are unchanged. Details and all numbers are in [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md).

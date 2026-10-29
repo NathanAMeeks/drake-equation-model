@@ -1,0 +1,578 @@
+{
+ "nathan_headline_ocean_linked": {
+  "_v4": {
+   "n": 100000,
+   "radio_p10_p50_p90": [
+    0.0018885909750930628,
+    3.571690963510025,
+    5308.34017934695
+   ],
+   "parent_radio_p10_p50_p90": [
+    0.029318275353193,
+    62.041215462287475,
+    83881.30418405384
+   ],
+   "stone_median": 150330.1670219994,
+   "parent_stone_median": 29200.108360214643,
+   "P_radio_lt_1": 0.41993,
+   "parent_P_radio_lt_1": 0.25275,
+   "paired_dex_radio_median": -1.2494890431759427,
+   "dex_shift_of_radio_median": -1.239806422570978,
+   "dex_shift_of_radio_p90": -1.198706427858463,
+   "dex_shift_of_stone_median": 0.7116616768809574,
+   "subsurface_share_of_stone": 0.9549495895740455,
+   "sobol_radio_top8": [
+    [
+     "l_stone_yr",
+     0.3448657814634568
+    ],
+    [
+     "stage_h_space_per_yr",
+     0.23095223485136346
+    ],
+    [
+     "f_land_and_ocean",
+     0.13859882033618984
+    ],
+    [
+     "f_plate_tectonics",
+     0.08495270884930871
+    ],
+    [
+     "stage_h_ind_per_yr",
+     0.03692809508024949
+    ],
+    [
+     "stage_h_radio_per_yr",
+     0.03632287950884022
+    ],
+    [
+     "f_climate_stable",
+     0.025207782980388126
+    ],
+    [
+     "r_self_per_gyr",
+     0.023661899716853063
+    ]
+   ],
+   "sobol_sum": 1.1297183103964152,
+   "stone_median_excl_subsurface": 6741.425694807323
+  },
+  "_v4x": {
+   "n": 100000,
+   "radio_p10_p50_p90": [
+    0.0024911485508198345,
+    243.08533457222325,
+    3886047143.6207724
+   ],
+   "parent_radio_p10_p50_p90": [
+    0.029318275353193,
+    62.041215462287475,
+    83881.30418405384
+   ],
+   "stone_median": 646047.5342433276,
+   "parent_stone_median": 29200.108360214643,
+   "P_radio_lt_1": 0.33189,
+   "parent_P_radio_lt_1": 0.25275,
+   "paired_dex_radio_median": 0.4695805020074202,
+   "dex_shift_of_radio_median": 0.5930784609096414,
+   "dex_shift_of_radio_p90": 4.665842890700034,
+   "dex_shift_of_stone_median": 1.344880010160807,
+   "subsurface_share_of_stone": 0.0031836198418516335,
+   "settled_share_of_radio": 0.9999893078032968,
+   "sobol_radio_top8": [
+    [
+     "l_stone_yr",
+     0.41294795864709655
+    ],
+    [
+     "stage_h_space_per_yr",
+     0.30195731761803823
+    ],
+    [
+     "stage_h_ind_per_yr",
+     0.04357254205587682
+    ],
+    [
+     "stage_h_radio_per_yr",
+     0.04272847512094222
+    ],
+    [
+     "r_self_per_gyr",
+     0.026985286200513003
+    ],
+    [
+     "v_front_c",
+     0.023962337050830992
+    ],
+    [
+     "f_settleable",
+     0.02069416676057118
+    ],
+    [
+     "stage_tau_agri_yr",
+     0.017266279593599793
+    ]
+   ],
+   "sobol_sum": 0.9914696772470336
+  },
+  "_v4_metal": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    0.01581499672001262,
+    33.80700617591685,
+    44640.95811426975
+   ],
+   "parent_radio_p10_p50_p90": [
+    0.0297248051663363,
+    61.22997108527808,
+    81774.13478512163
+   ],
+   "stone_median": 15687.010688641241,
+   "parent_stone_median": 28647.195983269212,
+   "P_radio_lt_1": 0.28668,
+   "parent_P_radio_lt_1": 0.2526,
+   "paired_dex_radio_median": -0.25750144320641644,
+   "dex_shift_of_radio_median": -0.2579573414011032,
+   "dex_shift_of_radio_p90": -0.2628824505993622,
+   "dex_shift_of_stone_median": -0.26154192673314036
+  },
+  "_v4_ghz": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    0.03386879704853965,
+    69.39093442501192,
+    89122.24540539735
+   ],
+   "parent_radio_p10_p50_p90": [
+    0.0297248051663363,
+    61.22997108527808,
+    81774.13478512163
+   ],
+   "stone_median": 32551.528512215744,
+   "parent_stone_median": 28647.195983269212,
+   "P_radio_lt_1": 0.24582,
+   "parent_P_radio_lt_1": 0.2526,
+   "paired_dex_radio_median": 0.0011563036028672258,
+   "dex_shift_of_radio_median": 0.054338681432775114,
+   "dex_shift_of_radio_p90": 0.03737016212364091,
+   "dex_shift_of_stone_median": 0.055489267219495764
+  },
+  "_v4_oxygen": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    0.024935463560952057,
+    52.53880462574725,
+    69731.70914062533
+   ],
+   "parent_radio_p10_p50_p90": [
+    0.0297248051663363,
+    61.22997108527808,
+    81774.13478512163
+   ],
+   "stone_median": 28647.195983269212,
+   "parent_stone_median": 28647.195983269212,
+   "P_radio_lt_1": 0.26166,
+   "parent_P_radio_lt_1": 0.2526,
+   "paired_dex_radio_median": -0.0398673708849262,
+   "dex_shift_of_radio_median": -0.06648386694781973,
+   "dex_shift_of_radio_p90": -0.06918564775372527,
+   "dex_shift_of_stone_median": 0.0
+  },
+  "_v4_recovery": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    0.015079415395609955,
+    30.161350440016026,
+    48775.59813356276
+   ],
+   "parent_radio_p10_p50_p90": [
+    0.0297248051663363,
+    61.22997108527808,
+    81774.13478512163
+   ],
+   "stone_median": 14633.515299342536,
+   "parent_stone_median": 28647.195983269212,
+   "P_radio_lt_1": 0.29208,
+   "parent_P_radio_lt_1": 0.2526,
+   "paired_dex_radio_median": -0.19575880992898953,
+   "dex_shift_of_radio_median": -0.30751327167579534,
+   "dex_shift_of_radio_p90": -0.22441335391098152,
+   "dex_shift_of_stone_median": -0.2917334532414368
+  },
+  "_v4_resources": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    0.0061933164374286965,
+    13.244095363717447,
+    18743.729907169967
+   ],
+   "parent_radio_p10_p50_p90": [
+    0.0297248051663363,
+    61.22997108527808,
+    81774.13478512163
+   ],
+   "stone_median": 28647.195983269212,
+   "parent_stone_median": 28647.195983269212,
+   "P_radio_lt_1": 0.33962,
+   "parent_P_radio_lt_1": 0.2526,
+   "paired_dex_radio_median": -0.650770578057499,
+   "dex_shift_of_radio_median": -0.6649417551323634,
+   "dex_shift_of_radio_p90": -0.6397599401986453,
+   "dex_shift_of_stone_median": 0.0
+  },
+  "_v4_climate": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    0.02065280073113714,
+    44.97004019381026,
+    62392.37854151057
+   ],
+   "parent_radio_p10_p50_p90": [
+    0.0297248051663363,
+    61.22997108527808,
+    81774.13478512163
+   ],
+   "stone_median": 21026.141086925985,
+   "parent_stone_median": 28647.195983269212,
+   "P_radio_lt_1": 0.2705,
+   "parent_P_radio_lt_1": 0.2526,
+   "paired_dex_radio_median": -0.12484113925557172,
+   "dex_shift_of_radio_median": -0.13404077861169317,
+   "dex_shift_of_radio_p90": -0.11748441549497612,
+   "dex_shift_of_stone_median": -0.13432254496242302
+  },
+  "_v4_subsurface": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    0.04024709933936499,
+    73.73754161054603,
+    85124.09790766568
+   ],
+   "parent_radio_p10_p50_p90": [
+    0.0297248051663363,
+    61.22997108527808,
+    81774.13478512163
+   ],
+   "stone_median": 351026.9269941768,
+   "parent_stone_median": 28647.195983269212,
+   "P_radio_lt_1": 0.24018,
+   "parent_P_radio_lt_1": 0.2526,
+   "paired_dex_radio_median": 0.0004051973279253218,
+   "dex_shift_of_radio_median": 0.08072459990406651,
+   "dex_shift_of_radio_p90": 0.017436564812768392,
+   "dex_shift_of_stone_median": 1.0882583129279002,
+   "subsurface_share_of_stone": 0.9135142052390075
+  },
+  "_v4_expansion": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    0.03140879941361593,
+    426.1729234498243,
+    2577640480.5987644
+   ],
+   "parent_radio_p10_p50_p90": [
+    0.0297248051663363,
+    61.22997108527808,
+    81774.13478512163
+   ],
+   "stone_median": 129606.57508599377,
+   "parent_stone_median": 28647.195983269212,
+   "P_radio_lt_1": 0.2371,
+   "parent_P_radio_lt_1": 0.2526,
+   "paired_dex_radio_median": 0.13223383809312061,
+   "dex_shift_of_radio_median": 0.8426217993596516,
+   "dex_shift_of_radio_p90": 4.498606385764573,
+   "dex_shift_of_stone_median": 0.6555449151392054,
+   "settled_share_of_radio": 0.9998816335843881
+  }
+ },
+ "baseline_ocean_linked": {
+  "_v4": {
+   "n": 100000,
+   "radio_p10_p50_p90": [
+    5.105080266325547e-10,
+    8.89574615879277e-06,
+    0.1407512432978864
+   ],
+   "parent_radio_p10_p50_p90": [
+    3.9548733494613795e-09,
+    8.05964340832008e-05,
+    1.2672327417869482
+   ],
+   "stone_median": 0.38213743288605306,
+   "parent_stone_median": 0.03976400221864132,
+   "P_radio_lt_1": 0.939413502933486,
+   "parent_P_radio_lt_1": 0.8944445753164503,
+   "paired_dex_radio_median": -1.0061957346672363,
+   "dex_shift_of_radio_median": -0.9571334454925657,
+   "dex_shift_of_radio_p90": -0.9544041455643161,
+   "dex_shift_of_stone_median": 0.9827294924287571,
+   "subsurface_share_of_stone": 0.9709277024547959,
+   "sobol_radio_top8": [
+    [
+     "l_stone_yr",
+     0.20953192849585928
+    ],
+    [
+     "tau_stone_tool_intelligence",
+     0.1795171154479031
+    ],
+    [
+     "stage_h_space_per_yr",
+     0.14156799428177322
+    ],
+    [
+     "f_land_and_ocean",
+     0.07650657788003663
+    ],
+    [
+     "tau_abiogenesis",
+     0.07246823788762409
+    ],
+    [
+     "tau_eukaryogenesis",
+     0.06636172404852006
+    ],
+    [
+     "tau_oxygenic_photosynthesis_GOE",
+     0.06631859195486225
+    ],
+    [
+     "f_plate_tectonics",
+     0.062346833667773806
+    ]
+   ],
+   "sobol_sum": 1.6204271509232095,
+   "stone_median_excl_subsurface": 0.01979640562293372
+  },
+  "_v4x": {
+   "n": 100000,
+   "radio_p10_p50_p90": [
+    1.0157747799111704e-09,
+    0.0014974509198246151,
+    23739600.260864962
+   ],
+   "parent_radio_p10_p50_p90": [
+    3.9548733494613795e-09,
+    8.05964340832008e-05,
+    1.2672327417869482
+   ],
+   "stone_median": 4.6157159837354325,
+   "parent_stone_median": 0.03976400221864132,
+   "P_radio_lt_1": 0.6257876487424675,
+   "parent_P_radio_lt_1": 0.8944445753164503,
+   "paired_dex_radio_median": 0.8559246785969687,
+   "dex_shift_of_radio_median": 1.2690367696776386,
+   "dex_shift_of_radio_p90": 7.272617016456904,
+   "dex_shift_of_stone_median": 2.0647489884138843,
+   "subsurface_share_of_stone": 5.7079151271554494e-05,
+   "settled_share_of_radio": 0.9999999411340914,
+   "sobol_radio_top8": [
+    [
+     "l_stone_yr",
+     0.3640888854745692
+    ],
+    [
+     "stage_h_space_per_yr",
+     0.2712699085015077
+    ],
+    [
+     "stage_h_ind_per_yr",
+     0.0517449859033707
+    ],
+    [
+     "tau_stone_tool_intelligence",
+     0.0481532438024725
+    ],
+    [
+     "stage_h_radio_per_yr",
+     0.041524146307511264
+    ],
+    [
+     "r_self_per_gyr",
+     0.03237216248057866
+    ],
+    [
+     "v_front_c",
+     0.031220005757992306
+    ],
+    [
+     "tau_oxygenic_photosynthesis_GOE",
+     0.027477441486625766
+    ]
+   ],
+   "sobol_sum": 1.543398659001695
+  },
+  "_v4_metal": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    1.8459168824941252e-09,
+    4.651497595748545e-05,
+    0.592993390376155
+   ],
+   "parent_radio_p10_p50_p90": [
+    3.4471252802137285e-09,
+    8.461665909831499e-05,
+    1.0348151406323727
+   ],
+   "stone_median": 0.020286441608154057,
+   "parent_stone_median": 0.03831827674700324,
+   "P_radio_lt_1": 0.9094599769915002,
+   "parent_P_radio_lt_1": 0.8985775276175857,
+   "paired_dex_radio_median": -0.26379713500828395,
+   "dex_shift_of_radio_median": -0.2598630733601457,
+   "dex_shift_of_radio_p90": -0.24181292170192326,
+   "dex_shift_of_stone_median": -0.2762000944644599
+  },
+  "_v4_ghz": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    3.82102567569028e-09,
+    0.00010527795687602845,
+    1.444817038198041
+   ],
+   "parent_radio_p10_p50_p90": [
+    3.4471252802137285e-09,
+    8.461665909831499e-05,
+    1.0348151406323727
+   ],
+   "stone_median": 0.047818084920545526,
+   "parent_stone_median": 0.03831827674700324,
+   "P_radio_lt_1": 0.8915229181953734,
+   "parent_P_radio_lt_1": 0.8985775276175857,
+   "paired_dex_radio_median": 0.001015311179576539,
+   "dex_shift_of_radio_median": 0.09488157384422677,
+   "dex_shift_of_radio_p90": 0.14495008011601784,
+   "dex_shift_of_stone_median": 0.09618620923544897
+  },
+  "_v4_oxygen": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    2.9621402860487862e-09,
+    7.203134738507077e-05,
+    0.8867642868549103
+   ],
+   "parent_radio_p10_p50_p90": [
+    3.4471252802137285e-09,
+    8.461665909831499e-05,
+    1.0348151406323727
+   ],
+   "stone_median": 0.03831827674700324,
+   "parent_stone_median": 0.03831827674700324,
+   "P_radio_lt_1": 0.9017274998001301,
+   "parent_P_radio_lt_1": 0.8985775276175857,
+   "paired_dex_radio_median": -0.05416627311316269,
+   "dex_shift_of_radio_median": -0.06993433561205104,
+   "dex_shift_of_radio_p90": -0.06705458014485441,
+   "dex_shift_of_stone_median": 0.0
+  },
+  "_v4_recovery": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    3.265954710190521e-09,
+    7.718578067864273e-05,
+    0.8904776921059918
+   ],
+   "parent_radio_p10_p50_p90": [
+    3.4471252802137285e-09,
+    8.461665909831499e-05,
+    1.0348151406323727
+   ],
+   "stone_median": 0.03421736681312268,
+   "parent_stone_median": 0.03831827674700324,
+   "P_radio_lt_1": 0.9019130686193798,
+   "parent_P_radio_lt_1": 0.8985775276175857,
+   "paired_dex_radio_median": -0.001472401030719439,
+   "dex_shift_of_radio_median": -0.03991857308406105,
+   "dex_shift_of_radio_p90": -0.06523973019693322,
+   "dex_shift_of_stone_median": -0.04915938422160504
+  },
+  "_v4_resources": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    6.916445735820931e-10,
+    1.995958367879168e-05,
+    0.252177084572807
+   ],
+   "parent_radio_p10_p50_p90": [
+    3.4471252802137285e-09,
+    8.461665909831499e-05,
+    1.0348151406323727
+   ],
+   "stone_median": 0.03831827674700324,
+   "parent_stone_median": 0.03831827674700324,
+   "P_radio_lt_1": 0.9260462099191155,
+   "parent_P_radio_lt_1": 0.8985775276175857,
+   "paired_dex_radio_median": -0.6456388745568069,
+   "dex_shift_of_radio_median": -0.6273043957365706,
+   "dex_shift_of_radio_p90": -0.6131571548333757,
+   "dex_shift_of_stone_median": 0.0
+  },
+  "_v4_climate": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    2.4314051625074338e-09,
+    6.078805818693925e-05,
+    0.8075250479878271
+   ],
+   "parent_radio_p10_p50_p90": [
+    3.4471252802137285e-09,
+    8.461665909831499e-05,
+    1.0348151406323727
+   ],
+   "stone_median": 0.026950480290204745,
+   "parent_stone_median": 0.03831827674700324,
+   "P_radio_lt_1": 0.9037944129160174,
+   "parent_P_radio_lt_1": 0.8985775276175857,
+   "paired_dex_radio_median": -0.12382136062585758,
+   "dex_shift_of_radio_median": -0.14363760366857067,
+   "dex_shift_of_radio_p90": -0.10770677210643473,
+   "dex_shift_of_stone_median": -0.15283946046960853
+  },
+  "_v4_subsurface": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    5.038758325490534e-09,
+    9.43379025871269e-05,
+    1.1680276458840062
+   ],
+   "parent_radio_p10_p50_p90": [
+    3.4471252802137285e-09,
+    8.461665909831499e-05,
+    1.0348151406323727
+   ],
+   "stone_median": 0.39856823936652014,
+   "parent_stone_median": 0.03831827674700324,
+   "P_radio_lt_1": 0.8967930423665034,
+   "parent_P_radio_lt_1": 0.8985775276175857,
+   "paired_dex_radio_median": 0.0004429223767274948,
+   "dex_shift_of_radio_median": 0.04723034217925325,
+   "dex_shift_of_radio_p90": 0.05259034779442372,
+   "dex_shift_of_stone_median": 1.0170967184842512,
+   "subsurface_share_of_stone": 0.9007386996758521
+  },
+  "_v4_expansion": {
+   "n": 50000,
+   "radio_p10_p50_p90": [
+    5.096421903778166e-09,
+    0.001599445597596405,
+    2561744.3501028097
+   ],
+   "parent_radio_p10_p50_p90": [
+    3.4471252802137285e-09,
+    8.461665909831499e-05,
+    1.0348151406323727
+   ],
+   "stone_median": 0.44803821017826223,
+   "parent_stone_median": 0.03831827674700324,
+   "P_radio_lt_1": 0.6539345675017553,
+   "parent_P_radio_lt_1": 0.8985775276175857,
+   "paired_dex_radio_median": 0.12138163012846315,
+   "dex_shift_of_radio_median": 1.2765135987116465,
+   "dex_shift_of_radio_p90": 6.393673012688883,
+   "dex_shift_of_stone_median": 1.0679090839302487,
+   "settled_share_of_radio": 0.9999987188592195
+  }
+ }
+}
