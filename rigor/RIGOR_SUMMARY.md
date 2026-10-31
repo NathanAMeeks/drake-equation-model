@@ -215,3 +215,83 @@ Removed from the section-8 set because their effect rests on [GUESS] ranges: fos
 - **GHZ + migration.** The star-to-star exposure spread s is [MODELED] uniform 0–√2. These are bounds, not a fit: 0 means complete radial mixing; √2 is the spread an exponential disk gives with no migration. Migration (Frankel+2018, 3.6 kpc over 8 Gyr) puts the truth between them. r_ster0 keeps its existing prior.
 - **Oxygenation.** The lag is [MEASURED] uniform 0.17–0.18 Gyr, spanning only the two sourced Earth anchors: complex multicellularity at 0.6 Ga, then the earliest charcoal (needing ≥16% O2) at ~0.43 Ga (Geology 2022) and ~0.42 Ga (Scott & Glasspool 2006). The previous [GUESS] spread and the never-oxygenated fraction were dropped. Applies to the land path only.
 - **Recovery.** Fixed at 10 Myr [MEASURED] (Kirchner & Weil 2000). The earlier 5–20 Myr spread was an assumption and has been removed.
+
+
+## 10. v6: conditioning on "no alien probe found near Earth" (Oct 28, local analysis, not in the headline)
+
+Script `rigor/v6_probe.py`, results `rigor/v6_probe.json`, chart `rigor/v6_probe.png`. Each saved v5 draw is re-evaluated (it reproduces the saved outputs exactly) to get its tool-using history over galactic time. Spacefaring-stage entries per Gyr = tool-using worlds(t) x spacefaring share (with the v5 ocean/O2 gates) x the stage's total exit rate (baseline end-of-lineage rate + `stage_h_space_per_yr`). This counts every civilization that ever reached the spacefaring stage, dead ones included. A probe-sending civilization's exploration wave reaches the Sun T_cross after it starts. T_cross values: 6.5e5 yr (Hart 1975, 0.1c), 2e6 yr (Hart, with settling time), 1e7 yr (Nicholson & Forgan 2013, upper end for self-replicating probes in a 200,000-star box). Only arrivals in the last 4.5 Gyr count, because the Earth-Moon system has to exist. Each draw is weighted by P(no probe found) = exp(-f_send x f_det x arrivals). The concept is Bracewell (1960).
+
+- **Searched region, measured.** Freitas & Valdes (1980) covered Earth-Moon L4/L5 and the halo orbits to about magnitude 14 (Skylab-size objects at lunar albedo). Valdes & Freitas (1983) covered all five Earth-Moon Lagrange points plus Sun-Earth L2: magnitude 17-19 near L3/L4/L5 (objects 1-3 m), 10-18 near L1/L2, and 14-16 at Sun-Earth L2 (20-40 m). Both searches were partial and found nothing. Sun-Earth L4/L5 are not in either search.
+- **f_det.** The chance that a probe which reached us is parked, still intact and big enough, in a region that has been searched. Haqq-Misra & Kopparapu (2012) put the searched fraction (for 1-10 m probes) at <=0.5 for the Moon, <=0.1 for Mars and <=1e-3 for the Solar System. Their numbers are used as a small f_det sweep, from 1e-3 to 0.5. Those are upper bounds on coverage only. Where a probe would park and how long it would survive are not sourced, so in practice f_det is [GUESS]-limited.
+- **f_send [GUESS].** The fraction of spacefaring civilizations that send probes, swept from 1e-4 to 1. Only the product f_send x f_det enters. Probes are assumed to persist (lifetime variants are listed below).
+
+Prior (v5): headline radio-or-better median 32.2, P(<1) 0.29. Median expected arrivals at the Sun over 4.5 Gyr: headline 1.02e+06, baseline 1.39.
+
+| scenario | f_det | f_send | radio-or-better median (10-90%) | P(<1) | stone-age median | ESS |
+|---|---|---|---|---|---|---|
+| `nathan_headline_ocean_linked_v5` | solar_system_1e-3 | 0.0001 | 2.76 (0.00467 - 2.13e+03) | 0.42 | 3.72e+03 | 72249 |
+| `nathan_headline_ocean_linked_v5` | solar_system_1e-3 | 0.001 | 0.547 (0.00176 - 346) | 0.55 | 1.46e+03 | 51922 |
+| `nathan_headline_ocean_linked_v5` | solar_system_1e-3 | 0.01 | 0.0826 (0.000502 - 39.4) | 0.71 | 493 | 31671 |
+| `nathan_headline_ocean_linked_v5` | solar_system_1e-3 | 0.1 | 0.00959 (0.00012 - 1.98) | 0.87 | 152 | 16040 |
+| `nathan_headline_ocean_linked_v5` | solar_system_1e-3 | 1 | 0.00122 (2.38e-05 - 0.077) | 0.96 | 44.3 | 6719 |
+| `nathan_headline_ocean_linked_v5` | mars_like_0.1 | 0.0001 | 0.0826 (0.000502 - 39.4) | 0.71 | 493 | 31671 |
+| `nathan_headline_ocean_linked_v5` | mars_like_0.1 | 0.001 | 0.00959 (0.00012 - 1.98) | 0.87 | 152 | 16040 |
+| `nathan_headline_ocean_linked_v5` | mars_like_0.1 | 0.01 | 0.00122 (2.38e-05 - 0.077) | 0.96 | 44.3 | 6719 |
+| `nathan_headline_ocean_linked_v5` | mars_like_0.1 | 0.1 | 0.000157 (3.72e-06 - 0.00341) | 0.99 | 14.2 | 2255 |
+| `nathan_headline_ocean_linked_v5` | mars_like_0.1 | 1 | 1.76e-05 (7.28e-07 - 0.000231) | 1.00 | 4.14 | 553 |
+| `nathan_headline_ocean_linked_v5` | moon_EM_Lpts_0.5 | 0.0001 | 0.019 (0.00019 - 5.57) | 0.83 | 213 | 20105 |
+| `nathan_headline_ocean_linked_v5` | moon_EM_Lpts_0.5 | 0.001 | 0.00228 (4.1e-05 - 0.199) | 0.94 | 64.2 | 8885 |
+| `nathan_headline_ocean_linked_v5` | moon_EM_Lpts_0.5 | 0.01 | 0.000296 (7.18e-06 - 0.00794) | 0.99 | 20.4 | 3241 |
+| `nathan_headline_ocean_linked_v5` | moon_EM_Lpts_0.5 | 0.1 | 3.6e-05 (1.15e-06 - 0.000534) | 1.00 | 6.27 | 879 |
+| `nathan_headline_ocean_linked_v5` | moon_EM_Lpts_0.5 | 1 | 3.62e-06 (2.6e-07 - 4.52e-05) | 1.00 | 2.41 | 181 |
+| `baseline_ocean_linked_v5` | solar_system_1e-3 | 0.0001 | 7.42e-05 (4.33e-09 - 0.834) | 0.90 | 0.0381 | 6896 |
+| `baseline_ocean_linked_v5` | solar_system_1e-3 | 0.001 | 6.55e-05 (4.06e-09 - 0.61) | 0.91 | 0.0344 | 6814 |
+| `baseline_ocean_linked_v5` | solar_system_1e-3 | 0.01 | 4.98e-05 (3.52e-09 - 0.349) | 0.93 | 0.0274 | 6635 |
+| `baseline_ocean_linked_v5` | solar_system_1e-3 | 0.1 | 3.02e-05 (2.78e-09 - 0.122) | 0.95 | 0.0184 | 6302 |
+| `baseline_ocean_linked_v5` | solar_system_1e-3 | 1 | 1.41e-05 (2.09e-09 - 0.0358) | 0.98 | 0.00968 | 5774 |
+| `baseline_ocean_linked_v5` | mars_like_0.1 | 0.0001 | 4.98e-05 (3.52e-09 - 0.349) | 0.93 | 0.0274 | 6635 |
+| `baseline_ocean_linked_v5` | mars_like_0.1 | 0.001 | 3.02e-05 (2.78e-09 - 0.122) | 0.95 | 0.0184 | 6302 |
+| `baseline_ocean_linked_v5` | mars_like_0.1 | 0.01 | 1.41e-05 (2.09e-09 - 0.0358) | 0.98 | 0.00968 | 5774 |
+| `baseline_ocean_linked_v5` | mars_like_0.1 | 0.1 | 4.64e-06 (1.1e-09 - 0.00851) | 0.99 | 0.00406 | 5103 |
+| `baseline_ocean_linked_v5` | mars_like_0.1 | 1 | 1.1e-06 (4.63e-10 - 0.00148) | 1.00 | 0.00147 | 4221 |
+| `baseline_ocean_linked_v5` | moon_EM_Lpts_0.5 | 0.0001 | 3.69e-05 (2.96e-09 - 0.168) | 0.94 | 0.0222 | 6427 |
+| `baseline_ocean_linked_v5` | moon_EM_Lpts_0.5 | 0.001 | 1.79e-05 (2.29e-09 - 0.0516) | 0.97 | 0.0119 | 5948 |
+| `baseline_ocean_linked_v5` | moon_EM_Lpts_0.5 | 0.01 | 6.71e-06 (1.39e-09 - 0.0136) | 0.99 | 0.00544 | 5326 |
+| `baseline_ocean_linked_v5` | moon_EM_Lpts_0.5 | 0.1 | 1.72e-06 (6.34e-10 - 0.00257) | 1.00 | 0.00203 | 4503 |
+| `baseline_ocean_linked_v5` | moon_EM_Lpts_0.5 | 1 | 4.25e-07 (2.55e-10 - 0.000409) | 1.00 | 0.000654 | 3569 |
+
+**Probe lifetime, guessed vs persist** (headline radio-or-better median at f_send x f_det = 1e-3): persist forever 0.00122, 1e6 yr guess 1.44. The 1e6 yr value was corrected on Oct 28 (v6b): the exponential is now integrated exactly inside each 20 Myr time bin. The earlier bin-centre version overcounted short lifetimes. With probes that persist, T_cross (6.5e5 to 1e7 yr) makes no difference.
+
+**What it pulls on** (headline, shift of the weighted median in dex at product 1e-3): l_stone_yr -1.89, f_land_and_ocean -1.16, f_plate_tectonics -0.53, stage_h_space_per_yr -0.37, stage_h_ind_per_yr +0.10, stage_h_radio_per_yr +0.09. The biggest pull is on the tool-using episode length (`l_stone_yr`) and on habitable-world supply (`f_land_and_ocean`, `f_plate_tectonics`). `stage_h_space_per_yr` moves *down*: counting probe senders per stage entry favours fewer, longer-lived spacefaring civilizations over many short-lived ones that come back again and again.
+
+**Caveats.** (1) The result is controlled by f_send x f_det, and neither is measured; that is why it stays out of the headline. (2) The spacefaring share (including the O2 gate) is taken from present-day values and applied across all of history; GHZ spread is not in the history. (3) Every probe-sending civilization is assumed to reach every star (complete exploration). (4) Entries count every return to the spacefaring stage after a regression. (5) The searches were photographic, partial and decades old. Modern surveys are not credited, and that is conservative for the constraint.
+
+### 10b. Sourced probe lifetimes (Oct 28, replaces the guessed lifetimes)
+
+**Impact destruction.** I use the Grun et al. (1985) interplanetary meteoroid flux at 1 AU, which is calibrated mainly on lunar-sample microcraters, as given on ESA MADWEB. The flux of meteoroids of at least 1 g is 7e-08 per m^2 per yr. A cross-check against Brown et al. (2002), N(>D) = 37 D^-2.7 per yr on Earth extrapolated down to 1 cm, gives about 7e-8 per m^2 of cross-section per yr, roughly 4x lower. The kill threshold is [GUESS]: at least 1 g (about 1 cm stony) at about 20 km/s. The cross-section is [MODELED] at 1 m^2. That gives a mean time to a destructive hit at 1 AU of 3.56e+06 yr. It becomes 3.56e+05 yr for a 10 m^2 probe, 1.68e+05 yr with a 0.1 g threshold, and 7.68e+07 yr with 10 g (10 g is outside the Grun model's stated range). Away from 1 AU the impact time is scaled by r [MODELED, dust density ~ r^-1, Mann et al. 2004]. The lunar crater record itself: Speyerer+2016 (LRO before/after images) found 33% more new craters of at least 10 m than the Neukum production and chronology functions predict. Those are decimetre-to-metre impactors, so the 1 g rate is not adjusted for it.
+
+| location | dynamical removal (yr) | impact (yr) | combined (yr) | basis |
+|---|---|---|---|---|
+| Earth-Moon L4/L5 (searched) | 100 | 3.56e+06 | 100 | Kordylewski-cloud sims: <0.1% of stable paths remain after 100 yr (Celest Mech Dyn Astr 2024) |
+| Lunar distant retrograde orbit | 750 | 3.56e+06 | 750 | stable DROs ~1e4 lunar periods (MNRAS 494, 2727, 2020) = ~750 yr |
+| Moon surface | inf | 3.56e+06 | 3.56e+06 | no dynamical removal; burial by regolith gardening (Speyerer+2016) not modelled |
+| Sun-Earth L4/L5, transient (like 2010 TK7) | 2.5e+05 | 3.56e+06 | 2.34e+05 | 2010 TK7 total 1:1 lifetime <0.25 Myr (Dvorak+2012) |
+| Sun-Earth L4/L5, most stable region | 1e+09 | 3.56e+06 | 3.55e+06 | MEGASIM: stretched-exponential decay, none left by 2.33 Gyr (ApJ 2022); 1e9 yr used as order of magnitude |
+| Mars Trojans | 4.5e+09 | 5.41e+06 | 5.41e+06 | dynamical half-lives ~ age of Solar System (Scholl+2005) |
+| Main belt (1 m body) | 3e+10 | 1.4e+07 | 1.4e+07 | Yarkovsky removal ~0.03%/Myr; collisional lifetime 14 Myr used for impacts (Bottke+2005) |
+| Jupiter Trojans | 1.73e+10 | 1.85e+07 | 1.85e+07 | ~23-25% escape over Solar System age (MNRAS 2020, Jovian Trojan stability) -> e-folding ~17 Gyr |
+
+Headline (`nathan_headline_ocean_linked_v5`) after conditioning with each location's combined lifetime. Cells show radio-or-better median (10-90%), P(<1). Columns are f_send x f_det. Prior: 32.2 (0.016-5.09e4), 0.29.
+
+| location | probe-wave arrivals still alive (median) | 1e-4 | 1e-3 | 1e-2 | 0.1 | 1 |
+|---|---|---|---|---|---|---|
+| Earth-Moon L4/L5 (searched) | 0.0271 | 31.9 (0.0159-5e+04), 0.29 | 30.7 (0.0156-4.64e+04), 0.29 | 25.4 (0.0145-3.49e+04), 0.30 | 15.2 (0.0114-1.73e+04), 0.32 | 5.82 (0.0071-5.12e+03), 0.37 |
+| Lunar distant retrograde orbit | 0.204 | 30.9 (0.0157-4.72e+04), 0.29 | 26.2 (0.0147-3.72e+04), 0.30 | 16.6 (0.0119-1.92e+04), 0.32 | 6.74 (0.00767-6.15e+03), 0.37 | 1.77 (0.00353-1.28e+03), 0.46 |
+| Moon surface | 966 | 2.86 (0.00478-2.2e+03), 0.42 | 0.571 (0.00181-358), 0.55 | 0.0857 (0.000516-41.1), 0.71 | 0.00996 (0.000124-2.03), 0.87 | 0.00125 (2.43e-05-0.077), 0.96 |
+| Sun-Earth L4/L5, transient (like 2010 TK7) | 63.4 | 11.3 (0.00982-1.17e+04), 0.34 | 3.66 (0.00548-2.94e+03), 0.40 | 0.781 (0.00219-509), 0.52 | 0.121 (0.000672-64.1), 0.68 | 0.0151 (0.000161-3.75), 0.85 |
+| Sun-Earth L4/L5, most stable region | 963 | 2.86 (0.00479-2.21e+03), 0.42 | 0.572 (0.00181-359), 0.55 | 0.086 (0.000517-41.3), 0.71 | 0.00998 (0.000124-2.03), 0.87 | 0.00125 (2.44e-05-0.0776), 0.96 |
+| Mars Trojans | 1.47e+03 | 2.18 (0.00409-1.63e+03), 0.44 | 0.411 (0.00147-251), 0.57 | 0.0587 (0.000407-25.7), 0.74 | 0.00685 (9.33e-05-1.17), 0.89 | 0.000872 (1.98e-05-0.0407), 0.97 |
+| Main belt (1 m body) | 3.79e+03 | 1.13 (0.00275-772), 0.49 | 0.189 (0.000904-104), 0.64 | 0.025 (0.000227-8.07), 0.81 | 0.00285 (4.81e-05-0.294), 0.94 | 0.00037 (9.25e-06-0.0104), 0.99 |
+| Jupiter Trojans | 5.01e+03 | 0.93 (0.00244-615), 0.51 | 0.149 (0.000774-81.1), 0.66 | 0.0191 (0.000191-5.43), 0.83 | 0.00226 (4.09e-05-0.193), 0.95 | 0.000292 (7.16e-06-0.00761), 0.99 |
+
+ESS stays at 3,200 or more for every headline cell; the baseline stays at 5,100 or more and barely moves (median 7.75e-5 down to at most 5e-6). Plain reading: every passive parking spot has a lifetime of only 1e2 to 2e7 yr, so only probes from roughly the last 0.1-20 Myr of galactic history can be present now. The places that have actually been searched, the Earth-Moon Lagrange points, empty within about a century unless a probe holds station, so finding nothing there barely constrains the headline (median 32 down to 6 even at a product of 1). Long-lived spots (Mars/Jupiter Trojans, main belt, stable Sun-Earth Trojan region, Moon surface) give a strong constraint only if a meaningful fraction of probe-sending civilizations park there AND those regions have been searched to a few-metre limit. That has not been done (f_det for those regions is far below 1). Caveats: the kill threshold and cross-section set the impact clock linearly; active or self-repairing probes are not covered by any of these lifetimes; the 1/r impact scaling and the use of a natural asteroid's collisional lifetime in the main belt are approximations.

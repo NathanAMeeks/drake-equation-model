@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-30
+
+**No-probe (Fermi) side analysis**, added as `rigor/v6_probe.py`, `rigor/v6_probe.json`, `rigor/v6_probe.png` and `rigor/v6b_probe.png`, with section 10 of [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md). **The headline is unchanged** (radio-or-better median 32.2). This is conditioning shown as a sweep; it is not applied to the model.
+- Each saved v5 draw is re-evaluated to get its history. Every civilization that ever reached the spacefaring stage (dead ones included) sends a probe wave that reaches the Sun after a sourced crossing time (Hart 1975; Nicholson & Forgan 2013). Draws are weighted by P(no probe found) = exp(-f_send x f_det x arrivals still alive).
+- f_send and f_det are [GUESS] and only swept (1e-4 to 1). The searched regions come from Freitas & Valdes (1980), Valdes & Freitas (1983) and Haqq-Misra & Kopparapu (2012).
+- Probe lifetime per parking location comes from sources: impacts from the Grun et al. (1985) meteoroid flux, cross-checked against Brown et al. (2002) and the lunar cratering record (Speyerer et al. 2016), plus published orbit-stability studies (Earth-Moon L4/L5, Earth and Mars and Jupiter Trojans, main belt). Every location gives a lifetime of 1e2 to 2e7 yr. The searched Earth-Moon Lagrange points empty within about a century, so finding nothing there barely moves the headline: median 5.8 even at f_send x f_det = 1.
+- **Correction:** the earlier guessed 1e6-yr lifetime variant overcounted, because it evaluated the decay at each 20 Myr bin centre. The exponential is now integrated exactly inside each bin. At f_send x f_det = 1e-3, the headline median for that variant is 1.44, not the 0.25-23 reported before.
+- The README gains a short "No-probe (Fermi) side analysis" section.
+
 ## 2026-10-28
 
 Headline changed to **radio-or-better civilizations alive now** (radio-capable + spacefaring), from the new data-anchored v5 scenarios `nathan_headline_ocean_linked_v5` and `baseline_ocean_linked_v5` (1e5 draws each). Stone-age-or-greater tool users are kept as the secondary number. Details: section 9 of [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md), `rigor/v5.json`, `rigor/v5_radio.png`.
