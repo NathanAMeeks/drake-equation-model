@@ -116,7 +116,7 @@ Inside each tool-using episode a world moves through **lithic → agricultural �
 
 **Literature baseline (`baseline`).** Hard-step expected times are log-uniform over 1e-3–1e3 Gyr, then updated on Earth's dated fossil record with the observer-selection correction of Snyder-Beattie et al. 2021, which favours slow, rare steps. **The choice between these two framings explains most of the ~6-orders-of-magnitude gap between the two headline numbers.**
 
-**Archive inputs** (pscomppars, re-pulled 14 Oct 2026 (6,445 confirmed planets, unchanged since the 12 Oct pull; HZ-rocky 23 conservative / 37 optimistic, ESI and superhabitable lists unchanged): 6,445 confirmed planets):
+**Archive inputs** (pscomppars, re-pulled 2 Nov 2026 (6,451 confirmed planets, up from 6,445 at the previous pull; HZ-rocky 23 conservative / 37 optimistic, ESI and superhabitable lists unchanged): 6,451 confirmed planets):
 * HZ rocky planets (R < 1.8 R⊕): 23 conservative and 37 optimistic, or 26 and 41 including TRAPPIST-1 with Teff clamped to 2600 K.
 * Mean ESI: 0.849 (conservative) and 0.865 (optimistic).
 * Top ESI: Teegarden's Star b 0.979, TOI-700 d 0.942, Kepler-1649 c 0.940, GJ 3378 b 0.938, TOI-700 e 0.932, GJ 1002 b 0.926.
@@ -447,8 +447,9 @@ Feasibility pass on Breakthrough Listen public data with turboSETI (`seti/scan.p
 * **3I/ATLAS GBT L-band (1618.65-1621.58 MHz, Iridium/GNSS region): blc23 scans 0013-0018, coarse channel 23** — hits at S/N>10: 438; ON-OFF filter-3 events: 1; at S/N>5: 828; ON-OFF filter-3 events: 1. Top plotted: 1618.785314 MHz, -2.121 Hz/s, S/N 23.38 ([plot](seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/top_hit.png)). Injection check: a synthetic drifting tone added to the ON scans was recovered as a filter-3 event.
 * **3I/ATLAS GBT L-band (1419.43-1422.36 MHz, includes HI 1420.41 MHz): blc24 scans 0013-0018, coarse channel 27** — hits at S/N>10: 11; ON-OFF filter-3 events: 0; at S/N>5: 16; ON-OFF filter-3 events: 0. Top plotted: 1420.000001 MHz, -0.0073 Hz/s, S/N 35.92 ([plot](seti/out/blc24_guppi_61027_17226_DIAG_3I_ATLAS_00_cc27_3dae93af/top_hit.png)). Injection check: a synthetic drifting tone added to the ON scans was recovered as a filter-3 event.
 * **3I/ATLAS GBT (2008.30-2011.23 MHz, strong line seen in mid-res bandpass): blc21 scans 0013-0018, coarse channel 18** — hits at S/N>10: 6; ON-OFF filter-3 events: 0; at S/N>5: 6; ON-OFF filter-3 events: 0. Top plotted: 2010.000000 MHz, 0.0073 Hz/s, S/N 45602.05 ([plot](seti/out/blc21_guppi_61027_17226_DIAG_3I_ATLAS_00_cc18_d2c0ccee/top_hit.png)). Injection check: a synthetic drifting tone added to the ON scans was recovered as a filter-3 event.
+* **3I/ATLAS GBT X-band node (12273.93-12276.86 MHz): blc20 scans 0061-0066, coarse channel 34** — hits at S/N>10: 6; ON-OFF filter-3 events: 0; at S/N>5: 170; ON-OFF filter-3 events: 0. Top plotted: 12274.377851 MHz, 0.0219 Hz/s, S/N 5.97 ([plot](seti/out/blc20_guppi_61027_31308_DIAG_3I_ATLAS_00_cc34_b61007ca/top_hit.png)).
 
-Every hit is almost certainly RFI or noise; **no detection is claimed**, and anything interesting would need re-observation. 1 job(s) pending for the weekly run.
+Every hit is almost certainly RFI or noise; **no detection is claimed**, and anything interesting would need re-observation. 0 job(s) pending for the weekly run.
 
 ## Reproduce
 

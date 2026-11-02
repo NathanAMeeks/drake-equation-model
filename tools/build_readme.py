@@ -7,7 +7,7 @@ import provenance as prov
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 cfg = yaml.safe_load(open("params.yaml")); S = json.load(open("results/results.json"))
 E = json.load(open("data/esi_hz.json")); SH = json.load(open("data/superhab.json")); HZ = json.load(open("data/hz_counts.json"))
-ARCHIVE_PULL = "re-pulled 14 Oct 2026 (6,445 confirmed planets, unchanged since the 12 Oct pull; HZ-rocky 23 conservative / 37 optimistic, ESI and superhabitable lists unchanged)"
+ARCHIVE_PULL = "re-pulled 2 Nov 2026 (6,451 confirmed planets, up from 6,445 at the previous pull; HZ-rocky 23 conservative / 37 optimistic, ESI and superhabitable lists unchanged)"
 head = cfg["run"]["headline_scenario"]; lit = cfg["run"].get("literature_baseline", "baseline")
 def fmt(x):
     if x is None: return "–"

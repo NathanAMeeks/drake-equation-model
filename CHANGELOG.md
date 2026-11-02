@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-02
+
+Weekly data refresh and SETI scan. **No model inputs changed, so no scenario was re-run and the headline is unchanged** (radio-or-better median 32.2; baseline 7.75e-5; stone-age-or-greater 1.57e4 / 0.0403).
+- NASA Exoplanet Archive `pscomppars` re-pulled 2 Nov 2026: 6,451 confirmed planets (was 6,445). `hz_archive.py`, `esi.py` and `superhab.py` re-run; HZ-rocky counts (23 conservative / 37 optimistic), the ESI lists and the superhabitable screen are unchanged (`superhab.json` differs only in the order of two tied entries).
+- SETI: processed the last queued job, the 3I/ATLAS GBT X-band node (blc20, scans 0061-0066, coarse channel 34, 12273.93-12276.86 MHz). 6 hits at S/N > 10 and 170 at S/N > 5; **0 filter-3 events at either threshold**. The dominant hit is a non-drifting 12275.000000 MHz line present in ON and OFF scans (terrestrial/instrumental). Three single-ON filter-2 hits at S/N 5.2-6.0 are consistent with noise. No injection test this run. No detection is claimed; see `seti/scan_log.md`. The queue is now empty.
+- Literature check (astro-ph, JWST, SETI, archaeology, genetics) found nothing that tightens a model parameter this week.
+- README rebuilt with `tools/build_readme.py`. Model by Nathan A. Meeks.
+
 ## 2026-10-30
 
 **No-probe (Fermi) side analysis**, added as `rigor/v6_probe.py`, `rigor/v6_probe.json`, `rigor/v6_probe.png` and `rigor/v6b_probe.png`, with section 10 of [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md). **The headline is unchanged** (radio-or-better median 32.2). This is conditioning shown as a sweep; it is not applied to the model.

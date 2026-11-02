@@ -1,8 +1,8 @@
 {
- "total_confirmed_rows": 6445,
- "unique_pl_name": 6445,
+ "total_confirmed_rows": 6451,
+ "unique_pl_name": 6451,
  "insolation_filled_from_L_a": 0,
- "planets_with_Teff_2600_7200_and_insolation": 5785,
+ "planets_with_Teff_2600_7200_and_insolation": 5787,
  "conservative_HZ_any_size": 185,
  "conservative_HZ_R_lt_1.8": 23,
  "optimistic_HZ_any_size": 278,
@@ -84,12 +84,12 @@
   "Wolf 1061 c",
   "Wolf 1069 b"
  ],
- "transiting_planets_total": 4811,
+ "transiting_planets_total": 4815,
  "discovery_method_counts": {
-  "Transit": 4781,
-  "Radial Velocity": 1203,
+  "Transit": 4785,
+  "Radial Velocity": 1204,
   "Microlensing": 292,
-  "Imaging": 97,
+  "Imaging": 98,
   "Transit Timing Variations": 29,
   "Eclipse Timing Variations": 17,
   "Orbital Brightness Modulation": 9,

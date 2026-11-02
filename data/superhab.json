@@ -17,17 +17,6 @@
  "lists": {
   "K + size_user": [
    {
-    "pl_name": "Kepler-62 f",
-    "st_teff": 4925.0,
-    "st_age": 7.0,
-    "sy_dist": 300.874,
-    "pl_rade": 1.41,
-    "S": 0.5,
-    "T_surf": 242.178,
-    "M_used": 3.426,
-    "ESI4": 0.799
-   },
-   {
     "pl_name": "Kepler-442 b",
     "st_teff": 4402.0,
     "st_age": 2.9,
@@ -37,6 +26,17 @@
     "T_surf": 259.584,
     "M_used": 2.36,
     "ESI4": 0.882
+   },
+   {
+    "pl_name": "Kepler-62 f",
+    "st_teff": 4925.0,
+    "st_age": 7.0,
+    "sy_dist": 300.874,
+    "pl_rade": 1.41,
+    "S": 0.5,
+    "T_surf": 242.178,
+    "M_used": 3.426,
+    "ESI4": 0.799
    }
   ],
   "K + size_user + temp": [],
