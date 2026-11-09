@@ -5,7 +5,7 @@
 - **git (348 files):** committed to `main` at commit `3644c01`. The link is `blob/<commit>/<path>`.
 - **release (86 files):** stored as GitHub Release assets. None is split, and each is a single file under 2 GB.
   - [`data-2026-11-09`](https://github.com/NathanAMeeks/drake-equation-model/releases/tag/data-2026-11-09): 59 Monte Carlo sample arrays (`*.npz`, `*.npy`), 5.07 GB.
-  - [`seti-data-2026-11-09`](https://github.com/NathanAMeeks/drake-equation-model/releases/tag/seti-data-2026-11-09): 27 raw SETI files, 4.68 GB. They are public Breakthrough Listen data: coarse-channel extracts of GBT observations of 3I/ATLAS from https://bldata.berkeley.edu/ATLAS/GB_ATLAS/, plus the BL tutorial Voyager-1 file from https://storage.googleapis.com/gbt_fil/.
+  - [`seti-data-2026-11-09`](https://github.com/NathanAMeeks/drake-equation-model/releases/tag/seti-data-2026-11-09): 27 raw SETI files, 4.50 GB. They are public Breakthrough Listen data: coarse-channel extracts of GBT observations of 3I/ATLAS from https://bldata.berkeley.edu/ATLAS/GB_ATLAS/, plus the BL tutorial Voyager-1 file from https://storage.googleapis.com/gbt_fil/.
   - **Asset names:** each name is the repo path with `/` replaced by `__`. To restore a file, download it and rename it back, for example `results__v1__samples_baseline.npz` becomes `results/v1/samples_baseline.npz`. Then check it with `sha256sum -c`.
 - **Excluded:**
   - `xpost/arcylo_photo1.jpg`: a private X post image, kept out of the public repo.
