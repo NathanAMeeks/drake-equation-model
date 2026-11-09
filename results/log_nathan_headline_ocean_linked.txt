@@ -1,0 +1,5 @@
+[nathan_headline_ocean_linked] 1000/200000  3s
+[nathan_headline_ocean_linked] 51000/200000  146s
+[nathan_headline_ocean_linked] 101000/200000  288s
+[nathan_headline_ocean_linked] 151000/200000  461s
+[nathan_headline_ocean_linked] DONE 200000/200000  607s

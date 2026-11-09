@@ -1,0 +1,5 @@
+[similarity_weighted] 1000/200000  6s
+[similarity_weighted] 51000/200000  269s
+[similarity_weighted] 101000/200000  560s
+[similarity_weighted] 151000/200000  820s
+[similarity_weighted] DONE 200000/200000  1056s

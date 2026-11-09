@@ -1,0 +1,5 @@
+[nathan_headline] 1000/200000  4s
+[nathan_headline] 51000/200000  148s
+[nathan_headline] 101000/200000  312s
+[nathan_headline] 151000/200000  434s
+[nathan_headline] DONE 200000/200000  552s

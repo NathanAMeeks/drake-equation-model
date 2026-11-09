@@ -1,0 +1,125 @@
+[2026-10-06T01:20:13-07:00] job voyager_f1032192_t300_v2_418d012f
+  ready voyager_f1032192_t300_v2.fil  504.0 MB
+  turboSETI snr=10.0 voyager_f1032192_t300_v2.fil
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     Filterbank file detected. Attempting to create .h5 file in current directory...
+blimpy.waterfall INFO     Detecting high frequency resolution data.
+blimpy.waterfall INFO     __write_to_hdf5_heavy: For /workspace/drake/seti/out/voyager_f1032192_t300_v2_418d012f/snr10/voyager_f1032192_t300_v2.h5, chunk_dim=(1, 1, 1048576), blob_dim=(2, 1, 66060288), n_blobs=1
+hdf5plugin._filters WARNING  Deprecation: hdf5plugin.Bitshuffle's lz4 argument is deprecated, use cname='lz4' or 'none' instead.
+hdf5plugin._filters WARNING  Deprecation: hdf5plugin.Bitshuffle's lz4 argument is deprecated, use cname='lz4' or 'none' instead.
+blimpy.waterfall INFO     __write_to_hdf5_heavy: Processing blob 1 of 1
+Traceback (most recent call last):
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/blimpy/io/hdf_reader.py", line 40, in examine_h5
+    xx = h5["data"][2][0][0]
+         ~~~~~~~~~~^^^
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/h5py/_hl/dataset.py", line 872, in __getitem__
+    return self._fast_reader.read(args)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/_selector.pyx", line 378, in h5py._selector.Reader.read
+  File "h5py/_selector.pyx", line 152, in h5py._selector.Selector.apply_args
+IndexError: Index (2) out of range for (0-1)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/turbo_seti/find_doppler/data_handler.py", line 142, in __split_h5
+    wf = Waterfall(self.filename, load_data=False)
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/blimpy/waterfall.py", line 167, in __init__
+    self.container = fw.open_file(filename, f_start=f_start, f_stop=f_stop, t_start=t_start, t_stop=t_stop,
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                  load_data=load_data, max_load=max_load)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/blimpy/io/file_wrapper.py", line 46, in open_file
+    return H5Reader(filename, f_start=f_start, f_stop=f_stop, t_start=t_start, t_stop=t_stop,
+                    load_data=load_data, max_load=max_load)
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/blimpy/io/hdf_reader.py", line 84, in __init__
+    _ = examine_h5(self.h5)
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/blimpy/io/hdf_reader.py", line 42, in examine_h5
+    oops("examine_h5: HDF5 Time-dimension data corruption")
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/blimpy/io/hdf_reader.py", line 14, in oops
+    sys.exit(86)
+    ~~~~~~~~^^^^
+SystemExit: 86
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/drake/seti/scan.py", line 342, in main
+    j["result"] = process(j, a); j["status"] = "done"; j["processed"] = now()
+                  ~~~~~~~^^^^^^
+  File "/workspace/drake/seti/scan.py", line 181, in process
+    dat = run_find_doppler(p, sdir, snr, args.max_drift); dats.append(dat)
+  File "/workspace/drake/seti/scan.py", line 116, in run_find_doppler
+    fd = FindDoppler(path, max_drift=max_drift, snr=snr, out_dir=out_dir, n_coarse_chan=1,
+                     log_level_int=logging.WARNING, blank_dc=True)
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/turbo_seti/find_doppler/find_doppler.py", line 125, in __init__
+    self.data_handle = DATAHandle(datafile,
+                       ~~~~~~~~~~^^^^^^^^^^
+                                  out_dir=out_dir,
+                                  ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+                                  gpu_id=gpu_id,
+                                  ^^^^^^^^^^^^^^
+                                  kernels=self.kernels)
+                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/turbo_seti/find_doppler/data_handler.py", line 82, in __init__
+    self.cchan_list = self.__split_h5()
+                      ~~~~~~~~~~~~~~~^^
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/turbo_seti/find_doppler/data_handler.py", line 145, in __split_h5
+    raise IOError(errmsg)
+OSError: Error encountered when trying to open file: /workspace/drake/seti/out/voyager_f1032192_t300_v2_418d012f/snr10/voyager_f1032192_t300_v2.h5
+
+*** Oops, hdf_reader: examine_h5: HDF5 Time-dimension data corruption ***
+
+[2026-10-06T01:20:17-07:00] job blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9
+  ready blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.h5  152.3 MB
+  ready blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.h5  152.9 MB
+  ready blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.h5  151.4 MB
+  ready blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.h5  152.4 MB
+  ready blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.h5  151.9 MB
+  ready blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.h5  151.3 MB
+  turboSETI snr=10.0 blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+Traceback (most recent call last):
+  File "/workspace/drake/seti/scan.py", line 342, in main
+    j["result"] = process(j, a); j["status"] = "done"; j["processed"] = now()
+                  ~~~~~~~^^^^^^
+  File "/workspace/drake/seti/scan.py", line 181, in process
+    dat = run_find_doppler(p, sdir, snr, args.max_drift); dats.append(dat)
+  File "/workspace/drake/seti/scan.py", line 118, in run_find_doppler
+    fd.search(n_partitions=1, progress_bar="n")
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/turbo_seti/find_doppler/find_doppler.py", line 248, in search
+    search_coarse_channel(cchan_obj, self, dataloader=sched, filewriter=filewriter, logwriter=logwriter)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/drake/seti/.venv/lib/python3.13/site-packages/turbo_seti/find_doppler/find_doppler.py", line 533, in search_coarse_channel
+    str(datah5_obj.header['cchan_id']) + " is: %i" % max_val.total_n_hits)
+                                         ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+TypeError: %i format: a real number is required, not numpy.ndarray
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_17226_DIAG_3I_ATLAS_0013.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 6.6859 deg>, 'src_raj': <Angle 10.84948 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.199375), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=10.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+wrote /workspace/drake/seti/scan_log.md

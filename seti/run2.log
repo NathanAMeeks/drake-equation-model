@@ -1,0 +1,436 @@
+[2026-10-06T01:25:41-07:00] job blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9
+  ready blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.h5  152.3 MB
+  ready blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.h5  152.9 MB
+  ready blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.h5  151.4 MB
+  ready blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.h5  152.4 MB
+  ready blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.h5  151.9 MB
+  ready blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.h5  151.3 MB
+  turboSETI snr=10.0 blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_17226_DIAG_3I_ATLAS_0013.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 6.6859 deg>, 'src_raj': <Angle 10.84948 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.199375), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=10.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+  turboSETI snr=10.0 blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_17543_DIAG_3I_ATLAS_0014.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 7.1956 deg>, 'src_raj': <Angle 10.84884 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.203043981484), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=10.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+  turboSETI snr=10.0 blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_17861_DIAG_3I_ATLAS_0015.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 6.6811 deg>, 'src_raj': <Angle 10.84815333 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.206724537034), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=10.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+  turboSETI snr=10.0 blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_18179_DIAG_3I_ATLAS_0016.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 6.6944 deg>, 'src_raj': <Angle 10.91568 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.21040509259), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=10.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+  turboSETI snr=10.0 blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_18497_DIAG_3I_ATLAS_0017.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 6.7017 deg>, 'src_raj': <Angle 10.86618 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.21408564815), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=10.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+  turboSETI snr=10.0 blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_18814_DIAG_3I_ATLAS_0018.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 5.6905 deg>, 'src_raj': <Angle 10.84762667 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.21775462963), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=10.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in an ON source only
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 10.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 72 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 71 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 59 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 84 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 67 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 85 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 1): Found a total of 198 hits in this cadence!
+find_events: Elapsed time: 0.03 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/events_f1.csv
+  snr=10.0 filter f1: 198 event rows
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in at least one ON source with RFI rejection from the OFF sources
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 10.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 72 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 71 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 59 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 84 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 67 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 85 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 2/3): Found a total of 198 hits in this cadence!
+find_events (Filter threshold 2): Found a total of 164 hits in only the on observations for this cadence!
+find_events: Elapsed time: 0.09 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/events_f2.csv
+  snr=10.0 filter f2: 164 event rows
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in all ON sources with RFI rejection from the OFF sources
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 10.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 72 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 71 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 59 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 84 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 67 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 85 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 2/3): Found a total of 198 hits in this cadence!
+find_events: Found a total of 164 hits in only the on observations for this cadence!
+find_events: Found a total of 3 events across this cadence!
+find_events: Elapsed time: 0.20 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/events_f3.csv
+  snr=10.0 filter f3: 3 event rows
+  turboSETI snr=5.0 blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_17226_DIAG_3I_ATLAS_0013.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 6.6859 deg>, 'src_raj': <Angle 10.84948 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.199375), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=5.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+  turboSETI snr=5.0 blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_17543_DIAG_3I_ATLAS_0014.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 7.1956 deg>, 'src_raj': <Angle 10.84884 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.203043981484), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=5.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+  turboSETI snr=5.0 blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_17861_DIAG_3I_ATLAS_0015.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 6.6811 deg>, 'src_raj': <Angle 10.84815333 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.206724537034), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=5.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+  turboSETI snr=5.0 blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_18179_DIAG_3I_ATLAS_0016.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 6.6944 deg>, 'src_raj': <Angle 10.91568 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.21040509259), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=5.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+  turboSETI snr=5.0 blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_18497_DIAG_3I_ATLAS_0017.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 6.7017 deg>, 'src_raj': <Angle 10.86618 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.21408564815), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=5.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+  turboSETI snr=5.0 blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.h5
+
+turbo_seti version 2.3.2
+blimpy version 2.1.4
+h5py version 3.16.0
+hdf5plugin version 7.1.0
+HDF5 library version 2.0.0
+
+
+data_handler    INFO     From user, n_coarse_chan=1
+HDF5 header info: {'DIMENSION_LABELS': array(['time', 'feed_id', 'frequency'], dtype=object), 'az_start': np.float64(0.0), 'data_type': np.int32(1), 'fch1': np.float64(1621.58203125), 'foff': np.float64(-2.7939677238464355e-06), 'ibeam': np.int32(1), 'machine_id': np.int32(20), 'nbeams': np.int32(1), 'nbits': np.int32(32), 'nchans': np.int32(1048576), 'nfpc': np.int32(1048576), 'nifs': np.int32(1), 'rawdatafile': 'guppi_61027_18814_DIAG_3I_ATLAS_0018.0000.raw', 'refbeam': np.int32(1), 'source_name': 'DIAG_3I_ATLAS', 'src_dej': <Angle 5.6905 deg>, 'src_raj': <Angle 10.84762667 hourangle>, 'telescope_id': np.int32(6), 'tsamp': np.float64(6.084537002666661), 'tstart': np.float64(61027.21775462963), 'za_start': np.float64(0.0)}
+
+Starting ET search with parameters: datafile=/workspace/drake/seti/data/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.h5, max_drift=4.0, min_drift=1e-05, snr=5.0, out_dir=/workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5, coarse_chans=None, flagging=False, n_coarse_chan=1, kernels=None, gpu_id=0, gpu_backend=False, blank_dc=True, precision=1, append_output=False, log_level_int=30, obs_info={'pulsar': 0, 'pulsar_found': 0, 'pulsar_dm': 0.0, 'pulsar_snr': 0.0, 'pulsar_stats': array([0., 0., 0., 0., 0., 0.]), 'RFI_level': 0.0, 'Mean_SEFD': 0.0, 'psrflux_Sens': 0.0, 'SEFDs_val': [0.0], 'SEFDs_freq': [0.0], 'SEFDs_freq_up': [0.0]}
+
+Computed drift rate resolution: 0.00956648975722505
+
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in an ON source only
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 5.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 139 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 157 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 126 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 137 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 122 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 147 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 1): Found a total of 387 hits in this cadence!
+find_events: Elapsed time: 0.03 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/events_f1.csv
+  snr=5.0 filter f1: 387 event rows
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in at least one ON source with RFI rejection from the OFF sources
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 5.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 139 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 157 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 126 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 137 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 122 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 147 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 2/3): Found a total of 387 hits in this cadence!
+find_events (Filter threshold 2): Found a total of 270 hits in only the on observations for this cadence!
+find_events: Elapsed time: 0.15 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/events_f2.csv
+  snr=5.0 filter f2: 270 event rows
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in all ON sources with RFI rejection from the OFF sources
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 5.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 139 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 157 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 126 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 137 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 122 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 147 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 2/3): Found a total of 387 hits in this cadence!
+find_events: Found a total of 270 hits in only the on observations for this cadence!
+find_events: Found a total of 3 events across this cadence!
+find_events: Elapsed time: 0.22 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/events_f3.csv
+  snr=5.0 filter f3: 3 event rows
+Traceback (most recent call last):
+  File "/workspace/drake/seti/scan.py", line 361, in <module>
+    main()
+    ~~~~^^
+  File "/workspace/drake/seti/scan.py", line 357, in main
+    save_q(q, a.queue)
+    ~~~~~~^^^^^^^^^^^^
+  File "/workspace/drake/seti/scan.py", line 40, in save_q
+    tmp = path + ".tmp"; json.dump(q, open(tmp, "w"), indent=1); os.replace(tmp, path)
+                         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 179, in dump
+    for chunk in iterable:
+                 ^^^^^^^^
+  File "/usr/lib/python3.13/json/encoder.py", line 433, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/usr/lib/python3.13/json/encoder.py", line 407, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.13/json/encoder.py", line 326, in _iterencode_list
+    yield from chunks
+  File "/usr/lib/python3.13/json/encoder.py", line 407, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.13/json/encoder.py", line 407, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.13/json/encoder.py", line 326, in _iterencode_list
+    yield from chunks
+  File "/usr/lib/python3.13/json/encoder.py", line 407, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.13/json/encoder.py", line 440, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python3.13/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type int32 is not JSON serializable

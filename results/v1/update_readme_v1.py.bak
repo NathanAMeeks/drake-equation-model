@@ -1,0 +1,279 @@
+"""Rebuild the result-dependent README sections from results/results.json, params.yaml and data/esi_hz.json."""
+import json, re, yaml, os
+os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+S = json.load(open("results/results.json")); cfg = yaml.safe_load(open("params.yaml")); E = json.load(open("data/esi_hz.json"))
+R = open("README.md").read()
+def fmt(x):
+    if x is None: return "–"
+    if x == 0: return "0"
+    if 1e-3 <= abs(x) < 1e5: return f"{x:.3g}"
+    return f"{x:.2e}"
+def section(title, body):
+    global R
+    pat = re.compile(r"(## " + re.escape(title) + r"\n)(.*?)(?=\n## )", re.S)
+    if pat.search(R): R = pat.sub(lambda m: m.group(1) + body, R, count=1)
+    else: raise SystemExit("missing section " + title)
+def insert_before(title, text):
+    global R
+    i = R.index("## " + title); R = R[:i] + text + R[i:]
+
+# ---- run commands / files
+if "esi.py" not in R.split("## Files")[0]:
+    R = R.replace(".venv/bin/python hz_archive.py                       # NASA Exoplanet Archive HZ counts -> data/hz_counts.json",
+                  ".venv/bin/python hz_archive.py                       # NASA Exoplanet Archive HZ counts -> data/hz_counts.json\n"
+                  ".venv/bin/python esi.py                              # Earth Similarity Index of HZ rocky planets -> data/esi_hz.json (+ CSVs)\n"
+                  ".venv/bin/python tools/update_readme.py              # refresh README numbers from results/results.json")
+if "`esi.py`" not in R:
+    R = R.replace("| `data/pscomppars.csv` |", "| `esi.py` | Schulze-Makuch+2011 Earth Similarity Index for Archive HZ rocky planets (feeds `similarity_weighted`) |\n"
+                  "| `data/esi_hz.json`, `data/esi_hz_rocky_{conservative,optimistic}.csv` | ESI values, population means of ESI^k, per-planet table |\n"
+                  "| `data/si_species.html`, `data/si/*.html`, `data/si_when_lived.json` | Smithsonian Human Origins species list and 'When Lived' spans (species factor) |\n"
+                  "| `data/pscomppars.csv` |")
+    R = R.replace("| `results/samples_<scenario>.npz` |", "| `results/comparison_scenarios.png` | all scenarios on one axis (median, 10–90%, 5–95%, species median) |\n"
+                  "| `results/esi_distribution.png` | ESI histogram of HZ rocky planets + population weight vs exponent |\n"
+                  "| `results/samples_<scenario>.npz` |")
+# ---- scenarios
+if "**similarity_weighted**" not in R:
+    R = R.replace("* **classic_static_SDO_style**:", "* **similarity_weighted** (USER-PROPOSED argument): every habitable body gets Earth's observed step timeline as its *typical* case (each hard step's expected time = Earth's interval; no observer-selection reweighting), and its probability is scaled by w = ESI^k averaged over the Archive HZ-rocky ESI population. Rare-Earth multipliers kept. Exponent k = 1 (linear) headline; k = 2, 3, 5, 10 and the optimistic-HZ population reported as exact rescalings.\n"
+                  "* **similarity_weighted_no_rare_earth**: the same, but similar planets are also assumed to share Earth's plate tectonics, land/ocean balance, large moon, Jupiter and binary outcome (those multipliers = 1). Upper-end reading.\n"
+                  "* **earth_random_draw**: Earth's step timings are one random draw from each step's waiting-time distribution, with an uninformative prior on whether Earth was fast or slow (Earth's interval at a uniform-random quantile ⇒ τ_k = x_k/E_k, E_k ~ Exp(1)). No observer-selection correction.\n"
+                  "* **classic_static_SDO_style**:")
+# ---- headline table
+head = cfg["run"]["headline_scenario"]; litb = cfg["run"].get("literature_baseline", "baseline")
+order = [head, litb] + [k for k in ["nathan_headline_no_superhab", "nathan_headline_no_tooluse", "similarity_weighted", "similarity_weighted_no_rare_earth", "earth_random_draw", "baseline", "baseline_no_exomoons", "snyder_beattie_priors", "user_inputs", "user_fast_intelligence", "classic_static_SDO_style"] if k not in (head, litb) and k in S]
+L = ["N = expected number of Milky Way worlds with stone-age-or-greater tool users alive **now**, other than Earth. Species = tool-using species (worlds × species_per_tool_world).\n",
+     "| scenario | n (ESS) | median worlds (50/50) | mean | 10th–90th pct | P(N<1) | P(no other world, Poisson) | median species now | median worlds ever | median species ever | P(50≤N_ever≤100) |",
+     "|---|---|---|---|---|---|---|---|---|---|---|"]
+for k in order:
+    s = S[k]; a = s["N_now"]; sp = s.get("species_now"); ev = s.get("N_ever"); se = s.get("species_ever")
+    nn = f"{s['n']} ({s['ess']:.0f})" if "n" in s else "1000000"
+    lab = f"**{k}** (HEADLINE)" if k == head else (f"{k} (literature baseline)" if k == litb else k)
+    L.append(f"| {lab} | {nn} | **{fmt(a['median'])}** | {fmt(a['mean'])} | {fmt(a['p10'])} – {fmt(a['p90'])} | {a['P_lambda_lt1']:.3f} | {a['P_zero_other_poisson']:.3f} | {fmt(sp['median']) if sp else '–'} | {fmt(ev['median']) if ev else '–'} | {fmt(se['median']) if se else '–'} | {('%.3f' % s['P_N_ever_50_100']) if 'P_N_ever_50_100' in s else '–'} |")
+e = S["exomoon_effect"]
+L.append(f"\nExomoons (paired draws): median {fmt(e['median_without'])} without → {fmt(e['median_with'])} with (×{e['median_with']/e['median_without']:.2f}); per-sample effect median {e['median_log10_ratio']:.3f} dex, 90th pct {e['p90_log10_ratio']:.2f} dex, 99th pct {e['p99_log10_ratio']:.2f} dex.\n")
+L.append("Deterministic best estimates (all `best` values; hard-step τ = Earth's own intervals): " + "; ".join(
+    f"{k} N_now ≈ {fmt(S[k]['best']['N_now'])} (species ≈ {fmt(S[k]['best'].get('species_now'))})" for k in [head, "baseline", "user_inputs", "similarity_weighted", "similarity_weighted_no_rare_earth"] if k in S) + ".\n")
+L.append(f"Charts: `results/comparison_scenarios.png` (all scenarios), `results/hist_log10N.png` and `results/tornado.png` (headline = {head}; literature baseline: `results/hist_log10N_baseline.png`, `results/tornado_baseline.png`), `results/hist_log10N_<scenario>.png`, `results/tornado_<scenario>.png`, `results/esi_distribution.png`.\n")
+section("Headline results (from results/results_summary.md)", "\n" + "\n".join(L) + "\n")
+# ---- new sections
+c, o = E["conservative"], E["optimistic"]
+sw = S["similarity_weighted"]["similarity_variants"]; swn = S["similarity_weighted_no_rare_earth"]["similarity_variants"]
+import csv
+top = list(csv.DictReader(open("data/esi_hz_rocky_optimistic.csv")))[:12]
+T = ["| rank | planet | dist (pc) | R (R⊕) | M used (M⊕) | mass source | S (S⊕) | ESI (4-property) | ESI (PHL flux–radius) | in conservative HZ? |", "|---|---|---|---|---|---|---|---|---|---|"]
+for i, r in enumerate(top, 1):
+    T.append(f"| {i} | {r['pl_name']} | {float(r['sy_dist']):.1f} | {float(r['pl_rade']):.2f} | {float(r['M_used']):.2f} | {r['mass_source']} | {float(r['S']):.2f} | {float(r['ESI4']):.3f} | {float(r['ESI_PHL_SR']):.3f} | {'yes' if r['pl_name'] in c['names'] else 'no'} |")
+V = ["| population, p = ESI^k | median weight | median N_now | 10th–90th | P(N<1) | median N_now, no-Rare-Earth variant |", "|---|---|---|---|---|---|"]
+for pop in ("conservative", "optimistic"):
+    for k in (1, 2, 3, 5, 10):
+        d = sw[f"{pop}_k{k}"]; d2 = swn[f"{pop}_k{k}"]
+        V.append(f"| {pop}, k={k} | {d['w_median']:.3f} | {fmt(d['N_now']['median'])} | {fmt(d['N_now']['p10'])} – {fmt(d['N_now']['p90'])} | {d['N_now']['P_lambda_lt1']:.3f} | {fmt(d2['N_now']['median'])} |")
+erd = S["earth_random_draw"]
+sim_text = f"""## Similarity-weighted scenario (Earth Similarity Index)
+**The user's argument.** Earth is not the only data point. Known Earth-like planets should inherit Earth's "average data" (its evolutionary timeline and step success), scaled by how similar they are, the way all electrons are assumed to behave alike. This is implemented literally, and it is labelled USER-PROPOSED.
+
+**ESI** (`esi.py`): Schulze-Makuch et al. 2011, Astrobiology 11, 1041 (https://doi.org/10.1089/ast.2010.0592). ESI = Π(1 − |x−x₀|/(x+x₀))^(wᵢ/n) over radius (w = 0.57), bulk density (1.07), escape velocity (0.70) and surface temperature (5.58, reference 288 K), with n = 4. Weights and reference values come from the PHL table (https://phl.upr.edu/projects/earth-similarity-index-esi).
+* Inputs: Archive `pl_rade` and `pl_bmasse`. Mass upper limits and missing masses are replaced by the Chen & Kipping 2017 Terran M–R relation (https://arxiv.org/abs/1603.08614).
+* Density = M/R³ and v_esc = √(M/R).
+* No exoplanet surface temperature is measured, so **T_surf = 288 K × S^¼** is ASSUMED (Earth-like albedo and greenhouse). The PHL flux–radius form is given as a cross-check.
+* Sanity check: Earth = 1.000; Mars (R 0.532, M 0.107, S 0.431) = 0.712, compared with the 0.70 reported for Mars after the 2011 paper (https://en.wikipedia.org/wiki/Earth_Similarity_Index).
+* Caveat: for radial-velocity planets the Archive radius is itself an M–R estimate from M sin i.
+
+**ESI distribution of Archive HZ rocky planets** (R < 1.8 R⊕, Kopparapu+2014 HZ, Teff clamped to ≥2600 K):
+
+| HZ | n | mean ESI | median | min–max | fraction ≥ 0.8 | ⟨ESI²⟩ | ⟨ESI³⟩ | ⟨ESI⁵⟩ | ⟨ESI¹⁰⟩ |
+|---|---|---|---|---|---|---|---|---|---|
+| conservative | {c['n']} | {c['mean']:.3f} | {c['median']:.3f} | {c['min']:.3f}–{c['max']:.3f} | {c['frac_ge_0p8']:.2f} | {c['mean_pow']['2']:.3f} | {c['mean_pow']['3']:.3f} | {c['mean_pow']['5']:.3f} | {c['mean_pow']['10']:.3f} |
+| optimistic | {o['n']} | {o['mean']:.3f} | {o['median']:.3f} | {o['min']:.3f}–{o['max']:.3f} | {o['frac_ge_0p8']:.2f} | {o['mean_pow']['2']:.3f} | {o['mean_pow']['3']:.3f} | {o['mean_pow']['5']:.3f} | {o['mean_pow']['10']:.3f} |
+
+Top planets by ESI (optimistic HZ). All of the top 17 orbit M dwarfs; the best non-M hosts are Kepler-442 b (K, rank 18) and Kepler-452 b (G, rank 19).
+
+{chr(10).join(T)}
+
+**How it enters the model.**
+* Each habitable body (planet or moon, G/K or M host) gets hard-step expected times equal to Earth's observed intervals. Earth's timeline is the typical case: waiting times are still exponential, but with Earth's means.
+* There is **no** Snyder-Beattie reweighting toward slow or rare steps.
+* Its probability is multiplied by w = ESI^k. The galaxy-wide η⊕ is weighted by the population mean ⟨ESI^k⟩, bootstrapped per sample from the HZ-rocky list.
+* Other exponents and the optimistic population are exact rescalings of the same draws, because N is linear in w.
+
+{chr(10).join(V)}
+
+**Interpretation.**
+* The similarity weight itself is a modest correction: ×{c['mean_pow']['1']:.2f} (linear) down to ×{c['mean_pow']['10']:.2f} (k = 10), because the known HZ rocky planets are fairly Earth-like on the ESI's four bulk properties.
+* What moves the answer from the baseline's ~10⁻³ to ~10³ is **treating Earth's timeline as typical, with no observer-selection correction**. ESI cannot test that assumption, because it measures size, density, escape velocity and insolation, not biology.
+* Electrons are interchangeable because they are measured to be identical. Planets with ESI ≈ 0.9 are not known to share Earth's chemistry, tectonics, land fraction or history.
+* Earth's own timing is subject to the selection effect Snyder-Beattie+2021 describe: we necessarily live on a planet that finished in time.
+* Dropping the Rare-Earth multipliers as well (`similarity_weighted_no_rare_earth`) gives ~10⁷.
+
+## Earth as one random draw (`earth_random_draw`)
+* Each of Earth's step intervals x_k is treated as a draw at a uniform-random quantile of an Exp(τ_k) waiting time. This is an uninformative prior on whether Earth was fast or slow, so τ_k = x_k/E_k with E_k ~ Exp(1) (median τ_k = 1.44 x_k).
+* It is mathematically the posterior from a single observation under a scale-invariant 1/τ prior, **without** the observer-selection (completed-by-now) correction.
+* Result: median **{fmt(erd['N_now']['median'])}**, 10th–90th {fmt(erd['N_now']['p10'])} – {fmt(erd['N_now']['p90'])}, P(N<1) = {erd['N_now']['P_lambda_lt1']:.3f}, P(τ_abiogenesis < 1 Gyr) = {erd.get('prior_P_tau_abio_lt_1Gyr', float('nan')):.2f}.
+* The baseline differs mainly in applying that observer-selection correction (on a broad log-uniform τ prior); it gives ~10⁻³ instead of ~10². Whether to apply the correction is the main open choice in this exercise (this exact scenario with the correction added was not run).
+
+## Species per tool-using world (`species:` in params.yaml)
+* The factor multiplies **tool-using species, not worlds**: species_now = N_now × species_concurrent and species_ever = N_ever × species_cumulative. It is drawn independently and post hoc in `analyze.py`, so the finished runs were not re-run.
+* **species_concurrent_per_tool_world**: log-uniform 1–5, best 2.38. Derived from the Smithsonian Human Origins "When Lived" spans (https://humanorigins.si.edu/evidence/human-fossils/species): the page lists 21 species, and 15 of them have fossils in the stone-tool era (≤3.3 Ma).
+  * The mean number of coexisting hominin species from 3.3 Ma to today is **2.38**. The maximum is **5** (~236 ka: H. erectus, heidelbergensis, naledi, neanderthalensis, sapiens) and the minimum is 1 (today).
+  * Homo only: mean 1.75 over 2.4 Ma to today.
+  * Wood & Boyle 2016 AJPA 159:S37 (https://doi.org/10.1002/ajpa.22902) find well-supported taxic diversity in every interval from 4 Ma to c. 40 ka. They give no single total, and they warn that some taxa may be over-split.
+* **species_cumulative_per_tool_world**: uniform 8–16, best 15.
+  * The Smithsonian list has 8 Homo species and 15 hominins in the tool era.
+  * Wikipedia's "List of Homo species" (https://en.wikipedia.org/wiki/List_of_Homo_species) names 16 Homo species, including contested ones.
+  * Nathan's figure of **9–16 humanoid species** is consistent with this; it is the user's figure, now verified as plausible.
+* **Context: ~2.3M named species. VERIFIED.** The Catalogue of Life estimates 2.3M extant species recognised by taxonomists (https://www.checklistbank.org/dataset/278910). The COL Base Release of 2026-07-14 lists 2,258,977 accepted species, and the Extended Release 2,496,219 (https://www.catalogueoflife.org/data/download). This is context only; it is not used in N.
+
+"""
+if "## Similarity-weighted scenario (Earth Similarity Index)" in R:
+    a = R.index("## Similarity-weighted scenario (Earth Similarity Index)"); b = R.index("## Variables (all in params.yaml)")
+    R = R[:a] + sim_text + R[b:]
+else:
+    insert_before("Variables (all in params.yaml)", sim_text)
+# ---- variables table
+def rng_(s):
+    d = s["dist"]
+    if d == "fixed": return f"fixed {s['value']}"
+    if d in ("uniform", "loguniform", "one_plus_loguniform"): return f"{d} [{s['low']}, {s['high']}]"
+    if d == "normal": return f"normal {s['mean']} ± {s['sd']}"
+    return d
+VT = ["| variable | distribution / range | best | meaning | source (URL) |", "|---|---|---|---|---|"]
+for sec in ("params", "multipliers"):
+    for k, s in cfg[sec].items():
+        VT.append(f"| `{k}` | {rng_(s)} | {s.get('best','(default)')} | {s.get('unit','')}{(' — user scenarios only') if 'scenarios' in s else ''}{(' (not applied to exomoons)') if s.get('applies_to_exomoons') is False else ''} | {s.get('source','')} — {s.get('url','')} |")
+for h in cfg["hard_steps"]:
+    VT.append(f"| `tau_{h['name']}` | per scenario: baseline loguniform [1e-3, 1e3] Gyr; SB2021 [1e-14, 1e10] Gyr; similarity_weighted = Earth's interval; earth_random_draw = x/Exp(1) | Earth interval | expected waiting time of this hard step; on Earth it completed {h['earth_gya']} Ga | {h['source']} — {h['url']} |")
+VT.append("| `w_similarity` | bootstrap mean of ESI^k over Archive HZ-rocky planets (similarity scenarios only) | ⟨ESI⟩ = %.3f (conservative, k=1) | similarity weight applied to every habitable body | Schulze-Makuch+2011; PHL — https://phl.upr.edu/projects/earth-similarity-index-esi |" % c["mean_pow"]["1"])
+for k in ("species_concurrent_per_tool_world", "species_cumulative_per_tool_world"):
+    s = cfg["species"][k]
+    VT.append(f"| `{k}` | {rng_(s)} | {s['best']} | {s['unit']} (post hoc, multiplies species not worlds) | {s['source']} — {s['url']} |")
+VT.append("\nDefault `best`: geometric mean for log-uniform, midpoint for uniform, mean for normal.\nUser-scenario overrides: `l_stone_yr` log-uniform [5e4, 2e5] yr (USER); `th_gk_gyr` uniform [7.5, 9.5] Gyr (USER: Sun ~4 Gyr left); in `user_fast_intelligence`, `tau_stone_tool_intelligence` log-uniform [1e-5, 1e-4] Gyr (USER, 'tens of kyr'); `similarity_weighted_no_rare_earth` fixes f_plate, f_land, f_large_moon, f_jupiter, f_binary = 1.\n")
+section("Variables (all in params.yaml)", "\n" + "\n".join(VT) + "\n")
+# ---- data sources rows
+if "| Earth similarity |" not in R:
+    R = R.replace("| L / extinction |", "| Earth similarity | NASA Exoplanet Archive radii/masses/insolation → Schulze-Makuch+2011 ESI (`esi.py`) | Biology. ESI compares bulk size, density, escape velocity and (here assumed) temperature only; RV radii are M–R estimates |\n"
+                  "| species per tool world | Smithsonian Human Origins species list and date spans; Wood & Boyle 2016; Wikipedia list of Homo species; Catalogue of Life (2.3M named species, context) | Any non-Earth rate; fossil spans are minima and taxonomy is debated |\n"
+                  "| L / extinction |")
+# ---- caveats
+if "Similarity weighting" not in R:
+    R = R.rstrip() + "\n" + """* **Similarity weighting** (user-proposed) is not a measurement of biology. ESI uses four bulk properties, with the temperature assumed from insolation. The large jump in N for `similarity_weighted` and `earth_random_draw` comes from treating Earth's timeline as typical, i.e. dropping the observer-selection correction, not from the ESI values.
+* The ESI population is dominated by M-dwarf planets (most HZ rocky detections). It is applied as a weight for G/K and M hosts alike.
+* Species counts assume Earth's hominin radiation (2.38 coexisting, 15 total over ~3.3 Myr) is typical for every tool world. Both counts depend on taxonomic splitting.
+* The new scenarios use 2e5 samples. They have no importance weights (ESS = n).
+"""
+# ================= nathan_headline section =================
+if head in S and "nathan_factor_effects" in S:
+    H = S[head]; a = H["N_now"]; sp = H["species_now"]; pf = S["nathan_factor_effects"]; sh = json.load(open("data/superhab.json"))
+    spc = H["spacing"]
+    lb = S[litb]["N_now"]
+    rows = []
+    for t, lab in [("nathan_headline_no_superhab", "without superhabitability (tool-use change only)"), ("nathan_headline_no_tooluse", "without cross-lineage tool use (superhab only)"), ("similarity_weighted", "without both (= similarity_weighted)")]:
+        d = pf[t]; rows.append(f"| {lab} | {fmt(d['median_N'])} | ×{d['ratio_of_medians']:.2f} | " + (f"{d['persample_log10_ratio_median']:.3f} [{d['p10']:.3f}, {d['p90']:.3f}] |" if d.get("paired") else "n/a (independent draws; similarity_weighted was a finished run, not re-run) |"))
+    kt = ["| planet | host Teff (K) | age (Gyr) | dist (pc) | R (R⊕) | S (S⊕) | T_surf assumed (K) | ESI | criteria met (K host, 1.0–1.5 R⊕, 282–302 K, 5–8 Gyr) |", "|---|---|---|---|---|---|---|---|---|"]
+    for r in sh["K_hosted_HZ_R_lt_2"]:
+        met = ["K"] + [n for n, f in [("size", r["size_user"]), ("temp", r["temp"]), ("age", r["age_5_8"])] if f]
+        kt.append(f"| {r['pl_name']} | {r['st_teff']:.0f} | {r['st_age'] if r['st_age']==r['st_age'] else '–'} | {r['sy_dist']:.0f} | {r['pl_rade']:.2f} | {r['S']:.2f} | {r['T_surf']:.0f} | {r['ESI4']:.3f} | {len(met)}/4 ({', '.join(met)}) |")
+    nh = f"""## Nathan's headline (`nathan_headline`)
+**Approved by Nathan as the headline (Oct 2026).** The literature `baseline` is kept for comparison. Definition:
+* Start from `similarity_weighted`: ESI¹ with the conservative HZ, each hard step's expected time equal to Earth's interval, and no observer-selection reweighting. Abiogenesis through multicellularity are unchanged.
+* Add **(a) a superhabitability boost** for the qualifying fraction of G/K planets.
+* Add **(b) cross-lineage tool use**: the complex-animals → stone-tools step becomes fast and repeatable.
+
+**Result.**
+* Median (50/50) **{fmt(a['median'])}** worlds now; mean {fmt(a['mean'])}; 10th–90th percentile {fmt(a['p10'])} – {fmt(a['p90'])}.
+* P(N<1) = {a['P_lambda_lt1']:.3f}; P(no other world, Poisson) = {a['P_zero_other_poisson']:.3f}.
+* Species now: median {fmt(sp['median'])} (10th–90th {fmt(sp['p10'])} – {fmt(sp['p90'])}).
+* Worlds ever: median {fmt(H['N_ever']['median'])}; species ever: median {fmt(H['species_ever']['median'])}.
+* Deterministic best estimate: {fmt(H['best']['N_now'])} worlds now.
+* At the median N, the equal-cube side is **{fmt(spc['median']['cube_side_ly'])} ly** for a ~7.9e12 ly³ disk (user-supplied volume; equal to a 50,000-ly-radius, 1,000-ly-thick cylinder). The **median nearest-neighbour distance is {fmt(spc['median']['nn_median_ly'])} ly** ({spc['median']['regime']}; random placement).
+* Range of the nearest-neighbour distance: {fmt(spc['p90']['nn_median_ly'])} ly at the 90th-percentile N to {fmt(spc['p10']['nn_median_ly'])} ly at the 10th.
+* For comparison, the literature baseline median is {fmt(lb['median'])} (P(N<1) = {lb['P_lambda_lt1']:.2f}).
+
+**Effect of each new factor** (the two nathan_headline variants reuse the headline's random draws; similarity_weighted is an earlier, independently drawn run):
+
+| comparison | its median N_now | headline median ÷ its median | per-sample log10 ratio: median [10th, 90th] |
+|---|---|---|---|
+{chr(10).join(rows)}
+
+### (a) Superhabitability: Schulze-Makuch, Heller & Guinan 2020 (Astrobiology 20, 1394, https://pmc.ncbi.nlm.nih.gov/articles/PMC7757576/) and Heller & Armstrong 2014 (Astrobiology 14, 50, https://doi.org/10.1089/ast.2013.1088)
+* **Criteria (paper, Table 2).**
+  * K-dwarf host; about 5–8 Gyr old.
+  * "Up to 1.5 more massive than Earth and about 10% larger"; mean surface temperature about 5 °C higher than Earth's.
+  * Moist atmosphere with 25–30% O₂; scattered land and water with many shallow seas and archipelagos.
+  * A large moon (1–10% of the planet's mass); plate tectonics and a strong magnetic field.
+  * Only host type, age, size and (roughly) temperature are testable with Archive data.
+* **The paper's 24 candidates.** The text says 24 planets and planet candidates smaller than 2 R⊕ (Fig. 2). Of these, 9 orbit K stars, 16 are about 5–8 Gyr old, and 5 are within 10° of the 19 °C optimum. Only KOI 5715.01 meets all three of those broad criteria, and it may be colder than Earth unless its greenhouse effect is stronger than Earth's. None meets all the criteria.
+  * Verified from the PMC full text. I could read **23 name tags** in the PMC copy of Fig. 2; Table 3 is an image and its table page is behind a captcha, so the 24th name was not confirmed.
+  * Today in the Archive KOI table: 22 of the 23 are listed, 2 CONFIRMED (Kepler-69 c, Kepler-1126 b) and 20 still CANDIDATE. KOI-456.04 is not in the cumulative table.
+  * With current Archive values, {sh['paper_kois_K_host_now']} have K hosts (Teff < 5200 K) and {sh['paper_kois_size_user']} have 1.0–1.5 R⊕, but none has both.
+  * Kepler-1126 b's Archive insolation is now 4.64 S⊕, well outside the HZ.
+* **Archive confirmed planets** (`superhab.py`, optimistic HZ, R < 2 R⊕, K host 3900–5200 K): {len(sh['K_hosted_HZ_R_lt_2'])} planets. **None meets K + 1.0–1.5 R⊕ + 282–302 K (assumed T_surf).**
+  * The closest is **Kepler-62 f** (K host, 1.41 R⊕, 7 Gyr), which fails only temperature (242 K assumed; its real temperature depends on its greenhouse).
+  * The paper's three broad criteria (K + temperature + age) are met by 0 confirmed planets.
+
+{chr(10).join(kt)}
+
+* **Model.** For a fraction f_superhab of G/K planets, the per-planet step-success probability is multiplied by `superhab_boost`, capped so it cannot exceed 1. The boost is not applied to moons or M-dwarf planets.
+  * f_superhab is log-uniform 0.02–0.3, ASSUMED. The best value, 0.073, is derived from the Archive: 0.70 K share of G/K stars × 25/49 of HZ R < 2 planets at 1.0–1.5 R⊕ × 10/49 in the temperature window, assuming independence.
+  * superhab_boost is log-uniform **1–3×, ASSUMED** (the user's suggestion). Neither paper gives a number.
+  * The 5–8 Gyr age criterion is not boosted separately, because the time-aware model already counts older planets as having had more time.
+
+### (b) Cross-lineage tool use: why the animals → tools step is treated as not-hard
+Tool use evolved independently in distantly related lineages (all citations verified):
+
+| lineage | behaviour | citation |
+|---|---|---|
+| primates: chimpanzees | termite fishing, aimed throwing; stone-hammer nut cracking ≥4.3 kyr old | Goodall 1964 Nature 201, 1264 (https://doi.org/10.1038/2011264a0); Mercader+2007 PNAS (https://www.pnas.org/doi/10.1073/pnas.0607909104) |
+| primates: hominins | stone tools from 3.3 Ma (Lomekwi 3) | Harmand+2015 Nature 521, 310 (https://www.nature.com/articles/nature14464) |
+| primates: bearded capuchins | stone-on-stone percussion **unintentionally makes sharp flakes and cores like hominin tools**; ≥3,000 yr archaeological record | Proffitt+2016 Nature 539, 85 (https://doi.org/10.1038/nature20112); Falótico+2019 Nat. Ecol. Evol. (https://www.nature.com/articles/s41559-019-0904-4) |
+| primates: long-tailed macaques | nut cracking unintentionally makes flakes resembling Oldowan/Lomekwian ones | Proffitt+2023 Sci. Adv. 9, eade8159 (https://www.science.org/doi/10.1126/sciadv.ade8159) |
+| corvids (New Caledonian crow) | manufactures hooked twig and stepped pandanus-leaf tools | Hunt 1996 Nature 379, 249 (https://www.nature.com/articles/379249a0) |
+| cephalopods (veined octopus) | carries coconut-shell halves for later use as a shelter | Finn, Tregenza & Norman 2009 Curr. Biol. 19, R1069 (https://doi.org/10.1016/j.cub.2009.10.052) |
+| sea otters | pound shellfish on stone anvils/hammers | Hall & Schaller 1964 J. Mammal. 45, 287 |
+| bottlenose dolphins (Shark Bay) | sponging, culturally transmitted | Krützen+2005 PNAS 102, 8939 (https://www.pnas.org/doi/10.1073/pnas.0500232102) |
+| Asian elephants | modify branches to switch flies | Hart+2001 Anim. Behav. 62, 839 |
+| overall | tool use across **three phyla and seven classes**; ~85% of entries use tools in only one category | Bentley-Condit & Smith 2010 Behaviour 147, 185 (https://brill.com/view/journals/beh/147/2/article-p185_3.xml) |
+
+* **Number of independent origins.**
+  * At least 6 independent lineages from the user's list are verified: primates, corvids, octopus, sea otters, dolphins and elephants.
+  * Tool use is documented in ≥7 animal classes (Bentley-Condit & Smith 2010).
+  * Lithic flake production specifically is known in 3 primate lineages: hominins (intentional), and capuchins and macaques (unintentional by-products).
+* **Timing.** Complex animals appeared ~0.6 Ga (Knoll 2011). Behaviour rarely fossilises, so every documented origin is in a living lineage, with archaeological records going back only to 3.3 Ma (hominins) or a few kyr (chimpanzees, capuchins). **The record shows that tool use arose several times within ≤0.6 Gyr of complex animals. It cannot date any non-hominin origin more precisely.**
+* **Model.**
+  * `n_tool_origins` is log-uniform 3–7 (best 6), and τ_stone_tools = 0.597 Gyr / n: n origins in ~0.6 Gyr read as a Poisson rate gives an expected first-origin time of 0.6/n Gyr. This mapping is ASSUMED.
+  * Re-evolution after a lineage ends scales with this shorter time, so tool use is also repeatable.
+  * Caveat: most origins are recent and cluster in large-brained vertebrates, which suggests a long lead time followed by rapid repeats rather than a uniform rate. Only hominins reached habitual intentional flaking.
+
+"""
+    if "## Nathan's headline (`nathan_headline`)" in R:
+        a_ = R.index("## Nathan's headline (`nathan_headline`)"); b_ = R.index("## Similarity-weighted scenario (Earth Similarity Index)")
+        R = R[:a_] + nh + R[b_:]
+    else:
+        insert_before("Similarity-weighted scenario (Earth Similarity Index)", nh)
+    # spacing table for all scenarios
+    ST = ["| scenario | median N | equal-cube side (ly) | median nearest-neighbour distance (ly) | regime |", "|---|---|---|---|---|"]
+    for k in order:
+        d = S[k].get("spacing", {}).get("median")
+        if d and d["cube_side_ly"]:
+            ST.append(f"| {k} | {fmt(d['N'])} | {fmt(d['cube_side_ly'])} | {fmt(d['nn_median_ly'])}{' (N<1: none expected)' if d['N'] < 1 else ''} | {d['regime']} |")
+    sp_text = "\n**Spacing at the median N** (disk ~7.9e12 ly³, user-supplied; nearest-neighbour distance assumes random placement):\n\n" + "\n".join(ST) + "\n"
+    R = re.sub(r"\n\*\*Spacing at the median N\*\*.*?\n(?=\n## )", "\n", R, flags=re.S)
+    i_ = R.index("## Nathan's headline"); R = R[:i_] + sp_text.lstrip("\n") + "\n" + R[i_:]
+    # scenario bullets
+    if "* **nathan_headline**" not in R:
+        R = R.replace("## Scenarios\n", "## Scenarios\n* **nathan_headline** (HEADLINE, user-approved): similarity_weighted + superhabitability boost + cross-lineage (fast, repeatable) tool use. Sensitivity runs: **nathan_headline_no_superhab**, **nathan_headline_no_tooluse** (same random draws).\n", 1)
+        R = R.replace("* **baseline** (headline): literature values.", "* **baseline** (literature baseline, kept for comparison): literature values.")
+    if "Headline scenario:" not in R.split("## Files")[0]:
+        R = R.replace("Built for Nathan Meeks (Oct 2026).", "Built for Nathan Meeks (Oct 2026). **Headline scenario: `nathan_headline`** (user-approved; `run.headline_scenario` in params.yaml). Literature `baseline` kept for comparison.", 1)
+    if "`superhab.py`" not in R.split("## What the target is")[0]:
+        R = R.replace("| `data/pscomppars.csv` |", "| `superhab.py` | superhabitability screen (Schulze-Makuch+2020 criteria) of Archive planets and of the paper's KOIs → `data/superhab.json`, `data/superhab_K_hz_planets.csv`, `data/smh2020_kois_screened.csv` |\n| `data/pscomppars.csv` |", 1)
+    # variables rows
+    if "`n_tool_origins`" not in R:
+        ex = cfg["scenarios"]["nathan_headline"]["extra_params"]
+        rows_ = [f"| `{k}` | {rng_(v)} | {v.get('best')} | {v['unit']} (nathan_headline only) | {v['source']} — {v['url']} |" for k, v in ex.items()]
+        R = R.replace("| `w_similarity` |", "\n".join(rows_) + "\n| `w_similarity` |", 1)
+    if "| superhabitability |" not in R:
+        R = R.replace("| species per tool world |", "| superhabitability | Schulze-Makuch+2020 criteria applied to Archive host Teff, radius, insolation, stellar age (`superhab.py`) | O₂ level, land/sea pattern, moon, tectonics, magnetic field (not observable); any numeric habitability boost |\n| cross-lineage tool use | Primary behavioural literature (table in the nathan_headline section); Bentley-Condit & Smith 2010 catalog | Dates of non-hominin origins (behaviour rarely fossilises); any rate for other worlds |\n| species per tool world |", 1)
+    if "nathan_headline caveat" not in R:
+        R = R.rstrip() + "\n" + """* **nathan_headline caveat:** this is the user's chosen framing. It inherits similarity_weighted's key assumption that Earth's timeline is typical, with no observer-selection correction. That assumption, not the two new factors, accounts for most of the gap from the literature baseline. The superhab boost and the origins→rate mapping are ASSUMED. No confirmed Archive planet meets the superhabitable criteria (Kepler-62 f is the closest), and only 23 of the paper's 24 candidate names could be read.
+"""
+open("README.md", "w").write(R)
+print("README updated", len(R.splitlines()), "lines")

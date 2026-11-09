@@ -1,0 +1,5 @@
+[similarity_weighted_no_rare_earth] 1000/200000  3s
+[similarity_weighted_no_rare_earth] 51000/200000  125s
+[similarity_weighted_no_rare_earth] 101000/200000  248s
+[similarity_weighted_no_rare_earth] 151000/200000  372s
+[similarity_weighted_no_rare_earth] DONE 200000/200000  492s

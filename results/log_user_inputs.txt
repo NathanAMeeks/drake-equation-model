@@ -1,0 +1,5 @@
+[user_inputs] 1000/200000  6s
+[user_inputs] 51000/200000  256s
+[user_inputs] 101000/200000  529s
+[user_inputs] 151000/200000  771s
+[user_inputs] DONE 200000/200000  1020s

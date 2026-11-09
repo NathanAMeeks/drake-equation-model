@@ -1,0 +1,5 @@
+[earth_random_draw] 1000/200000  3s
+[earth_random_draw] 51000/200000  123s
+[earth_random_draw] 101000/200000  243s
+[earth_random_draw] 151000/200000  363s
+[earth_random_draw] DONE 200000/200000  481s

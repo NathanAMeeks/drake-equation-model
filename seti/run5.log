@@ -1,0 +1,224 @@
+[2026-10-06T01:51:51-07:00] job blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9
+  ready blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.h5  152.3 MB
+  ready blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.h5  152.9 MB
+  ready blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.h5  151.4 MB
+  ready blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.h5  152.4 MB
+  ready blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.h5  151.9 MB
+  ready blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.h5  151.3 MB
+  turboSETI snr=10.0 blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.h5
+  turboSETI snr=10.0 blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.h5
+  turboSETI snr=10.0 blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.h5
+  turboSETI snr=10.0 blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.h5
+  turboSETI snr=10.0 blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.h5
+  turboSETI snr=10.0 blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.h5
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in an ON source only
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 10.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 72 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 71 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 59 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 84 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 67 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 85 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 1): Found a total of 198 hits in this cadence!
+find_events: Elapsed time: 0.02 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/events_f1.csv
+  snr=10.0 filter f1: 198 hit rows in 198 events
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in at least one ON source with RFI rejection from the OFF sources
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 10.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 72 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 71 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 59 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 84 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 67 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 85 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 2/3): Found a total of 198 hits in this cadence!
+find_events (Filter threshold 2): Found a total of 164 hits in only the on observations for this cadence!
+find_events: Elapsed time: 0.08 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/events_f2.csv
+  snr=10.0 filter f2: 164 hit rows in 164 events
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in all ON sources with RFI rejection from the OFF sources
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 10.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 72 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 71 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 59 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 84 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 67 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 85 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 2/3): Found a total of 198 hits in this cadence!
+find_events: Found a total of 164 hits in only the on observations for this cadence!
+find_events: Found a total of 3 events across this cadence!
+find_events: Elapsed time: 0.13 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr10/events_f3.csv
+  snr=10.0 filter f3: 3 hit rows in 1 events
+  turboSETI snr=5.0 blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.h5
+  turboSETI snr=5.0 blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.h5
+  turboSETI snr=5.0 blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.h5
+  turboSETI snr=5.0 blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.h5
+  turboSETI snr=5.0 blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.h5
+  turboSETI snr=5.0 blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.h5
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in an ON source only
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 5.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 139 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 157 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 126 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 137 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 122 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 147 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 1): Found a total of 387 hits in this cadence!
+find_events: Elapsed time: 0.03 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/events_f1.csv
+  snr=5.0 filter f1: 387 hit rows in 387 events
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in at least one ON source with RFI rejection from the OFF sources
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 5.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 139 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 157 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 126 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 137 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 122 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 147 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 2/3): Found a total of 387 hits in this cadence!
+find_events (Filter threshold 2): Found a total of 270 hits in only the on observations for this cadence!
+find_events: Elapsed time: 0.15 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/events_f2.csv
+  snr=5.0 filter f2: 270 hit rows in 270 events
+
+===========   BEGINNING FIND_EVENT PIPELINE   ===========
+
+Assuming the first observation is an ON
+find_event_pipeline INFO     file=blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat, tstart=61027.199375, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat, tstart=61027.203043981484, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat, tstart=61027.206724537034, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat, tstart=61027.21040509259, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat, tstart=61027.21408564815, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+find_event_pipeline INFO     file=blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat, tstart=61027.21775462963, source_name=DIAG_3I_ATLAS, fch1=1621.58203125, foff=-2.7939677238464355e-06, nchans=1048576
+There are 6 total files in the filelist /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/dat_files.lst
+Therefore, looking for events in 1 on-off set(s)
+Present in all ON sources with RFI rejection from the OFF sources
+A CSV file will be saved
+=== First DAT file in set:  blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat ===
+find_events: SNR_cut = 5.0
+find_events: min_drift_rate = None
+find_events: max_drift_rate = None
+find_events: Loading data...
+find_events: Loaded 139 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17226_DIAG_3I_ATLAS_0013.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 157 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17543_DIAG_3I_ATLAS_OFF_0014.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 126 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_17861_DIAG_3I_ATLAS_0015.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 137 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18179_DIAG_3I_ATLAS_OFF_0016.rawspec.0000.cc23.dat (OFF)
+find_events: Loaded 122 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18497_DIAG_3I_ATLAS_0017.rawspec.0000.cc23.dat (ON)
+find_events: Loaded 147 hits from /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/blc23_guppi_61027_18814_DIAG_3I_ATLAS_OFF_0018.rawspec.0000.cc23.dat (OFF)
+find_events: All data loaded!
+
+find_events: Finding events in this cadence...
+find_events (Filter threshold 2/3): Found a total of 387 hits in this cadence!
+find_events: Found a total of 270 hits in only the on observations for this cadence!
+find_events: Found a total of 3 events across this cadence!
+find_events: Elapsed time: 0.23 sec
+===========   find_event_pipeline: output dataframe is complete   ===========
+find_event_pipeline: Saved CSV file to /workspace/drake/seti/out/blc23_guppi_61027_17226_DIAG_3I_ATLAS_00_cc23_a6a8c0a9/snr5/events_f3.csv
+  snr=5.0 filter f3: 3 hit rows in 1 events
+wrote /workspace/drake/seti/scan_log.md

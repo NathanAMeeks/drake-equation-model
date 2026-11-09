@@ -1,0 +1,4 @@
+[user_fast_intelligence] 1000/200000  2s
+[user_fast_intelligence] 51000/200000  127s
+[user_fast_intelligence] 101000/200000  252s
+[user_fast_intelligence] 151000/200000  377s

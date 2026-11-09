@@ -1,0 +1,4 @@
+[snyder_beattie_priors] 1000/200000  3s
+[snyder_beattie_priors] 51000/200000  126s
+[snyder_beattie_priors] 101000/200000  248s
+[snyder_beattie_priors] 151000/200000  369s

@@ -1,0 +1,10 @@
+[user_inputs] 1000/500000  2s
+[user_inputs] 51000/500000  123s
+[user_inputs] 101000/500000  243s
+[user_inputs] 151000/500000  364s
+[user_inputs] 201000/500000  484s
+[user_inputs] 251000/500000  605s
+[user_inputs] 301000/500000  726s
+[user_inputs] 351000/500000  847s
+[user_inputs] 401000/500000  969s
+[user_inputs] 451000/500000  1090s

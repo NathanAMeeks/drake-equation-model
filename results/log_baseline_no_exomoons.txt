@@ -1,0 +1,5 @@
+[baseline_no_exomoons] 1000/200000  7s
+[baseline_no_exomoons] 51000/200000  267s
+[baseline_no_exomoons] 101000/200000  505s
+[baseline_no_exomoons] 151000/200000  777s
+[baseline_no_exomoons] DONE 200000/200000  1009s
