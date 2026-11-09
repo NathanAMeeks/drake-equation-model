@@ -21,3 +21,6 @@
 
 ## Removed Nov 9, 2026: Smithsonian pages
 `data/si_species.html` and the 21 pages in `data/si/` are Smithsonian Human Origins pages under Smithsonian copyright. They were removed from the current tree. MANIFEST.csv now lists each with its original source URL, and `data/SOURCES_smithsonian.md` holds the links. The extracted data, `data/si_when_lived.json`, stays. No release asset contained these pages.
+
+## Updated Nov 9, 2026: v8 headline publish
+`nathan_headline_ocean_linked_v8` / `baseline_ocean_linked_v8` become the headline (radio-or-better median 73.5 / 1.03e-4). New rigor files: `rigor/v8.json`, `rigor/v8_analysis.py`, `rigor/v8_radio.png`, `rigor/v8_scan.md`, `rigor/v8_audit_fixes.md`, `rigor/v7_candidates.md`, plus RIGOR_SUMMARY §11. Sample arrays stay in releases / local only (gitignored). MANIFEST.csv SHA-256 rows for changed files refreshed locally; blob links point at the v8 commit once pushed.

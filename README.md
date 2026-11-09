@@ -4,19 +4,19 @@
 
 ## Headline
 
-| | Nathan's headline (`nathan_headline_ocean_linked_v5`) | Literature baseline (`baseline_ocean_linked_v5`) |
+| | Nathan's headline (`nathan_headline_ocean_linked_v8`) | Literature baseline (`baseline_ocean_linked_v8`) |
 |---|---|---|
-| **Median radio-or-better civilizations now (radio + spacefaring), other than Earth — HEADLINE** | **32.2** | **7.75e-05** |
-| radio-or-better 10th–90th percentile | 0.016 – 5.09e+04 | 4.54e-09 – 1.1 |
-| P(radio-or-better < 1) | 0.288 | 0.898 |
-| Median worlds with stone-age-or-greater tool users now (secondary) | 1.57e+04 | 0.0403 |
-| stone-age-or-greater 10th–90th percentile | 165 – 1.02e+06 | 1.64e-05 – 80 |
-| stone-age-or-greater mean; P(N < 1) | 9.67e+05; 0.003 | 2.34e+03; 0.702 |
-| Median tool-using species now | 3.49e+04 | 0.0899 |
-| Median worlds that ever had tool users (by now) | 5.35e+05 | 22.9 |
-| Largest host-type share of N (share of mean) | K dwarfs 81% | K dwarfs 84% |
-| Median nearest-neighbour distance at the median N | 437 ly | 2.07e+05 ly (N<1: no neighbour expected) |
-| Equal-cube side at the median N (disk ≈ 7.9e12 ly³) | 796 ly | 5.81e+04 ly |
+| **Median radio-or-better civilizations now (radio + spacefaring), other than Earth — HEADLINE** | **73.5** | **1.03e-04** |
+| radio-or-better 10th–90th percentile | 0.0734 – 4.08e+04 | 8.17e-09 – 0.864 |
+| P(radio-or-better < 1) | 0.222 | 0.905 |
+| Median worlds with stone-age-or-greater tool users now (secondary) | 2.43e+04 | 0.0337 |
+| stone-age-or-greater 10th–90th percentile | 299 – 1.15e+06 | 1.44e-05 – 58.5 |
+| stone-age-or-greater mean; P(N < 1) | 8.93e+05; 0.001 | 2.28e+03; 0.718 |
+| Median tool-using species now | 5.36e+04 | 0.0743 |
+| Median worlds that ever had tool users (by now) | 5.25e+05 | 18.7 |
+| Largest host-type share of N (share of mean) | K dwarfs 79% | K dwarfs 83% |
+| Median nearest-neighbour distance at the median N | 378 ly | 2.27e+05 ly (N<1: no neighbour expected) |
+| Equal-cube side at the median N (disk ≈ 7.9e12 ly³) | 688 ly | 6.17e+04 ly |
 
 ![All scenarios compared](results/comparison_scenarios.png)
 
@@ -24,7 +24,7 @@ Headline histogram: [`results/hist_log10N.png`](results/hist_log10N.png) · sens
 
 ## Multi-spectral and multiphase breakdowns (v2 model)
 
-Suggested by a friend of Nathan's (Oct 2026). Re-run with the v2 model (2e5 samples each): `baseline`, `baseline_no_exomoons`, `nathan_headline`, `nathan_headline_no_superhab`, `nathan_headline_no_tooluse`, `nathan_headline_ocean`, `baseline_ocean`, `nathan_headline_ocean_linked_v5`, `baseline_ocean_linked_v5`. Every other scenario is still the v1 model (two host classes, G/K and M, and one stone-age-or-greater phase).
+Suggested by a friend of Nathan's (Oct 2026). Re-run with the v2 model (2e5 samples each): `baseline`, `baseline_no_exomoons`, `nathan_headline`, `nathan_headline_no_superhab`, `nathan_headline_no_tooluse`, `nathan_headline_ocean`, `baseline_ocean`, `nathan_headline_ocean_linked`, `baseline_ocean_linked`, `nathan_headline_ocean_linked_v5`, `baseline_ocean_linked_v5`, `nathan_headline_ocean_linked_v8`, `baseline_ocean_linked_v8`. Every other scenario is still the v1 model (two host classes, G/K and M, and one stone-age-or-greater phase).
 
 ![Multi-spectral breakdown](results/spectral_breakdown.png)
 
@@ -34,16 +34,16 @@ Each type has its own star fraction (RECONS and Gaia-EDR3 10-pc censuses vs Krou
 
 | scenario | host type | median N now | 10th–90th pct | P(N<1) | share of mean N | median share [10th, 90th] | median N ever |
 |---|---|---|---|---|---|---|---|
-| nathan_headline_ocean_linked_v5 | M | **506** | 4.13 – 4.56e+04 | 0.047 | 8.1% | 3.6% [0.4, 25.5] | 1.47e+04 |
-| nathan_headline_ocean_linked_v5 | K | **1.22e+04** | 124 – 8.12e+05 | 0.003 | 81.1% | 82.9% [58.8, 94.1] | 3.48e+05 |
-| nathan_headline_ocean_linked_v5 | G | **1.33e+03** | 13.2 – 9.45e+04 | 0.022 | 10.7% | 9.0% [2.8, 24.6] | 1.09e+05 |
-| nathan_headline_ocean_linked_v5 | F | **8.57** | 0.0653 – 787 | 0.287 | 0.1% | 0.1% [0.0, 0.5] | 5.34e+03 |
-| nathan_headline_ocean_linked_v5 | **all** | **1.57e+04** | 165 – 1.02e+06 | 0.003 | 100% | – | 5.35e+05 |
-| baseline_ocean_linked_v5 | M | **0.00153** | 4.87e-07 – 3.88 | 0.855 | 7.7% | 4.2% [0.4, 28.3] | 0.757 |
-| baseline_ocean_linked_v5 | K | **0.0329** | 1.35e-05 – 66.9 | 0.713 | 84.4% | 88.9% [64.0, 97.5] | 17.3 |
-| baseline_ocean_linked_v5 | G | **0.00104** | 3.83e-07 – 2.95 | 0.864 | 7.9% | 3.2% [0.5, 14.7] | 2.19 |
-| baseline_ocean_linked_v5 | F | **9.78e-07** | 2.12e-10 – 0.00452 | 0.986 | 0.1% | 0.0% [0.0, 0.1] | 0.00768 |
-| baseline_ocean_linked_v5 | **all** | **0.0403** | 1.64e-05 – 80 | 0.702 | 100% | – | 22.9 |
+| nathan_headline_ocean_linked_v8 | M | **396** | 3.47 – 2.99e+04 | 0.053 | 4.9% | 1.8% [0.2, 13.8] | 7.29e+03 |
+| nathan_headline_ocean_linked_v8 | K | **1.81e+04** | 217 – 8.78e+05 | 0.002 | 79.3% | 81.1% [52.7, 94.3] | 3.22e+05 |
+| nathan_headline_ocean_linked_v8 | G | **2.98e+03** | 34.9 – 1.53e+05 | 0.010 | 15.7% | 13.4% [3.6, 39.5] | 1.27e+05 |
+| nathan_headline_ocean_linked_v8 | F | **15.2** | 0.143 – 1.02e+03 | 0.228 | 0.1% | 0.1% [0.0, 0.6] | 5e+03 |
+| nathan_headline_ocean_linked_v8 | **all** | **2.43e+04** | 299 – 1.15e+06 | 0.001 | 100% | – | 5.25e+05 |
+| baseline_ocean_linked_v8 | M | **6.49e-04** | 2.16e-07 – 1.63 | 0.882 | 3.7% | 2.1% [0.2, 16.7] | 0.33 |
+| baseline_ocean_linked_v8 | K | **0.0277** | 1.19e-05 – 49.3 | 0.730 | 82.7% | 88.7% [61.9, 97.7] | 13.5 |
+| baseline_ocean_linked_v8 | G | **0.00151** | 5.90e-07 – 3.51 | 0.853 | 13.5% | 5.6% [0.8, 26.8] | 2.48 |
+| baseline_ocean_linked_v8 | F | **1.19e-06** | 2.91e-10 – 0.00437 | 0.985 | 0.0% | 0.0% [0.0, 0.1] | 0.00771 |
+| baseline_ocean_linked_v8 | **all** | **0.0337** | 1.44e-05 – 58.5 | 0.718 | 100% | – | 18.7 |
 
 **Top Archive planets by ESI, per host type** (Kopparapu+2014 HZ, R < 1.8 R⊕; Schulze-Makuch+2011 4-property ESI):
 
@@ -74,22 +74,22 @@ Inside each tool-using episode a world moves through **lithic → agricultural �
 
 | scenario | stage | median N now | 10th–90th pct | mean | P(N<1) | median share of tool-using time [10th, 90th] |
 |---|---|---|---|---|---|---|
-| nathan_headline_ocean_linked_v5 | lithic | **9.59e+03** | 133 – 5.22e+05 | 4.77e+05 | 0.003 | 0.969 [0.179, 0.999] |
-| nathan_headline_ocean_linked_v5 | agricultural | **280** | 0.611 – 1.06e+05 | 2.43e+05 | 0.121 | 0.00112 [1.08e-04, 0.0131] |
-| nathan_headline_ocean_linked_v5 | industrial | **0.0281** | 1.12e-04 – 5.04 | 11.1 | 0.807 | 1.31e-05 [9.18e-07, 1.78e-04] |
-| nathan_headline_ocean_linked_v5 | radio | **0.0187** | 6.02e-05 – 3.91 | 17.1 | 0.826 | 8.29e-06 [4.87e-07, 1.48e-04] |
-| nathan_headline_ocean_linked_v5 | spacefaring | **31.4** | 0.0142 – 5.14e+04 | 2.47e+05 | 0.292 | 0.021 [1.25e-04, 0.819] |
-| nathan_headline_ocean_linked_v5 | **radio-capable (radio + spacefaring)** | **32.2** | 0.016 – 5.09e+04 | 2.45e+05 | 0.288 | – |
-| baseline_ocean_linked_v5 | lithic | **0.0253** | 1.26e-05 – 41.4 | 1.19e+03 | 0.735 | 0.968 [0.166, 0.999] |
-| baseline_ocean_linked_v5 | agricultural | **7.24e-04** | 1.03e-07 – 4.16 | 801 | 0.853 | 0.00112 [1.08e-04, 0.0123] |
-| baseline_ocean_linked_v5 | industrial | **6.90e-08** | 1.71e-11 – 2.46e-04 | 0.02 | 0.998 | 1.29e-05 [9.32e-07, 1.77e-04] |
-| baseline_ocean_linked_v5 | radio | **4.32e-08** | 9.30e-12 – 1.81e-04 | 0.0498 | 0.998 | 8.19e-06 [4.74e-07, 1.49e-04] |
-| baseline_ocean_linked_v5 | spacefaring | **7.84e-05** | 4.20e-09 – 1.12 | 354 | 0.897 | 0.0215 [1.22e-04, 0.833] |
-| baseline_ocean_linked_v5 | **radio-capable (radio + spacefaring)** | **7.75e-05** | 4.54e-09 – 1.1 | 351 | 0.898 | – |
+| nathan_headline_ocean_linked_v8 | lithic | **1.82e+04** | 267 – 8.23e+05 | 6.64e+05 | 0.001 | 0.982 [0.45, 0.999] |
+| nathan_headline_ocean_linked_v8 | agricultural | **242** | 0.688 – 6.86e+04 | 1.55e+05 | 0.116 | 9.13e-04 [1.22e-04, 0.00757] |
+| nathan_headline_ocean_linked_v8 | industrial | **0.0861** | 6.12e-04 – 6.22 | 7.9 | 0.762 | 1.07e-05 [8.05e-07, 1.34e-04] |
+| nathan_headline_ocean_linked_v8 | radio | **0.0627** | 3.47e-04 – 5.87 | 14.8 | 0.776 | 7.58e-06 [4.89e-07, 1.18e-04] |
+| nathan_headline_ocean_linked_v8 | spacefaring | **72.1** | 0.0656 – 4.13e+04 | 7.48e+04 | 0.227 | 0.0127 [8.19e-05, 0.547] |
+| nathan_headline_ocean_linked_v8 | **radio-capable (radio + spacefaring)** | **73.5** | 0.0734 – 4.08e+04 | 7.4e+04 | 0.222 | – |
+| baseline_ocean_linked_v8 | lithic | **0.0252** | 1.18e-05 – 42.3 | 1.76e+03 | 0.735 | 0.982 [0.441, 0.999] |
+| baseline_ocean_linked_v8 | agricultural | **3.69e-04** | 5.68e-08 – 1.77 | 355 | 0.883 | 9.23e-04 [1.23e-04, 0.00722] |
+| baseline_ocean_linked_v8 | industrial | **1.22e-07** | 3.66e-11 – 2.51e-04 | 0.00961 | 0.998 | 1.05e-05 [8.30e-07, 1.37e-04] |
+| baseline_ocean_linked_v8 | radio | **8.29e-08** | 2.22e-11 – 2.20e-04 | 0.0225 | 0.998 | 7.59e-06 [4.73e-07, 1.19e-04] |
+| baseline_ocean_linked_v8 | spacefaring | **1.02e-04** | 7.74e-09 – 0.862 | 161 | 0.904 | 0.0128 [8.19e-05, 0.555] |
+| baseline_ocean_linked_v8 | **radio-capable (radio + spacefaring)** | **1.03e-04** | 8.17e-09 – 0.864 | 159 | 0.905 | – |
 
 **Radio-capable N vs classic SETI-style Drake estimates.** 
-* `nathan_headline_ocean_linked_v5`: median **32.2** radio-capable worlds now (10th–90th 0.016 – 5.09e+04, P(N<1) = 0.29; median nearest-neighbour distance at the median ≈ 7.33e+03 ly); top drivers: l_stone_yr (4.4 dex), stage_h_space_per_yr (3.7 dex), f_land_and_ocean (3.1 dex), f_plate_tectonics (2.6 dex)
-* `baseline_ocean_linked_v5`: median **7.75e-05** radio-capable worlds now (10th–90th 4.54e-09 – 1.1, P(N<1) = 0.90; below 1, so no radio neighbour is expected at the median); top drivers: l_stone_yr (4.5 dex), tau_stone_tool_intelligence (4.2 dex), stage_h_space_per_yr (3.9 dex), f_plate_tectonics (2.8 dex)
+* `nathan_headline_ocean_linked_v8`: median **73.5** radio-capable worlds now (10th–90th 0.0734 – 4.08e+04, P(N<1) = 0.22; median nearest-neighbour distance at the median ≈ 4.86e+03 ly); top drivers: l_stone_yr (4.2 dex), stage_h_space_per_yr (3.4 dex), stage_h_ind_per_yr (1.9 dex), f_plate_tectonics (1.8 dex)
+* `baseline_ocean_linked_v8`: median **1.03e-04** radio-capable worlds now (10th–90th 8.17e-09 – 0.864, P(N<1) = 0.91; below 1, so no radio neighbour is expected at the median); top drivers: l_stone_yr (4.4 dex), tau_stone_tool_intelligence (4.3 dex), stage_h_space_per_yr (3.5 dex), tau_eukaryogenesis (2.7 dex)
 * Sandberg, Drexler & Ord 2018 (arXiv:1806.02404), 'current knowledge' sketch for communicating civilisations: median N = 0.32, mean 27 million, P(N<1) = 52%. This repo's static SDO-style stone-age variant: median 28.8.
 * Radio-only (radio but not yet spacefaring) is a very short stage here, because Earth went from radio to orbital spaceflight in 62 years. Almost all radio-capable worlds are therefore in the spacefaring stage.
 
@@ -116,7 +116,7 @@ Inside each tool-using episode a world moves through **lithic → agricultural �
 
 **Literature baseline (`baseline`).** Hard-step expected times are log-uniform over 1e-3–1e3 Gyr, then updated on Earth's dated fossil record with the observer-selection correction of Snyder-Beattie et al. 2021, which favours slow, rare steps. **The choice between these two framings explains most of the ~6-orders-of-magnitude gap between the two headline numbers.**
 
-**Archive inputs** (pscomppars, re-pulled 2 Nov 2026 (6,451 confirmed planets, up from 6,445 at the previous pull; HZ-rocky 23 conservative / 37 optimistic, ESI and superhabitable lists unchanged): 6,451 confirmed planets):
+**Archive inputs** (pscomppars, re-pulled 2 Nov 2026 (6,451 confirmed planets, up from 6,445 at the previous pull; HZ-rocky 23 conservative / 37 optimistic, ESI and superhabitable lists unchanged): 6,464 confirmed planets):
 * HZ rocky planets (R < 1.8 R⊕): 23 conservative and 37 optimistic, or 26 and 41 including TRAPPIST-1 with Teff clamped to 2600 K.
 * Mean ESI: 0.849 (conservative) and 0.865 (optimistic).
 * Top ESI: Teegarden's Star b 0.979, TOI-700 d 0.942, Kepler-1649 c 0.940, GJ 3378 b 0.938, TOI-700 e 0.932, GJ 1002 b 0.926.
@@ -211,9 +211,9 @@ Ranges marked **ASSUMED** have no quantitative literature value. **USER** marks 
 
 ## Source provenance
 
-Every sourced variable in [`params.yaml`](params.yaml), classified from its `source` field: **literature-sourced** (value or range taken or derived from cited published data), **literature + ASSUMED element** (cited data, but the mapping onto the model variable or part of the range is a judgement), **user-supplied** (Nathan's own inputs) and **ASSUMED** (no usable quantitative literature value; the reason is in the source text). Counts: literature-sourced 70, literature + ASSUMED element 14, user-supplied 4, ASSUMED 35.
+Every sourced variable in [`params.yaml`](params.yaml), classified from its `source` field: **literature-sourced** (value or range taken or derived from cited published data), **literature + ASSUMED element** (cited data, but the mapping onto the model variable or part of the range is a judgement), **user-supplied** (Nathan's own inputs) and **ASSUMED** (no usable quantitative literature value; the reason is in the source text). Counts: literature-sourced 75, literature + ASSUMED element 16, user-supplied 4, ASSUMED 35.
 
-Evidence tag (`tag:` in params.yaml): **[MEASURED]** direct observation, census or dated record; **[MODELED]** taken from a theoretical model or simulation, or a measurement mapped onto the variable by a judgement; **[GUESS]** ASSUMED or user-supplied (no quantitative literature value), plus the SDO 2018 Table-1 ranges, which compile published opinions. Tag counts: [MEASURED] 37, [MODELED] 40, [GUESS] 45.
+Evidence tag (`tag:` in params.yaml): **[MEASURED]** direct observation, census or dated record; **[MODELED]** taken from a theoretical model or simulation, or a measurement mapped onto the variable by a judgement; **[GUESS]** ASSUMED or user-supplied (no quantitative literature value), plus the SDO 2018 Table-1 ranges, which compile published opinions. Tag counts: [MEASURED] 40, [MODELED] 44, [GUESS] 45.
 
 <details><summary>Full provenance table (click to expand)</summary>
 
@@ -289,6 +289,11 @@ Evidence tag (`tag:` in params.yaml): **[MEASURED]** direct observation, census 
 | `classic_static.log10_lambdaVt` | [GUESS] | literature-sourced | SDO 2018: fl = 1-exp(-lambda V t), log-normal, sigma = 50 decades, median 1 | https://arxiv.org/abs/1806.02404 |
 | `classic_static.fi` | [GUESS] | literature-sourced | SDO 2018 Table 1 | https://arxiv.org/abs/1806.02404 |
 | `classic_static.L_stone` | [GUESS] | literature-sourced | same as l_stone_yr above | https://www.nature.com/articles/nature14464 |
+| `v8.f_not_flooded` | [MODELED] | literature-sourced | Boley et al. 2025 ApJ (arXiv:2510.24854) §IV.3.2 known-planet sample FeO=8 wt%, Earth water budget: fully submerged Mars-like 0%, Venus-like 24%, Earth-like … | https://doi.org/10.3847/1538-4357/ae182b |
+| `v8.h_impact_per_yr` | [MEASURED] | literature-sourced | Harris & Chodas 2021 Icarus 365, 114452: >=10 km about 1 per 1e8 yr (low, certainly catastrophic), >=1 km about 1 per 5e5 yr (high, global effects). … | https://doi.org/10.1016/j.icarus.2021.114452 |
+| `v8.t_interglacial_yr` | [MEASURED] | literature-sourced | PAGES Past Interglacials WG 2016 Rev.Geophys. 54, 162: 11 interglacials in 800 kyr, 10-30 kyr each. Glacial return ends farming (regress to lithic): … | https://doi.org/10.1002/2015rg000482 |
+| `v8.f_climate_persist` | [MODELED] | literature-sourced | Tyrrell 2020 Commun.Earth Environ. 1, 61: 100,000 planets x 100 runs. NOTE: low 0.0145 = fraction of ALL RUNS that succeed; high 0.087 = fraction of PLANETS … | https://doi.org/10.1038/s43247-020-00057-8 |
+| `v8.features.recovery.t_recovery_gyr` | [MODELED] | literature-sourced | MODELED bridge: Lyson+2019 Science (local Denver-basin ecological/body-size recovery ~0.1 Myr after K-Pg) .. Kirchner & Weil 2000 Nature (global diversity … |  |
 | `n_giant_hz_m` | [MODELED] | literature + ASSUMED element | Hill et al. 2018 (M 6+/-6%); lower bound 0.01 ASSUMED | https://arxiv.org/abs/1805.03370 |
 | `f_exomoon_host` | [MODELED] | literature + ASSUMED element | WIDE ASSUMED prior. Low end: Canup & Ward 2006 Nature (satellite systems ~1e-4 of planet mass -> in-situ moons Moon-to-Mars size); capture routes Williams … | https://www.nature.com/articles/nature04860 |
 | `r_ster0_per_gyr` | [MODELED] | literature + ASSUMED element | LITERATURE-INFORMED low end (2026-10-12; was ASSUMED loguniform 1e-3-0.25). Barnes, Lewis, Salcido, Elahi, Filipovic & Bower 2026 MNRAS 552, stag1750 (EAGLE … | https://arxiv.org/abs/2610.07450 |
@@ -303,6 +308,8 @@ Evidence tag (`tag:` in params.yaml): **[MEASURED]** direct observation, census 
 | `scenarios.nathan_headline.n_tool_origins` | [MODELED] | literature + ASSUMED element | Low 3 = independent lithic-flake-producing primate lineages (hominins, Harmand+2015; bearded capuchins, Proffitt+2016 Nature 539, 85; long-tailed macaques, … | https://doi.org/10.1038/nature20112 |
 | `scenarios.nathan_headline_ocean_moons.independent_params2.n_hab_moons_per_giant` | [MODELED] | literature + ASSUMED element | Solar System: Jupiter 4 large (Galilean) moons, Saturn 1 (Titan); Cilibrasi+2018 MNRAS 480, 4355 population synthesis: surviving systems most often 3 moons, … | https://arxiv.org/abs/1801.06094 |
 | `scenarios.nathan_headline_ocean_linked_v4.independent_params2.t_recovery_gyr` | [MODELED] | literature + ASSUMED element | Kirchner & Weil 2000 Nature 404, 177: origination lags extinction by ~10 Myr throughout the fossil record (also after removing the Big Five); range ASSUMED … | https://doi.org/10.1038/35004564 |
+| `v8.f_unbalanced_productivity` | [MODELED] | literature + ASSUMED element | Hoening & Spohn 2023 Astrobiology 23 (arXiv:2211.09473): land and ocean planets keep 1/3-1/2 of Earth's biomass/bioproductivity. Mapping productivity -> … | https://doi.org/10.1089/ast.2022.0070 |
+| `v8.f_thick_disk_planets` | [MEASURED] | literature + ASSUMED element | Zink+2023 AJ 165, 262: super-Earth occurrence -50+/-8% over first kpc of vertical amplitude vs -14+/-3% from metallicity alone -> 0.50/0.86 = 0.58 (1 sigma … | https://doi.org/10.3847/1538-3881/acd24c |
 | `multipliers.extra_worlds_per_system` | [GUESS] | user-supplied | USER-PROPOSED (speculative past intelligence on Venus/Mars): low-weight bonus for >1 tool-using world per system; not literature | user research export |
 | `scenarios.user_inputs.l_stone_yr` | [GUESS] | user-supplied | USER-PROPOSED 50-200 kyr extinction window (CONFLICTS with Big-Five spacing of ~50-135 Myr; kept as the user's scenario) |  |
 | `scenarios.user_inputs.th_gk_gyr` | [GUESS] | user-supplied | USER: Sun ~4 Gyr remaining (+~4.4 Gyr elapsed) |  |
@@ -363,9 +370,13 @@ Evidence tag (`tag:` in params.yaml): **[MEASURED]** direct observation, census 
 | nathan_headline_no_tooluse [v2] | 200000 | 622 | 2.81 – 1.15e+05 | 2.54e+05 | 0.063 | 1.41e+03 | 4.86e+04 | 1.67e+03 |
 | nathan_headline_ocean [v2] | 200000 | 2.82e+04 | 294 – 1.62e+06 | 1.37e+06 | 0.002 | 6.34e+04 | 5.87e+05 | 359 |
 | baseline_ocean [v2] | 200000 | 0.0413 | 1.45e-05 – 83.9 | 5.68e+03 | 0.703 | 0.0926 | 27.1 | 2.05e+05 (N<1) |
+| nathan_headline_ocean_linked [v2] | 200000 | 2.9e+04 | 272 – 1.85e+06 | 1.64e+06 | 0.002 | 6.49e+04 | 5.93e+05 | 356 |
+| baseline_ocean_linked [v2] | 200000 | 0.043 | 1.56e-05 – 95.9 | 4.77e+03 | 0.701 | 0.0939 | 26.6 | 2.01e+05 (N<1) |
+| nathan_headline_ocean_linked_v5 [v2] | 100000 | 1.57e+04 | 165 – 1.02e+06 | 9.67e+05 | 0.003 | 3.49e+04 | 5.35e+05 | 437 |
+| baseline_ocean_linked_v5 [v2] | 100000 | 0.0403 | 1.64e-05 – 80 | 2.34e+03 | 0.702 | 0.0899 | 22.9 | 2.07e+05 (N<1) |
+| **nathan_headline_ocean_linked_v8** (headline) [v2] | 100000 | 2.43e+04 | 299 – 1.15e+06 | 8.93e+05 | 0.001 | 5.36e+04 | 5.25e+05 | 378 |
+| baseline_ocean_linked_v8 (literature) [v2] | 100000 | 0.0337 | 1.44e-05 – 58.5 | 2.28e+03 | 0.718 | 0.0743 | 18.7 | 2.27e+05 (N<1) |
 | classic_static_SDO_style | 1000000 | 28.8 | 3.14e-60 – 1.49e+06 | 8.05e+06 | 0.465 | 61.8 | – | 7.75e+03 |
-| **nathan_headline_ocean_linked_v5** (headline) [v2] | 100000 | 1.57e+04 | 165 – 1.02e+06 | 9.67e+05 | 0.003 | 3.49e+04 | 5.35e+05 | 437 |
-| baseline_ocean_linked_v5 (literature) [v2] | 100000 | 0.0403 | 1.64e-05 – 80 | 2.34e+03 | 0.702 | 0.0899 | 22.9 | 2.07e+05 (N<1) |
 
 Effect of the headline's new factors (paired draws): without superhabitability the median is 2.21e+03 (headline ×1.08); without cross-lineage tool use it is 622 (×3.84).
 
@@ -375,14 +386,14 @@ Scenario definitions are in `params.yaml` under `scenarios:`. Full statistics, s
 
 ## What it means (plain language)
 
-* **Headline: radio-or-better civilizations now.** About **32.2** in Nathan's headline (P(<1) ≈ 29%) and **7.75e-05** in the literature baseline (P(<1) ≈ 90%). Radio-or-better is the stage we could in principle detect. The stone-age-or-greater counts below are the secondary metric.
-* **If Earth's history is typical** (Nathan's headline), the Milky Way has about **1.57e+04** worlds with stone-age-or-better tool users right now, and the typical distance to the nearest one is about **437 light-years**. The range is very wide (165 to 1.02e+06), but under these assumptions it is unlikely we are alone (P(N<1) ≈ 0%).
-* **If Earth's history is treated as a lucky draw** that we see only because we exist (the literature baseline), the median falls to **0.0403**, and we are probably the only such world right now (P(N<1) ≈ 70%).
-* **The data cannot yet decide between those two views.** The biggest swings come from how often planets have both land and ocean, how long a stone-age-or-later phase lasts, plate tectonics, and the hard-step timescales. Star counts and η⊕ matter much less (η⊕ for K stars swings the headline by ~0.3 orders of magnitude).
+* **Headline: radio-or-better civilizations now.** About **73.5** in Nathan's headline (P(<1) ≈ 22%) and **1.03e-04** in the literature baseline (P(<1) ≈ 91%). Radio-or-better is the stage we could in principle detect. The stone-age-or-greater counts below are the secondary metric.
+* **If Earth's history is typical** (Nathan's headline), the Milky Way has about **2.43e+04** worlds with stone-age-or-better tool users right now, and the typical distance to the nearest one is about **378 light-years**. The range is very wide (299 to 1.15e+06), but under these assumptions it is unlikely we are alone (P(N<1) ≈ 0%).
+* **If Earth's history is treated as a lucky draw** that we see only because we exist (the literature baseline), the median falls to **0.0337**, and we are probably the only such world right now (P(N<1) ≈ 72%).
+* **The data cannot yet decide between those two views.** The biggest swings come from how often planets have both land and ocean, how long a stone-age-or-later phase lasts, plate tectonics, and the hard-step timescales. Star counts and η⊕ matter much less (η⊕ for K stars swings the headline by ~0.6 orders of magnitude).
 * **What Nathan's two new factors do.** Superhabitable worlds change the answer only slightly (×1.08). Treating tool use as fast and repeatable matters more (×3.8). This is probably mostly through faster re-emergence after a collapse, because the first arrival moves by only ~0.5 of ~4.4 Gyr.
 * **Stone-age worlds are effectively invisible** at interstellar distances, so a large N is consistent with the silence we observe.
 * **Most tool-using worlds would still be in the stone age.** That is why the radio-or-better headline is far below the stone-age count: in the stage breakdown, most tool-using time is spent in the lithic stage, because Earth took 3.3 Myr to get from stone tools to farming.
-* **K dwarfs dominate.** Orange K stars supply most of N in both framings (81% headline, 84% baseline). They are ~1.4–4.5× more common than G stars, have a higher η⊕ range and long habitable windows. M dwarfs are ~6–10× more numerous than K dwarfs but carry the flare and tidal-locking/water-loss penalties. The superhabitability boost (K only) adds just a few percentage points. F stars contribute ~0.1%: they are rare (~2–3% of stars), their continuously-habitable-zone windows (1.4–5 Gyr, Cuntz & Guinan 2016) are mostly shorter than the ~4-Gyr Earth-like path to tool use, and they carry a UV penalty.
+* **K dwarfs dominate.** Orange K stars supply most of N in both framings (79% headline, 83% baseline). They are ~1.4–4.5× more common than G stars, have a higher η⊕ range and long habitable windows. M dwarfs are ~6–10× more numerous than K dwarfs but carry the flare and tidal-locking/water-loss penalties. The superhabitability boost (K only) adds just a few percentage points. F stars contribute ~0.1%: they are rare (~2–3% of stars), their continuously-habitable-zone windows (1.4–5 Gyr, Cuntz & Guinan 2016) are mostly shorter than the ~4-Gyr Earth-like path to tool use, and they carry a UV penalty.
 
 ## Ocean-intelligence path (2026-10-17)
 
@@ -420,9 +431,11 @@ No factor is fitted to data, so there is no fitted trend to hold out; the two Ar
 
 **Oct 26 data-anchored new variables (v5).** These are metallicity occurrence (Wang & Fischer 2015 + Hayden+2015), galactic-habitable-zone exposure spread with radial migration (Frankel+2018), oxygenation timing for fire-level O2 (land path only) and extinction recovery (Kirchner & Weil 2000). Guess-based candidates were removed. **Radio-or-better median:** headline_ocean_linked 62 → **32.2** (10–90% 0.016–5.09e+04, P(<1) 0.29); baseline_ocean_linked 8.06e-05 → **7.75e-05** (P(<1) 0.90). Chart: ![v5](rigor/v5_radio.png)
 
+**Nov 9 v8 (new headline).** Nine data-backed features on top of v5 (land/ocean from Boley 2025 + Höning & Spohn 2023; η⊕ Bryson 2021 / Gillis 2026; thick-disk Zink 2023; recovery Lyson/Kirchner; glacial PAGES; impacts Harris & Chodas; M-flare JWST bound; pt_best Skemer 2025). `q_regress` Seshat floor dropped after audit. **Radio-or-better median:** v5 32.2 → **73.5** (10–90% 0.0734–4.08e+04, P(<1) 0.22; stone-age-or-greater 2.43e+04); baseline 7.75e-05 → **0.000103** (P(<1) 0.91). Paired shift +0.309 dex. Sensitivities: env-paced 71.1; Tyrrell replaces PT×moon 150; Tyrrell replaces moon only 14.8. Audit: PASS. Details: [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md) §11, [`rigor/v8.json`](rigor/v8.json), [`v8_audit_fixes.md`](rigor/v8_audit_fixes.md). Chart: ![v8](rigor/v8_radio.png)
+
 ## No-probe (Fermi) side analysis (2026-10-28)
 
-A side analysis, **not applied to the headline** (the headline stays at the v5 value above, median 32.2). It asks how the radio-or-better distribution changes if we condition on no alien probe having been found near Earth. Each v5 draw is weighted by P(no probe | draw) = exp(-f_send x f_det x probe arrivals still alive). Probe arrivals are counted from every civilization that ever reached the spacefaring stage, using the model's own history. Crossing times come from Hart (1975) and Nicholson & Forgan (2013). The searched regions come from Freitas & Valdes (1980, 1985) and Valdes & Freitas (1983). Probe lifetimes per parking location combine the Grun et al. (1985) meteoroid flux, cross-checked against the lunar cratering record, with published orbit-stability studies. f_send and f_det are [GUESS] and are only swept, never fixed. The only regions actually searched, the Earth-Moon Lagrange points, empty within about a century, so even with f_send x f_det = 1 the headline median only drops to 5.82. Long-lived parking spots (Trojans, main belt) would constrain strongly, but they have not been searched to metre-scale limits. Details: [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md) section 10, [`rigor/v6_probe.json`](rigor/v6_probe.json), charts [`v6_probe.png`](rigor/v6_probe.png) and [`v6b_probe.png`](rigor/v6b_probe.png).
+A side analysis, **not applied to the headline** (still conditioned on the v5 draws; the published headline is now v8, median 73.5). It asks how the radio-or-better distribution changes if we condition on no alien probe having been found near Earth. Each v5 draw is weighted by P(no probe | draw) = exp(-f_send x f_det x probe arrivals still alive). Probe arrivals are counted from every civilization that ever reached the spacefaring stage, using the model's own history. Crossing times come from Hart (1975) and Nicholson & Forgan (2013). The searched regions come from Freitas & Valdes (1980, 1985) and Valdes & Freitas (1983). Probe lifetimes per parking location combine the Grun et al. (1985) meteoroid flux, cross-checked against the lunar cratering record, with published orbit-stability studies. f_send and f_det are [GUESS] and are only swept, never fixed. The only regions actually searched, the Earth-Moon Lagrange points, empty within about a century, so even with f_send x f_det = 1 the headline median only drops to 5.82. Long-lived parking spots (Trojans, main belt) would constrain strongly, but they have not been searched to metre-scale limits. Details: [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md) section 10, [`rigor/v6_probe.json`](rigor/v6_probe.json), charts [`v6_probe.png`](rigor/v6_probe.png) and [`v6b_probe.png`](rigor/v6b_probe.png).
 
 ## Caveats
 

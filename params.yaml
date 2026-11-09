@@ -20,9 +20,9 @@ run:
   t_now_gyr: 13.8        # present age of the Universe / Galaxy grid end
   earth_habitable_start_gya: 4.4   # oceans formed (Peck et al. 2001 via Snyder-Beattie+2021 Table 1)
   bayes_update_on_earth_timing: true   # Snyder-Beattie et al. 2021-style update of hard-step rates
-  scenarios_to_run: [baseline, baseline_no_exomoons, snyder_beattie_priors, user_inputs, user_fast_intelligence, similarity_weighted, similarity_weighted_no_rare_earth, earth_random_draw, nathan_headline, nathan_headline_no_superhab, nathan_headline_no_tooluse, nathan_headline_ocean, baseline_ocean, nathan_headline_ocean_linked, baseline_ocean_linked, nathan_headline_ocean_linked_v5, baseline_ocean_linked_v5]
-  headline_scenario: nathan_headline_ocean_linked_v5   # 2026-10-28: headline metric = radio-or-better civilisations now (v5, data-anchored new variables)
-  literature_baseline: baseline_ocean_linked_v5          # kept for comparison in every report
+  scenarios_to_run: [baseline, baseline_no_exomoons, snyder_beattie_priors, user_inputs, user_fast_intelligence, similarity_weighted, similarity_weighted_no_rare_earth, earth_random_draw, nathan_headline, nathan_headline_no_superhab, nathan_headline_no_tooluse, nathan_headline_ocean, baseline_ocean, nathan_headline_ocean_linked, baseline_ocean_linked, nathan_headline_ocean_linked_v5, baseline_ocean_linked_v5, nathan_headline_ocean_linked_v8, baseline_ocean_linked_v8]
+  headline_scenario: nathan_headline_ocean_linked_v8   # 2026-11-09: headline metric = radio-or-better civilisations now (v8, audit-passed data-backed candidates)
+  literature_baseline: baseline_ocean_linked_v8          # kept for comparison in every report
 
 # ---------------- Astrophysics / galaxy -------------------------------
 params:
@@ -1086,6 +1086,69 @@ scenarios:
       s_ghz: {dist: uniform, low: 0.0, high: 1.414, unit: "log-sd of a star's lifetime sterilisation exposure around the galaxy mean", tag: "[MODELED]", source: "Bounds, not a fitted value: 0 = complete radial mixing; sqrt(2) = sd(R/h_R) of an exponential disk (R ~ Gamma(2, h_R)) if exposure scales as exp(-R/h_R) and stars never migrate. Radial migration (Frankel+2018 ApJ 865, 96: sigma_RM8 = 3.6 +/- 0.1 kpc) places the truth between", url: "https://arxiv.org/abs/1805.09198"}
       o2_lag_gyr: {dist: uniform, low: 0.17, high: 0.18, unit: "Gyr from complex multicellularity (0.6 Ga) to fire-level O2 (>=16%)", tag: "[MEASURED]", source: "Span of the sourced Earth anchors only: earliest charcoal mid-Silurian ~0.43 Ga (Geology 50(9):1048, 2022; sustained burns need >=16% O2) and Late Silurian ~0.42 Ga (Scott & Glasspool 2006 PNAS 103, 10861)", url: "https://pubs.geoscienceworld.org/gsa/geology/article/50/9/1048/614348 ; https://doi.org/10.1073/pnas.0604090103"}
       t_recovery_gyr: {dist: fixed, value: 0.010, unit: "Gyr, biotic recovery delay after an extinction, added to the tool-use re-evolution time", tag: "[MEASURED]", source: "Kirchner & Weil 2000 Nature 404, 177: ~10 Myr origination lag (single sourced value; no spread added)", url: "https://doi.org/10.1038/35004564"}
+  # ---- v8 variants (2026-11-09): paired with v5 (same main, ocean, indep2 streams)
+  nathan_headline_ocean_linked_v8:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 100000
+    v8: [land, ne_m, m_flares, thick, pt_best, recovery, eta_earth, glacial, impacts]
+  nathan_headline_ocean_linked_v8_none:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 5000
+    v8: []
+  nathan_headline_ocean_linked_v8_only_land:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 50000
+    v8: [land]
+  nathan_headline_ocean_linked_v8_only_ne_m:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 50000
+    v8: [ne_m]
+  nathan_headline_ocean_linked_v8_only_m_flares:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 50000
+    v8: [m_flares]
+  nathan_headline_ocean_linked_v8_only_thick:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 50000
+    v8: [thick]
+  nathan_headline_ocean_linked_v8_only_pt_best:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 50000
+    v8: [pt_best]
+  # nathan_headline_ocean_linked_v8_only_q_regress: DROPPED (audit fix: q_regress not in headline; v5 U(0,1) restored)
+  nathan_headline_ocean_linked_v8_only_recovery:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 50000
+    v8: [recovery]
+  nathan_headline_ocean_linked_v8_only_eta_earth:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 50000
+    v8: [eta_earth]
+  nathan_headline_ocean_linked_v8_only_glacial:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 50000
+    v8: [glacial]
+  nathan_headline_ocean_linked_v8_only_impacts:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 50000
+    v8: [impacts]
+  nathan_headline_ocean_linked_v8_envpaced:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 100000
+    v8: [land, ne_m, m_flares, thick, pt_best, recovery, eta_earth, glacial, impacts, env_paced]
+  nathan_headline_ocean_linked_v8_tyrrell:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 100000
+    v8: [land, ne_m, m_flares, thick, pt_best, recovery, eta_earth, glacial, impacts, tyrrell]
+  nathan_headline_ocean_linked_v8_tyrrell_moon:
+    inherit: nathan_headline_ocean_linked_v5
+    n_samples: 100000
+    v8: [land, ne_m, m_flares, thick, pt_best, recovery, eta_earth, glacial, impacts, tyrrell_moon]
+  baseline_ocean_linked_v8:
+    inherit: baseline_ocean_linked_v5
+    n_samples: 100000
+    v8: [land, ne_m, m_flares, thick, pt_best, recovery, eta_earth, glacial, impacts]
+
 species:
   seed: 20261002
   species_concurrent_per_tool_world: {dist: loguniform, low: 1.0, high: 5.0, best: 2.38,
@@ -1123,3 +1186,36 @@ v4:
   f_metal_rich_kepler: 0.48     # Wang & Fischer 2015: ~49,000 metal-rich vs ~53,000 metal-poor Kepler stars
   o2_lag_earth_gyr: 0.17        # complex multicellularity 0.6 Ga -> earliest charcoal / sustained-fire O2 (>=16%) mid-Silurian ~0.43 Ga (Geology 50(9):1048, 2022; Belcher & McElwain 2008 Science; NOE 0.85-0.54 Ga per Lyons+2014 Nature 506, 307)
   rho_stars_pc3: 0.08           # Carroll-Nellenback+2019 citing Henry+2018: 0.07-0.09 pc^-3
+
+# ---------------- v8 (2026-11-09): combined data-backed candidates from rigor/v7_candidates.md and
+# rigor/v8_scan.md. Features are switched per scenario with `v8: [...]`. All v8 params are drawn from their own RNG stream for
+# every v8 variant, and overrides only move bounds of existing priors, so v5 / v8 / one-at-a-time variants are paired draw by draw.
+# Skipped candidates and the reasons are listed in rigor/RIGOR_SUMMARY.md section 11.
+v8:
+  params:
+    f_not_flooded:   {dist: uniform, low: 0.32, high: 1.0, unit: "P(rocky HZ world with <= Earth-like water is not fully submerged)", tag: "[MODELED]",
+                      source: "Boley et al. 2025 ApJ (arXiv:2510.24854) §IV.3.2 known-planet sample FeO=8 wt%, Earth water budget: fully submerged Mars-like 0%, Venus-like 24%, Earth-like 35%, Mercury-like 68% -> not-flooded 1.00..0.32; U(0.32,1) spans the full topography set", url: "https://doi.org/10.3847/1538-4357/ae182b ; https://arxiv.org/abs/2510.24854"}
+    f_unbalanced_productivity: {dist: uniform, low: 0.33, high: 0.5, unit: "bioproductivity of land- or ocean-dominated worlds relative to a balanced Earth-like world (applied to all land-path worlds: conservative)", tag: "[MODELED]",
+                      source: "Hoening & Spohn 2023 Astrobiology 23 (arXiv:2211.09473): land and ocean planets keep 1/3-1/2 of Earth's biomass/bioproductivity. Mapping productivity -> tool-user odds linear: ASSUMED", url: "https://doi.org/10.1089/ast.2022.0070"}
+    f_thick_disk_planets: {dist: uniform, low: 0.49, high: 0.67, unit: "small-planet occurrence for thick-disk-phase stars relative to thin disk, beyond metallicity", tag: "[MEASURED]",
+                      source: "Zink+2023 AJ 165, 262: super-Earth occurrence -50+/-8% over first kpc of vertical amplitude vs -14+/-3% from metallicity alone -> 0.50/0.86 = 0.58 (1 sigma 0.49-0.67). P<40 d planets; HZ extrapolation and thick-phase = high-|z| mapping ASSUMED. Model counterpoint (Boettner & Dayal 2024, up to 1.5x) not used", url: "https://doi.org/10.3847/1538-3881/acd24c"}
+    h_impact_per_yr: {dist: loguniform, low: 1.0e-8, high: 2.0e-6, unit: "per yr, civilisation-collapsing impacts (agricultural+ stages)", tag: "[MEASURED]",
+                      source: "Harris & Chodas 2021 Icarus 365, 114452: >=10 km about 1 per 1e8 yr (low, certainly catastrophic), >=1 km about 1 per 5e5 yr (high, global effects). Collapse threshold between 1 and 10 km is the MODELED part", url: "https://doi.org/10.1016/j.icarus.2021.114452"}
+    t_interglacial_yr: {dist: uniform, low: 1.0e4, high: 3.0e4, unit: "yr, length of a stable interglacial (farming possible)", tag: "[MEASURED]",
+                      source: "PAGES Past Interglacials WG 2016 Rev.Geophys. 54, 162: 11 interglacials in 800 kyr, 10-30 kyr each. Glacial return ends farming (regress to lithic): Richerson, Boyd & Bettinger 2001 Am.Antiq. 66, 387 [MODELED]. Applied to all worlds (Earth-as-typical, as for the stage anchors)", url: "https://doi.org/10.1002/2015rg000482 ; https://doi.org/10.2307/2694241"}
+    f_climate_persist: {dist: loguniform, low: 0.0145, high: 0.087, unit: "P(climate stays habitable for 3 Gyr); SENSITIVITY ONLY, replaces f_plate_tectonics x f_large_moon", tag: "[MODELED]",
+                      source: "Tyrrell 2020 Commun.Earth Environ. 1, 61: 100,000 planets x 100 runs. NOTE: low 0.0145 = fraction of ALL RUNS that succeed; high 0.087 = fraction of PLANETS that succeed in >=1/100 runs — different estimands, sensitivity-only (not headline)", url: "https://doi.org/10.1038/s43247-020-00057-8"}
+  features:
+    land:      {note: "v8_scan #1: f_land_and_ocean -> (1 - f_ocean_world_gk) x f_not_flooded x f_unbalanced_productivity (FGK); f_not_flooded x f_unbalanced_productivity (M, f_m_water keeps the water-mass spread). Replaces the Stern & Gerya 2024 loguniform 2e-4..1 and its [GUESS] copula links"}
+    ne_m:      {overrides: {ne_M: {low: 0.05, high: 0.351, tag: "[MEASURED]", source: "Gillis, Cloutier & Pass 2026 (arXiv:2602.23364) §V.5 TESS mid-late M: optimistic HZ terrestrial 0.142+0.093/-0.092 -> 1 sigma floor 0.05; high = conservative HZ terrestrial 95% upper <0.351 (was 0.41 leftover Dressing/Archive)"}}}
+    m_flares:  {overrides: {f_m_flares: {high: 0.39, tag: "[MEASURED]", source: "JWST hot rocky M-dwarf planets: 0 of 6 thick atmospheres (v5's 4: TRAPPIST-1 b, c, LHS 3844 b, GJ 1252 b; plus TOI-1468 b Hot Rocks II A&A 2025 and LTT 3780 b Hot Rocks IV AJ 2025) -> binomial 95% upper 1-0.05^(1/6) = 0.39; mapping to HZ planets ASSUMED (v7 #2 + v8_scan #4, one change)"}}}
+    thick:     {note: "v8_scan #7: f_thick_disk_planets multiplies planet production of stars born before thick_end_gyr"}
+    pt_best:   {overrides: {f_plate_tectonics: {best: 0.29, source: "Skemer+2025 JGR Planets (doi:10.1029/2025JE009106): 29% of Hypatia-based mantles PT-favourable; range 0.01-1 kept. Best value only (no effect on MC draws)"}}}
+    q_regress: {note: "DROPPED from headline (audit 2026-11-09). stage_q_regress stays at the v5 prior U(0,1) [GUESS]. Hoyer+2025 Soc.Sci.Hist. (doi:10.1017/ssh.2025.10113): ~5% of 168 Seshat crises end in some collapse, none ended the tool-using lineage — qualitative support for the high end of the v5 range only; the 0/9 binomial floor is NOT applied (regional polity -> world-wide lineage mapping too strong)"}
+    recovery:  {overrides: {t_recovery_gyr: {dist: loguniform, low: 1.0e-4, high: 1.0e-2, tag: "[MODELED]", source: "MODELED bridge: Lyson+2019 Science (local Denver-basin ecological/body-size recovery ~0.1 Myr after K-Pg) .. Kirchner & Weil 2000 Nature (global diversity lag ~10 Myr); unlike quantities joined into one prior"}}}
+    eta_earth: {overrides: {ne_K: {low: 0.16, high: 1.50, source: "Bryson+2021 AJ 161, 36 conservative HZ, +/-1 sigma of the lower/upper bound models: 0.37-0.21 = 0.16 .. 0.60+0.90 = 1.50 (both ends widened)"}, ne_G: {high: 1.50, source: "Bryson+2021 conservative HZ upper-bound model +1 sigma 0.60+0.90 = 1.50; low 0.10 (2026 Archive reanalysis) kept"}}}
+    glacial:   {note: "v7 #1: regress-only hazard agricultural -> lithic at rate 1/t_interglacial_yr. The lithic -> agricultural wait (interglacial fraction ~0.2) is NOT added: Earth's 3.29 Myr anchor already contains it"}
+    impacts:   {note: "v7 #4: h_impact_per_yr added to the agricultural..spacefaring stage hazards (split regress/end by stage_q_regress)"}
+    env_paced: {note: "SENSITIVITY v8_scan #2 (Mills+2025 Sci.Adv. 11, eads5698): hard steps complete when environmental windows open; with no data on other planets' clocks, delays fixed at Earth's (4.40 Gyr total), no exponential spread"}
+    tyrrell_moon: {note: "SENSITIVITY variant of tyrrell: f_climate_persist replaces f_large_moon only (f_plate_tectonics kept for its continent/nutrient role)"}
+    tyrrell:   {note: "SENSITIVITY v8_scan #6: f_climate_persist replaces f_plate_tectonics x f_large_moon (both climate-stability rationales), never multiplied on top"}

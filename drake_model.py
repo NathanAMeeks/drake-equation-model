@@ -117,8 +117,10 @@ class Model:
         self.Mc = 1 << int(math.ceil(math.log2(self.I * 2)))  # for galactic convolution
         self.steps = cfg["hard_steps"]
         self.scn = cfg["scenarios"][scenario]
-        if "inherit" in self.scn:   # v3: variant = parent scenario + these keys (independent_params2 / flags)
-            self.scn = {**cfg["scenarios"][self.scn["inherit"]], **{k: v for k, v in self.scn.items() if k != "inherit"}}
+        def _res(d):   # v3: variant = parent scenario + these keys; v8: chains resolved recursively
+            return {**_res(cfg["scenarios"][d["inherit"]]), **{k: v for k, v in d.items() if k != "inherit"}} if "inherit" in d else dict(d)
+        self.scn = _res(self.scn)
+        self.V8 = set(self.scn.get("v8", [])) if "v8" in self.scn else None   # v8 features (2026-11-09), see params.yaml v8 block
         self.scenario = scenario
         ts = run["earth_habitable_start_gya"]
         dates = [ts] + [s["earth_gya"] for s in self.steps]
@@ -175,12 +177,19 @@ class Model:
             specs[name] = s
         for name, s in self.scn.get("independent_params2", {}).items():
             specs[name] = s
+        if self.V8 is not None:
+            v8 = self.cfg["v8"]
+            for name, s in v8["params"].items(): specs[name] = s
+            for f in sorted(self.V8):
+                for name, s in v8["features"].get(f, {}).get("overrides", {}).items():
+                    specs[name] = {**specs[name], **s}
         return specs
 
     def draw(self, n, rng):
         extra = self.scn.get("extra_params", {}); indep = self.scn.get("independent_params", {})
         indep2_ = self.scn.get("independent_params2", {})
-        P = {k: sample(v, n, rng) for k, v in self.param_specs().items() if k not in extra and k not in indep and k not in indep2_}
+        specs = self.param_specs(); v8p = self.cfg.get("v8", {}).get("params", {}) if self.V8 is not None else {}
+        P = {k: sample(v, n, rng) for k, v in specs.items() if k not in extra and k not in indep and k not in indep2_ and k not in v8p}
         if indep:
             if not hasattr(self, "_rng_indep"):
                 self._rng_indep = np.random.default_rng(int(self.cfg["run"]["seed"]) + 7919)
@@ -189,7 +198,10 @@ class Model:
         if indep2:   # v3 features (2026-10-21): own stream so ocean/indep draws stay paired with the parent
             if not hasattr(self, "_rng_indep2"):
                 self._rng_indep2 = np.random.default_rng(int(self.cfg["run"]["seed"]) + 15485863)
-            for k, v in indep2.items(): P[k] = sample(v, n, self._rng_indep2)
+            for k, v in indep2.items(): P[k] = sample(specs[k], n, self._rng_indep2)   # specs: v8 overrides apply, same stream use
+        if v8p:   # v8 params: own stream, always drawn for every v8 variant => all v8 variants paired with each other and with v5
+            if not hasattr(self, "_rng_v8"): self._rng_v8 = np.random.default_rng(int(self.cfg["run"]["seed"]) + 32452843)
+            for k in v8p: P[k] = sample(specs[k], n, self._rng_v8)
         sim = self.scn.get("similarity")
         if sim:   # per-sample bootstrap mean of ESI^k over the Archive HZ-rocky population (aux_* = other variants)
             E = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), sim["esi_file"])))
@@ -207,7 +219,7 @@ class Model:
                     else:
                         P[f"w_similarity_{c}"] = P["w_similarity"].copy()
         for k, v in extra.items():
-            P[k] = sample(v, n, rng)
+            P[k] = sample(specs[k], n, rng)
         if self.scn.get("links"): self._apply_links(P)
         self._apply_tool_origins(P)
         return P
@@ -284,6 +296,23 @@ class Model:
                 mult[c] = mult[c] * P[name]
                 if s.get("applies_to_exomoons", True):
                     multm[c] = multm[c] * P[name]
+        V8 = self.V8 or set(); Lfac = {}
+        if "tyrrell" in V8 or "tyrrell_moon" in V8:   # sensitivity: Tyrrell 2020 climate persistence REPLACES the climate-stability geology factors (not stacked)
+            for c in cls:
+                act_ = self.active_multipliers()
+                for nm in (("f_large_moon",) if "tyrrell_moon" in V8 else ("f_plate_tectonics", "f_large_moon")):
+                    if c in self._targets(act_[nm]):
+                        mult[c] = mult[c] / P[nm]
+                        if act_[nm].get("applies_to_exomoons", True): multm[c] = multm[c] / P[nm]
+                mult[c] = mult[c] * P["f_climate_persist"]; multm[c] = multm[c] * P["f_climate_persist"]
+        if "land" in V8:      # land path = (not ocean-dominated) x P(not fully flooded) x productivity of unbalanced worlds
+            act_ = self.active_multipliers()
+            for c in cls:
+                if c not in self._targets(act_["f_land_and_ocean"]): continue
+                wet = P["f_m_water"] if c in ("m", "M") else (1.0 - P["f_ocean_world_gk"])   # water-mass spread (M: f_m_water stays as is)
+                Lfac[c] = np.maximum(P["f_not_flooded"] * P["f_unbalanced_productivity"] * (1.0 if c in ("m", "M") else wet), 1e-300)
+                mult[c] = mult[c] * Lfac[c] / P["f_land_and_ocean"]
+                if act_["f_land_and_ocean"].get("applies_to_exomoons", True): multm[c] = multm[c] * Lfac[c] / P["f_land_and_ocean"]
         # similarity weight applies to every habitable body (planets and moons); per class if available
         if "w_similarity" in P:
             for c in cls:
@@ -300,7 +329,7 @@ class Model:
             for c in cls:
                 Lc = np.ones(n)
                 for nm in land_only:
-                    if nm in act and c in self._targets(act[nm]): Lc = Lc * P[nm]
+                    if nm in act and c in self._targets(act[nm]): Lc = Lc * (Lfac[c] if (nm == "f_land_and_ocean" and c in Lfac) else P[nm])
                 Ow = P["f_ocean_world_m"] if c in ("m", "M") else P["f_ocean_world_gk"]
                 Oc = np.minimum(Ow, 1.0 - Lc) * P["f_ocean_fecundity"]
                 r = Oc / Lc
@@ -312,6 +341,8 @@ class Model:
             if ocean: mult_o[c] = (1 - f) * mult_o[c] + f * np.minimum(mult_o[c] * P["superhab_boost"], 1.0)
         moon = P.get("f_exomoon_host", np.zeros(n)) * P.get("f_exomoon_habitable", np.ones(n))
         base = sfr * 1e9 * dt * col(P["stars_per_msun"] * P["fp"] * P["f_ghz"]) * fZ
+        if "thick" in V8:   # Zink+2023: non-metallicity deficit of small planets around thick-disk (old, high-|z|) stars
+            base = base * np.where(t[None, :] < col(tq), col(P["f_thick_disk_planets"]), 1.0)
         pl, th, moon_share, pl_o, moon_frac, sub_frac = {}, {}, {}, {}, {}, {}
         for c in cls:
             if self.ms:
@@ -349,6 +380,9 @@ class Model:
         taus = np.stack([P["tau_" + s["name"]] for s in self.steps], axis=1)
         for j in range(taus.shape[1]):
             G *= dft_trunc_exp(col(dt / taus[:, j]), I, self.omega_log)
+        if "env_paced" in V8:   # sensitivity (Mills+2025): steps complete when Earth-like environmental windows open -> fixed Earth delays
+            jb = lambda d: float(round(d / dt))
+            G = np.exp(self.omega_log * jb(self.earth_dt.sum())) * np.ones((n, 1))
         g = np.fft.irfft(G, n=self.M)[:, :I]
         g = np.clip(g, 0, None)
         # Earth-timing likelihood weight (Snyder-Beattie+2021 style)
@@ -421,6 +455,9 @@ class Model:
             Gp = np.ones_like(G)
             for j in range(taus.shape[1] - 1): Gp *= dft_trunc_exp(col(dt / taus[:, j]), I, self.omega_log)
             Dl = dft_trunc_exp(col(dt / taus[:, -1]), I, self.omega_log)
+            if "env_paced" in V8:
+                j1 = float(round(self.earth_dt[:-1].sum() / dt)); Gp = np.exp(self.omega_log * j1) * np.ones((n, 1))
+                Dl = np.exp(self.omega_log * (float(round(self.earth_dt.sum() / dt)) - j1)) * np.ones((n, 1))
             hk = np.fft.irfft(Dl * Khat, n=self.M)[:, :I] * (age[None, :] >= col(P["o2_lag_gyr"] if "o2_lag_gyr" in P else P["o2_lag_scale"] * self.cfg["v4"]["o2_lag_earth_gyr"]))
             Qi = np.clip(np.fft.irfft(Gp * np.fft.rfft(hk, n=self.M), n=self.M)[:, :I], 0, None)
             num = den = 0
@@ -529,13 +566,18 @@ class Model:
         a = [1e9 / P[k] for k in mpc["advance_params"]]                # per Gyr, s -> s+1 (S-1 entries)
         h = [np.zeros(n)] + [1e9 * P[k] for k in mpc["hazard_params"]]   # per Gyr, stage 1 has no extra hazard
         q = P[mpc["regress_fraction_param"]]
+        V8 = self.V8 or set(); hr = [np.zeros(n) for _ in range(S)]
+        if "impacts" in V8:   # km-scale impact hazard on agricultural+ stages (split regress/end by q like other stage collapses)
+            h = [h[0]] + [x + 1e9 * P["h_impact_per_yr"] for x in h[1:]]
+        if "glacial" in V8:   # glacial return ends farming (regress agricultural -> lithic only): rate 1 / interglacial length
+            hr[1] = 1e9 / P["t_interglacial_yr"]
         Qm = np.zeros((n, S, S))
         for s_ in range(S):
-            out_rate = alpha + h[s_]
+            out_rate = alpha + h[s_] + hr[s_]
             if s_ < S - 1:
                 Qm[:, s_, s_ + 1] = a[s_]; out_rate = out_rate + a[s_]
             if s_ > 0:
-                Qm[:, s_, s_ - 1] = q * h[s_]
+                Qm[:, s_, s_ - 1] = q * h[s_] + hr[s_]
             Qm[:, s_, s_] = -out_rate
         e1 = np.zeros((n, S)); e1[:, 0] = 1.0
         Tst = np.linalg.solve(np.transpose(-Qm, (0, 2, 1)), e1[..., None])[..., 0]   # row 1 of (-Q)^-1

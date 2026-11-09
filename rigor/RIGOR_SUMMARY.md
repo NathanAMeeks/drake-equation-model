@@ -295,3 +295,57 @@ Headline (`nathan_headline_ocean_linked_v5`) after conditioning with each locati
 | Jupiter Trojans | 5.01e+03 | 0.93 (0.00244-615), 0.51 | 0.149 (0.000774-81.1), 0.66 | 0.0191 (0.000191-5.43), 0.83 | 0.00226 (4.09e-05-0.193), 0.95 | 0.000292 (7.16e-06-0.00761), 0.99 |
 
 ESS stays at 3,200 or more for every headline cell; the baseline stays at 5,100 or more and barely moves (median 7.75e-5 down to at most 5e-6). Plain reading: every passive parking spot has a lifetime of only 1e2 to 2e7 yr, so only probes from roughly the last 0.1-20 Myr of galactic history can be present now. The places that have actually been searched, the Earth-Moon Lagrange points, empty within about a century unless a probe holds station, so finding nothing there barely constrains the headline (median 32 down to 6 even at a product of 1). Long-lived spots (Mars/Jupiter Trojans, main belt, stable Sun-Earth Trojan region, Moon surface) give a strong constraint only if a meaningful fraction of probe-sending civilizations park there AND those regions have been searched to a few-metre limit. That has not been done (f_det for those regions is far below 1). Caveats: the kill threshold and cross-section set the impact clock linearly; active or self-repairing probes are not covered by any of these lifetimes; the 1/r impact scaling and the use of a natural asteroid's collisional lifetime in the main belt are approximations.
+
+## 11. v8: combined data-backed candidates (Nov 9, 2026; published as headline)
+
+Scenario `nathan_headline_ocean_linked_v8` = v5 + 9 switchable features (`v8:` list, params.yaml `v8` block; `q_regress` dropped after audit). All v8 draws come from their own RNG stream and overrides only move bounds, so v8, every one-at-a-time variant and v5 are paired draw by draw. Regression: `v8_none` (no features) reproduces v5 bit-for-bit. Script `rigor/v8_analysis.py` -> `rigor/v8.json`, `rigor/v8_radio.png`. Audit fix list: `rigor/v8_audit_fixes.md`. Audit re-check: PASS (median 73.5).
+
+| | v5 | v8 (pre-audit) | **v8 (post-audit)** |
+|---|---|---|---|
+| headline median radio-or-better now (n = 1e5) | 32.2 | 224 | **73.5** |
+| 10-90% | 0.016 - 5.09e4 | 0.193 - 1.03e5 | **0.073 - 4.08e4** |
+| P(< 1) | 0.288 | 0.169 | **0.222** |
+| stone-age-or-greater median | 1.57e4 | 3.23e4 | **2.43e4** |
+| literature baseline median (ESS 6,945) | 7.75e-5 | 3.03e-4 | **1.03e-4** (P<1 0.91) |
+
+Paired median shift +0.309 dex (was +0.750). Features (tags in params.yaml) and one-at-a-time paired shift vs v5 (n = 5e4):
+
+| feature | change | tag | dex |
+|---|---|---|---|
+| land (v8 scan; audit-fixed) | f_land_and_ocean -> (1 - f_ocean_world_gk) x U(0.32,1) not-flooded x U(0.33,0.5) productivity (FGK); M: not-flooded x productivity. Boley+2025 §IV.3.2 full topography set (Mars 0% / Venus 24% / Earth 35% / Mercury 68% submerged) | MODELED | +0.39 |
+| recovery (v7 raise #1; retagged) | t_recovery fixed 10 Myr -> loguniform 0.1-10 Myr (Lyson 2019 local .. Kirchner & Weil 2000 global) | MODELED | +0.12 |
+| eta_earth (v7 raise #5) | ne_K 0.27-0.88 -> 0.16-1.50; ne_G high 0.88 -> 1.50 (Bryson 2021 conservative HZ, +/-1 sigma, both ends) | MEASURED | +0.02 |
+| ne_m (v8 scan; audit-fixed) | ne_M low 0.16 -> 0.05; high 0.41 -> 0.351 (Gillis 2026 conservative 95% upper) | MEASURED | -0.00 |
+| m_flares (v7 lower #2 + v8 scan, one change) | f_m_flares high 0.53 -> 0.39 (0 of 6 JWST) | MEASURED | -0.00 |
+| pt_best (v8 scan) | f_plate_tectonics best 0.17 -> 0.29 (Skemer 2025); best only, MC draws unchanged | MODELED | 0 |
+| thick (v8 scan) | U(0.49,0.67) on planet production before thick_end_gyr (Zink 2023, non-metallicity part) | MEASURED | -0.08 |
+| glacial (v7 lower #1) | regress-only agricultural -> lithic at 1 / U(10-30 kyr) interglacial length (PAGES 2016; Richerson 2001) | MEASURED rate / MODELED effect | -0.05 |
+| impacts (v7 lower #4) | stage hazard loguniform 1e-8..2e-6 /yr on agricultural+ (Harris & Chodas 2021, >=10 km .. >=1 km) | MEASURED rate / MODELED threshold | -0.01 |
+
+Dropped from headline: **q_regress** (was +0.20 dex with U(0.717,1) Seshat floor). `stage_q_regress` stays at the v5 prior U(0,1) [GUESS]. Hoyer+2025 (~5% of 168 crises end in some collapse; none ended the tool-using lineage) is a qualitative note only.
+
+Sum of one-at-a-time shifts ≈ +0.40 dex vs combined +0.31 (near additive; land dominates).
+
+### 11.1 Audit fixes (Nov 9 afternoon)
+
+Against `/workspace/audit_scratch/drake_v8/REPORT.md` (FAIL):
+
+1. `f_not_flooded` re-anchored to the full Boley topography set → U(0.32,1.0) [MODELED], §IV.3.2.
+2. Seshat 0/9 binomial floor removed; `q_regress` out of the headline feature set; v5 U(0,1) restored; Hoyer qualitative only.
+3. `t_recovery_gyr` retagged [MODELED] (local Lyson vs global Kirchner & Weil bridge).
+4. `ne_M` high 0.41 → 0.351 (Gillis conservative 95% upper); low 0.05 unchanged.
+5. Tyrrell `f_climate_persist` loguniform(0.0145, 0.087): **0.0145 = fraction of all runs that succeed; 0.087 = fraction of planets that succeed in ≥1/100 runs** — different estimands. Sensitivity-only; not in the headline.
+
+Headline moved 224 → **73.5**. Land OAT +0.52 → +0.39 dex.
+
+Sensitivity variants on top of post-fix v8 (n = 1e5):
+- Environment-paced hard steps (Mills 2025): median **71.1** (−0.007 dex vs v8).
+- Tyrrell climate persistence replacing f_plate_tectonics x f_large_moon: median **150** (+0.31 dex vs v8). Replacing f_large_moon only: median **14.8** (−0.72 dex vs v8). Direction still depends on which factors Tyrrell is taken to overlap.
+
+Overlaps handled: same as pre-audit (oxygen gate off ocean path; land shares f_ocean_world_gk with ocean path; glacial lithic→agri wait not double-counted; impacts/Big-Five overlap negligible; Tyrrell replaces, never multiplies).
+
+Skipped list unchanged (see prior paragraph in git history / v8_scan.md): superflares, super-eruptions, pandemics, thorium heat, etc.
+
+Top first-order Sobol drivers of log10 radio-or-better, post-fix v8 (sum 1.09, permutation null 7e-4): l_stone_yr 0.38, stage_h_space_per_yr 0.25, f_plate_tectonics 0.07, stage_h_ind 0.04, stage_h_radio 0.04, f_large_moon 0.04, m_recurrence 0.04, stage_tau_agri_yr 0.03, r_self 0.02, f_ocean_world_gk 0.02. (v5: l_stone 0.34, h_space 0.23, f_land_and_ocean 0.17, f_plate_tectonics 0.10.) Lifetime still dominates; land-ocean factor remains out of the top drivers.
+
+Checks: check.py (nathan_headline_ocean, baseline_ocean) max relative error 5e-13 / 3e-12, no support violations, 0 samples outside the interval bounds; v8 parameter supports all respected (incl. ne_M≤0.351, f_not_flooded≥0.32, stage_q_regress in [0,1]); pairing asserts pass; `v8_none==v5` True. check.py / bounds.py do not yet cover the v4/v5/v8 feature code (as before); v8 is covered by the regression and pairing tests only.

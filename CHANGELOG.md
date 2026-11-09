@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-11-09
+
+**v8 becomes the headline** (radio-or-better median **73.5**, was 32.2). Literature baseline **1.03e-4** (was 7.75e-5). Stone-age-or-greater median **2.43e4** (was 1.57e4). 10–90% radio-or-better: 0.073 – 4.08e4; P(<1) 0.222. Paired median shift vs v5: **+0.309 dex**. Details: [rigor/RIGOR_SUMMARY.md](rigor/RIGOR_SUMMARY.md) §11, [`rigor/v8.json`](rigor/v8.json), [`rigor/v8_audit_fixes.md`](rigor/v8_audit_fixes.md). Audit re-check: **PASS**.
+
+Headline / baseline scenarios: `nathan_headline_ocean_linked_v8` / `baseline_ocean_linked_v8` (inherit v5; nine switchable `v8:` features). `v8_none` reproduces v5 bit-for-bit.
+
+**Features (tags in `params.yaml` `v8` block)**
+- **land** [MODELED]: replaces `f_land_and_ocean` with (1 − f_ocean_world_gk) × f_not_flooded U(0.32,1) × f_unbalanced_productivity U(0.33,0.5) (FGK); M path uses not-flooded × productivity. Sources: Boley et al. 2025 ApJ (arXiv:2510.24854) §IV.3.2 full topography set; Höning & Spohn 2023. OAT +0.394 dex.
+- **recovery** [MODELED]: `t_recovery_gyr` fixed 10 Myr → loguniform 0.1–10 Myr (Lyson 2019 local … Kirchner & Weil 2000 global). OAT +0.117 dex.
+- **eta_earth** [MEASURED]: ne_K 0.16–1.50; ne_G high → 1.50 (Bryson+2021 ±1σ). OAT +0.024 dex.
+- **ne_m** [MEASURED]: ne_M 0.05–0.351 (Gillis, Cloutier & Pass 2026 conservative 95% upper). OAT ~0.
+- **m_flares** [MEASURED]: f_m_flares high 0.53 → 0.39 (0 of 6 JWST). OAT ~0.
+- **pt_best**: f_plate_tectonics best 0.17 → 0.29 (Skemer+2025); best only, MC unchanged.
+- **thick** [MEASURED]: U(0.49,0.67) on planet production before thick_end_gyr (Zink+2023 non-metallicity). OAT −0.081 dex.
+- **glacial** [MEASURED rate / MODELED effect]: regress-only agri→lithic at 1/U(10–30 kyr) (PAGES 2016; Richerson+2001). OAT −0.053 dex.
+- **impacts** [MEASURED rate / MODELED threshold]: stage hazard loguniform 1e-8…2e-6 /yr on agricultural+ (Harris & Chodas 2021). OAT −0.005 dex.
+
+**Dropped after audit:** `q_regress` Seshat 0/9 binomial floor (was +0.20 dex). `stage_q_regress` stays at v5 U(0,1) [GUESS].
+
+**Audit fixes (from FAIL → PASS):** f_not_flooded U(0.76,1) → U(0.32,1); q_regress removed; t_recovery retagged [MODELED]; ne_M high 0.41 → 0.351; Tyrrell estimand mismatch disclosed (sensitivity-only).
+
+**Sensitivity (on top of post-fix v8):** env-paced hard steps median **71.1**; Tyrrell replacing plate tectonics × large moon **150**; Tyrrell replacing large moon only **14.8**.
+
+Large sample arrays stay out of git (releases). Model by Nathan A. Meeks.
+
 ## 2026-11-02
 
 Weekly data refresh and SETI scan. **No model inputs changed, so no scenario was re-run and the headline is unchanged** (radio-or-better median 32.2; baseline 7.75e-5; stone-age-or-greater 1.57e4 / 0.0403).
