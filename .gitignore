@@ -1,8 +1,6 @@
 # large / regenerable
-data/pscomppars.csv
 results/*.npz
 results/*.npy
-results/log_*.txt
 *.npz
 *.npy
 # environments & caches
@@ -12,7 +10,6 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 # not part of the public repo
-sb2021.*
 xpost/
 # SETI scan: raw/extracted data, envs and bulky search products stay local
 seti/data/
@@ -22,4 +19,3 @@ seti/out/**/*.dat
 seti/out/**/*.log
 seti/out/**/*.lst
 seti/out/**/inject/
-seti/*.log

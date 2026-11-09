@@ -1,14 +1,14 @@
 {
- "total_confirmed_rows": 6451,
- "unique_pl_name": 6451,
+ "total_confirmed_rows": 6464,
+ "unique_pl_name": 6464,
  "insolation_filled_from_L_a": 0,
- "planets_with_Teff_2600_7200_and_insolation": 5787,
+ "planets_with_Teff_2600_7200_and_insolation": 5799,
  "conservative_HZ_any_size": 185,
  "conservative_HZ_R_lt_1.8": 23,
- "optimistic_HZ_any_size": 278,
+ "optimistic_HZ_any_size": 279,
  "optimistic_HZ_R_lt_1.8": 37,
  "simple_0.36-1.1_S_R_lt_1.8": 25,
- "R_lt_1.8_total": 1524,
+ "R_lt_1.8_total": 1527,
  "missing_radius": 50,
  "conservative_rocky_by_spectral_type": {
   "M": 19,
@@ -84,10 +84,10 @@
   "Wolf 1061 c",
   "Wolf 1069 b"
  ],
- "transiting_planets_total": 4815,
+ "transiting_planets_total": 4827,
  "discovery_method_counts": {
-  "Transit": 4785,
-  "Radial Velocity": 1204,
+  "Transit": 4797,
+  "Radial Velocity": 1205,
   "Microlensing": 292,
   "Imaging": 98,
   "Transit Timing Variations": 29,
@@ -113,11 +113,11 @@
  ],
  "rocky_radius_from_calculation_count": 18,
  "conservative_HZ_giants": 118,
- "optimistic_HZ_giants": 159,
+ "optimistic_HZ_giants": 160,
  "optimistic_HZ_giants_by_type": {
   "G": 93,
   "K": 36,
-  "F": 24,
+  "F": 25,
   "M": 6
  }
 }
