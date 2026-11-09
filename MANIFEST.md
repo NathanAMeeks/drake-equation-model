@@ -18,3 +18,6 @@
   - Result: 434 of 434 published files match, covering 9,749,011,429 bytes, which is 100% of published bytes and 99.997% of all bytes in the working copy.
 
 **Note:** `data/` holds the 2026-11-09 NASA Exoplanet Archive pull (6,464 rows). The model has not been rerun on it. The current headline in the README uses the 2026-11-02 data.
+
+## Removed Nov 9, 2026: Smithsonian pages
+`data/si_species.html` and the 21 pages in `data/si/` are Smithsonian Human Origins pages under Smithsonian copyright. They were removed from the current tree. MANIFEST.csv now lists each with its original source URL, and `data/SOURCES_smithsonian.md` holds the links. The extracted data, `data/si_when_lived.json`, stays. No release asset contained these pages.
